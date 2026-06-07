@@ -1,0 +1,125 @@
+// This is your Prisma schema file
+// Learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String?
+  image        String?
+  passwordHash String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  predictions  RankPrediction[]
+  progress     StudyProgress[]
+  accounts     Account[]
+  sessions     Session[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model RankPrediction {
+  id            String   @id @default(cuid())
+  userId        String?
+  mathScore     Int
+  gatScore      Int
+  totalScore    Int
+  predictedRank Int
+  predictedAIR  Int
+  examCycle     String   // "NDA 1" | "NDA 2"
+  examYear      Int
+  createdAt     DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id])
+}
+
+model StudyProgress {
+  id          String   @id @default(cuid())
+  userId      String
+  subject     String   // "maths" | "english" | "physics" | "chemistry" | "history" | "geography" | "gk"
+  topicsDone  String   @default("[]") // JSON array of completed topic IDs
+  percentage  Int      @default(0)
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, subject])
+}
+
+model CutoffData {
+  id            Int    @id @default(autoincrement())
+  year          Int
+  examCycle     String // "NDA 1" | "NDA 2"
+  writtenCutoff Int
+  finalCutoff   Int
+  totalApplied  Int?
+  totalQualified Int?
+}
+
+model ExamNotification {
+  id               Int      @id @default(autoincrement())
+  title            String
+  description      String
+  examCycle        String
+  examYear         Int
+  notificationDate DateTime?
+  applicationStart DateTime?
+  applicationEnd   DateTime?
+  examDate         DateTime?
+  resultDate       DateTime?
+  isActive         Boolean  @default(true)
+  createdAt        DateTime @default(now())
+}
+
+model NewsArticle {
+  id          Int      @id @default(autoincrement())
+  title       String
+  slug        String   @unique
+  category    String   // "notification" | "update" | "training" | "defence"
+  summary     String
+  content     String
+  publishedAt DateTime @default(now())
+  isPublished Boolean  @default(true)
+}
