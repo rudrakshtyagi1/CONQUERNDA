@@ -9,6 +9,9 @@ export default function PreviousYearPapers() {
     { year: '2024', session: 'NDA 2', status: 'Available' },
     { year: '2024', session: 'NDA 1', status: 'Available' },
     { year: '2023', session: 'NDA 2', status: 'Available' },
+    { year: '2023', session: 'NDA 1', status: 'Available' },
+    { year: '2022', session: 'NDA 2', status: 'Available' },
+    { year: '2022', session: 'NDA 1', status: 'Available' },
   ];
 
   return (
