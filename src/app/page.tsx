@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 
 const htmlContent = `
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
 /* ═══════════════════════════════════════
@@ -28,10 +28,11 @@ const htmlContent = `
   --white:#fff;
 }
 html{scroll-behavior:smooth}
-body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--text);overflow-x:hidden;font-size:15px;line-height:1.6}
+body{font-family:'Inter',sans-serif;background:var(--white);color:var(--text);overflow-x:hidden;font-size:15px;line-height:1.6}
 a{text-decoration:none;color:inherit}
-button{font-family:'DM Sans',sans-serif}
+button{font-family:'Inter',sans-serif}
 ul{list-style:none}
+h1,h2,h3,h4{letter-spacing:-0.02em}
 
 /* ═══════════════════════════════════════
    UTILITY
@@ -71,61 +72,103 @@ ul{list-style:none}
 .btn-wh:hover{background:var(--pale);transform:translateY(-1px)}
 
 /* ═══════════════════════════════════════
+   BADGES — improved
+═══════════════════════════════════════ */
+.badge{display:inline-flex;align-items:center;font-size:0.65rem;font-weight:700;padding:2px 7px;border-radius:20px;letter-spacing:.06em;text-transform:uppercase;line-height:1.4}
+.badge-up{background:#FFF3E0;color:#C2410C}
+.badge-ok{background:var(--greenl);color:var(--green)}
+.badge-live{background:#DCFCE7;color:#15803D}
+.badge-new{background:#FEF9C3;color:#A16207}
+.badge-beta{background:var(--pale);color:var(--blue)}
+.badge-daily{background:#DCFCE7;color:#15803D}
+
+/* ═══════════════════════════════════════
    NAV
 ═══════════════════════════════════════ */
 nav{
   display:flex;align-items:center;justify-content:space-between;
-  padding:0 36px;height:62px;
-  background:rgba(255,255,255,.97);
-  backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--border);
+  padding:0 36px;height:64px;
+  background:rgba(255,255,255,.98);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid #E5E7EB;
   position:sticky;top:0;z-index:200;
+  font-family:'Inter',sans-serif;
 }
-.logo{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:700;color:var(--blue4);cursor:pointer;user-select:none}
+.logo{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:700;color:var(--blue4);cursor:pointer;user-select:none;letter-spacing:-0.01em}
 .logo-icon{width:33px;height:33px;background:var(--blue);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .logo-icon svg{width:18px;height:18px;fill:white}
-.nav-center{display:flex;gap:2px}
-.nav-item{position:relative}
+.nav-center{display:flex;gap:1px}
+.nav-item{position:static}
 .nav-btn{
-  font-size:13px;font-weight:500;color:var(--muted);
+  font-size:0.9rem;font-weight:500;color:#374151;
   padding:7px 13px;border-radius:8px;
   cursor:pointer;border:none;background:none;
-  display:flex;align-items:center;gap:4px;
-  transition:all .15s;font-family:'DM Sans',sans-serif;
+  display:flex;align-items:center;gap:5px;
+  transition:color .15s,background .15s;font-family:'Inter',sans-serif;
+  letter-spacing:-0.01em;
 }
-.nav-btn:hover,.nav-btn.open{background:var(--pale);color:var(--blue)}
-.nav-btn .chev{font-size:12px;transition:transform .2s}
-.nav-btn.open .chev{transform:rotate(180deg)}
-.dropdown{
-  position:absolute;top:calc(100% + 10px);left:0;
-  background:white;border:1px solid var(--border);
-  border-radius:16px;padding:12px;
-  min-width:560px;display:none;
-  grid-template-columns:1fr 1fr;gap:4px;
-  box-shadow:0 12px 40px rgba(21,101,192,.13);
-  z-index:300;
-  animation:ddIn .15s ease;
+.nav-btn:hover,.nav-btn.open{color:#1D4ED8;background:#EFF6FF}
+.nav-btn .chev{font-size:11px;transition:transform .2s;opacity:.6}
+.nav-btn.open .chev{transform:rotate(180deg);opacity:1}
+
+/* ── MEGA MENU ── */
+.mega-wrap{
+  position:fixed;top:64px;left:0;right:0;
+  background:white;
+  border-top:1px solid #E5E7EB;
+  box-shadow:0 4px 16px rgba(0,0,0,.08);
+  z-index:199;
+  opacity:0;pointer-events:none;
+  transform:translateY(-8px);
+  transition:opacity .15s ease,transform .15s ease;
 }
-@keyframes ddIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
-.dropdown.show{display:grid}
-.dd-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;transition:background .12s}
-.dd-item:hover{background:var(--pale)}
-.dd-icon{width:32px;height:32px;background:var(--pale);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mega-wrap.show{opacity:1;pointer-events:all;transform:translateY(0)}
+.mega-inner{max-width:1200px;margin:0 auto;padding:28px 36px 24px;}
+.mega-label{
+  font-size:10px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--blue);
+  margin-bottom:14px;display:block;
+}
+.mega-grid{
+  display:grid;gap:4px;
+}
+.mega-grid-4{grid-template-columns:repeat(4,1fr)}
+.mega-grid-3{grid-template-columns:repeat(3,1fr)}
+.mega-grid-5{grid-template-columns:repeat(5,1fr)}
+.dd-item{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:12px 14px;border-radius:8px;
+  cursor:pointer;transition:background .12s;
+  color:inherit;
+}
+.dd-item:hover{background:#F0F4FF}
+.dd-icon{
+  width:34px;height:34px;background:#EFF6FF;
+  border-radius:8px;display:flex;align-items:center;
+  justify-content:center;flex-shrink:0;
+  transition:background .12s;
+}
+.dd-item:hover .dd-icon{background:#DBEAFE}
 .dd-icon i{font-size:15px;color:var(--blue)}
-.dd-text h4{font-size:13px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.dd-text p{font-size:11px;color:var(--muted);margin-top:1px}
+.dd-text h4{
+  font-size:0.8rem;font-weight:600;color:#111827;
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+  letter-spacing:-0.01em;line-height:1.3;
+}
+.dd-text p{font-size:0.75rem;color:#6B7280;margin-top:2px;line-height:1.4}
+
 .nav-right{display:flex;align-items:center;gap:10px}
 .nav-search{
   display:flex;align-items:center;gap:7px;
-  background:var(--surface);border:1px solid var(--border);
+  background:#F9FAFB;border:1px solid #E5E7EB;
   border-radius:20px;padding:7px 16px;
-  font-size:12px;color:var(--muted);cursor:pointer;
-  transition:border .15s;font-family:'DM Sans',sans-serif;
+  font-size:12px;color:#6B7280;cursor:pointer;
+  transition:border .15s,background .15s;font-family:'Inter',sans-serif;
 }
-.nav-search:hover{border-color:var(--blue2)}
+.nav-search:hover{border-color:#93C5FD;background:white}
 .nav-search i{font-size:13px}
-.nav-cta{background:var(--blue);color:white;padding:8px 22px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .2s;font-family:'DM Sans',sans-serif}
-.nav-cta:hover{background:var(--blue2);transform:translateY(-1px)}
+.nav-cta{background:var(--blue);color:white;padding:8px 22px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .2s;font-family:'Inter',sans-serif;letter-spacing:-0.01em}
+.nav-cta:hover{background:#1D4ED8;transform:translateY(-1px)}
 
 /* ═══════════════════════════════════════
    HERO
@@ -432,94 +475,140 @@ footer{background:var(--text);padding:56px 36px 30px}
 <!-- ══════════════════════════════════════
      NAV
 ══════════════════════════════════════ -->
-<nav>
-  <div class="logo">
+<nav id="site-nav" role="navigation" aria-label="Main navigation">
+  <a href="/" class="logo">
     <div class="logo-icon">
       <svg viewBox="0 0 24 24"><path d="M12 2L4 7v6c0 5 3.5 9.3 8 10.5C16.5 22.3 20 18 20 13V7L12 2z"/></svg>
     </div>
     ConquerNDA
-  </div>
+  </a>
 
-  <div class="nav-center">
+  <div class="nav-center" role="menubar">
     <!-- NDA Exam -->
-    <div class="nav-item">
-      <button class="nav-btn" onclick="togNav('dd-exam',this)">
-        NDA Exam <i class="ti ti-chevron-down chev"></i>
+    <div class="nav-item" role="none">
+      <button class="nav-btn" role="menuitem" aria-haspopup="true" aria-expanded="false"
+        data-mega="mega-exam" onmouseenter="openMega('mega-exam',this)" onkeydown="handleNavKey(event,'mega-exam',this)">
+        NDA Exam <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
       </button>
-      <div class="dropdown" id="dd-exam">
-        <a href="/what-is-nda" class="dd-item"><div class="dd-icon"><i class="ti ti-info-circle"></i></div><div class="dd-text"><h4>What is NDA</h4><p>Overview, history & wings</p></div></a>
-        <a href="/eligibility" class="dd-item"><div class="dd-icon"><i class="ti ti-shield-check"></i></div><div class="dd-text"><h4>Eligibility</h4><p>Age, education & physical</p></div></a>
-        <a href="/exam-pattern" class="dd-item"><div class="dd-icon"><i class="ti ti-file-description"></i></div><div class="dd-text"><h4>Exam Pattern</h4><p>Papers, marking & cutoffs</p></div></a>
-        <a href="/syllabus" class="dd-item"><div class="dd-icon"><i class="ti ti-book"></i></div><div class="dd-text"><h4>Syllabus</h4><p>Topic-wise complete guide</p></div></a>
-        <div class="dd-item"><div class="dd-icon"><i class="ti ti-history"></i></div><div class="dd-text"><h4>Previous Papers <span class="badge badge-new">New</span></h4><p>PYQs 2019–2025</p></div></div>
-        <div class="dd-item"><div class="dd-icon"><i class="ti ti-chart-line"></i></div><div class="dd-text"><h4>Cutoff Analysis</h4><p>Historical cutoff trends</p></div></div>
-      </div>
     </div>
-
     <!-- Preparation -->
-    <div class="nav-item">
-      <button class="nav-btn" onclick="togNav('dd-prep',this)">
-        Preparation <i class="ti ti-chevron-down chev"></i>
+    <div class="nav-item" role="none">
+      <button class="nav-btn" role="menuitem" aria-haspopup="true" aria-expanded="false"
+        data-mega="mega-prep" onmouseenter="openMega('mega-prep',this)" onkeydown="handleNavKey(event,'mega-prep',this)">
+        Preparation <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
       </button>
-      <div class="dropdown" id="dd-prep">
-        <a href="/roadmap" class="dd-item"><div class="dd-icon"><i class="ti ti-map"></i></div><div class="dd-text"><h4>Study Roadmap</h4><p>Class 10, 11, 12 & dropper plans</p></div></a>
-        <div class="dd-item"><div class="dd-icon"><i class="ti ti-books"></i></div><div class="dd-text"><h4>Books & Resources</h4><p>Best books subject-wise</p></div></div>
-        <a href="/current-affairs" class="dd-item"><div class="dd-icon"><i class="ti ti-news"></i></div><div class="dd-text"><h4>Daily Current Affairs <span class="badge badge-daily">Daily</span></h4><p>Defence & GK updates</p></div></a>
-        <div class="dd-item"><div class="dd-icon"><i class="ti ti-clipboard-list"></i></div><div class="dd-text"><h4>Mock Tests <span class="badge badge-beta">Beta</span></h4><p>Practice full-length tests</p></div></div>
-        <a href="/fitness" class="dd-item"><div class="dd-icon"><i class="ti ti-run"></i></div><div class="dd-text"><h4>Fitness Tracker</h4><p>PT & physical prep guide</p></div></a>
-      </div>
     </div>
-
     <!-- SSB -->
-    <div class="nav-item">
-      <button class="nav-btn" onclick="togNav('dd-ssb',this)">
-        SSB <i class="ti ti-chevron-down chev"></i>
+    <div class="nav-item" role="none">
+      <button class="nav-btn" role="menuitem" aria-haspopup="true" aria-expanded="false"
+        data-mega="mega-ssb" onmouseenter="openMega('mega-ssb',this)" onkeydown="handleNavKey(event,'mega-ssb',this)">
+        SSB <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
       </button>
-      <div class="dropdown" id="dd-ssb" style="min-width:520px">
-        <a href="/ssb" class="dd-item"><div class="dd-icon"><i class="ti ti-calendar"></i></div><div class="dd-text"><h4>SSB Overview</h4><p>5-day selection process</p></div></a>
-        <a href="/ssb/screening" class="dd-item"><div class="dd-icon"><i class="ti ti-brain"></i></div><div class="dd-text"><h4>Screening</h4><p>OIR test & PPDT</p></div></a>
-        <a href="/ssb/psychology" class="dd-item"><div class="dd-icon"><i class="ti ti-mood-smile"></i></div><div class="dd-text"><h4>Psychology Tests</h4><p>TAT, WAT, SRT & SDT</p></div></a>
-        <a href="/ssb/gto" class="dd-item"><div class="dd-icon"><i class="ti ti-users"></i></div><div class="dd-text"><h4>GTO Tasks</h4><p>Group outdoor tasks</p></div></a>
-        <a href="/ssb/personal-interview" class="dd-item"><div class="dd-icon"><i class="ti ti-message"></i></div><div class="dd-text"><h4>Interview</h4><p>Personal interview prep</p></div></a>
-        <div class="dd-item"><div class="dd-icon"><i class="ti ti-plane"></i></div><div class="dd-text"><h4>CPSS <span class="badge badge-beta">For Pilots</span></h4><p>Pilot aptitude battery</p></div></div>
-        <a href="/medical" class="dd-item"><div class="dd-icon"><i class="ti ti-stethoscope"></i></div><div class="dd-text"><h4>Medical Examination</h4><p>Medical standards & prep</p></div></a>
-      </div>
     </div>
-
     <!-- Career -->
-    <div class="nav-item">
-      <button class="nav-btn" onclick="togNav('dd-car',this)">
-        Career <i class="ti ti-chevron-down chev"></i>
+    <div class="nav-item" role="none">
+      <button class="nav-btn" role="menuitem" aria-haspopup="true" aria-expanded="false"
+        data-mega="mega-career" onmouseenter="openMega('mega-career',this)" onkeydown="handleNavKey(event,'mega-career',this)">
+        Career <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
       </button>
-      <div class="dropdown" id="dd-car" style="min-width:460px">
-        <a href="/salary" class="dd-item"><div class="dd-icon"><i class="ti ti-coin"></i></div><div class="dd-text"><h4>Salary & Perks</h4><p>Complete pay breakdown</p></div></a>
-        <a href="/rank-structure" class="dd-item"><div class="dd-icon"><i class="ti ti-award"></i></div><div class="dd-text"><h4>Rank Structure</h4><p>Army, Navy & Air Force</p></div></a>
-        <a href="/training" class="dd-item"><div class="dd-icon"><i class="ti ti-building"></i></div><div class="dd-text"><h4>NDA Training Life</h4><p>3-year academy life</p></div></a>
-        <a href="/success-stories" class="dd-item"><div class="dd-icon"><i class="ti ti-star"></i></div><div class="dd-text"><h4>Success Stories</h4><p>Real aspirant journeys</p></div></a>
-        <a href="/defence-news" class="dd-item"><div class="dd-icon"><i class="ti ti-news"></i></div><div class="dd-text"><h4>Defence News</h4><p>Latest from the forces</p></div></a>
-      </div>
     </div>
-
     <!-- Tools -->
-    <div class="nav-item">
-      <button class="nav-btn" onclick="togNav('dd-tools',this)">
-        Tools <i class="ti ti-chevron-down chev"></i>
+    <div class="nav-item" role="none">
+      <button class="nav-btn" role="menuitem" aria-haspopup="true" aria-expanded="false"
+        data-mega="mega-tools" onmouseenter="openMega('mega-tools',this)" onkeydown="handleNavKey(event,'mega-tools',this)">
+        Tools <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
       </button>
-      <div class="dropdown" id="dd-tools" style="min-width:520px">
-        <a href="/rank-predictor" class="dd-item"><div class="dd-icon"><i class="ti ti-chart-bar"></i></div><div class="dd-text"><h4>AIR Rank Predictor <span class="badge badge-live">Live</span></h4><p>Predict rank with UPSC data</p></div></a>
-        <div class="dd-item"><div class="dd-icon"><i class="ti ti-calculator"></i></div><div class="dd-text"><h4>Marks Calculator</h4><p>Calculate your total score</p></div></div>
-        <a href="/eligibility" class="dd-item"><div class="dd-icon"><i class="ti ti-shield-check"></i></div><div class="dd-text"><h4>Eligibility Checker</h4><p>Quick eligibility check</p></div></a>
-        <a href="/cutoff-analysis" class="dd-item"><div class="dd-icon"><i class="ti ti-trending-up"></i></div><div class="dd-text"><h4>Cutoff Predictor</h4><p>Written cutoff estimator</p></div></a>
-        <div class="dd-item"><div class="dd-icon"><i class="ti ti-git-branch"></i></div><div class="dd-text"><h4>Branch Predictor</h4><p>Army / Navy / Air Force</p></div></div>
-      </div>
     </div>
   </div>
 
   <div class="nav-right">
-    <div class="nav-search"><i class="ti ti-search"></i> Search exams, cutoffs…</div>
+    <div class="nav-search" tabindex="0"><i class="ti ti-search" aria-hidden="true"></i> Search…</div>
     <button class="nav-cta">Start Free</button>
   </div>
 </nav>
+
+<!-- ══════════════════════════════════════
+     MEGA MENU PANELS
+══════════════════════════════════════ -->
+
+<!-- NDA EXAM -->
+<div id="mega-exam" class="mega-wrap" role="region" aria-label="NDA Exam menu"
+  onmouseenter="keepMega('mega-exam')" onmouseleave="closeMega()">
+  <div class="mega-inner">
+    <span class="mega-label">NDA Exam</span>
+    <div class="mega-grid mega-grid-4">
+      <a href="/what-is-nda" class="dd-item"><div class="dd-icon"><i class="ti ti-info-circle"></i></div><div class="dd-text"><h4>What is NDA</h4><p>Overview, history &amp; wings</p></div></a>
+      <a href="/eligibility" class="dd-item"><div class="dd-icon"><i class="ti ti-shield-check"></i></div><div class="dd-text"><h4>Eligibility</h4><p>Age, education &amp; physical</p></div></a>
+      <a href="/exam-pattern" class="dd-item"><div class="dd-icon"><i class="ti ti-file-description"></i></div><div class="dd-text"><h4>Exam Pattern</h4><p>Papers, marking &amp; cutoffs</p></div></a>
+      <a href="/syllabus" class="dd-item"><div class="dd-icon"><i class="ti ti-book"></i></div><div class="dd-text"><h4>Syllabus</h4><p>Topic-wise complete guide</p></div></a>
+      <a href="/previous-year-papers" class="dd-item"><div class="dd-icon"><i class="ti ti-history"></i></div><div class="dd-text"><h4>Previous Papers <span class="badge badge-new">New</span></h4><p>PYQs 2019–2025</p></div></a>
+      <a href="/cutoff-analysis" class="dd-item"><div class="dd-icon"><i class="ti ti-chart-line"></i></div><div class="dd-text"><h4>Cutoff Analysis</h4><p>Historical cutoff trends</p></div></a>
+    </div>
+  </div>
+</div>
+
+<!-- PREPARATION -->
+<div id="mega-prep" class="mega-wrap" role="region" aria-label="Preparation menu"
+  onmouseenter="keepMega('mega-prep')" onmouseleave="closeMega()">
+  <div class="mega-inner">
+    <span class="mega-label">Preparation</span>
+    <div class="mega-grid mega-grid-4">
+      <a href="/roadmap" class="dd-item"><div class="dd-icon"><i class="ti ti-map"></i></div><div class="dd-text"><h4>Study Roadmap</h4><p>Class 10, 11, 12 &amp; dropper</p></div></a>
+      <a href="/roadmap" class="dd-item"><div class="dd-icon"><i class="ti ti-books"></i></div><div class="dd-text"><h4>Books &amp; Resources</h4><p>Best books subject-wise</p></div></a>
+      <a href="/current-affairs" class="dd-item"><div class="dd-icon"><i class="ti ti-news"></i></div><div class="dd-text"><h4>Daily Current Affairs <span class="badge badge-daily">Daily</span></h4><p>Defence &amp; GK updates</p></div></a>
+      <a href="/mock-tests" class="dd-item"><div class="dd-icon"><i class="ti ti-clipboard-list"></i></div><div class="dd-text"><h4>Mock Tests <span class="badge badge-beta">Beta</span></h4><p>Practice full-length tests</p></div></a>
+      <a href="/fitness" class="dd-item"><div class="dd-icon"><i class="ti ti-run"></i></div><div class="dd-text"><h4>Fitness Tracker</h4><p>PT &amp; physical prep guide</p></div></a>
+    </div>
+  </div>
+</div>
+
+<!-- SSB -->
+<div id="mega-ssb" class="mega-wrap" role="region" aria-label="SSB menu"
+  onmouseenter="keepMega('mega-ssb')" onmouseleave="closeMega()">
+  <div class="mega-inner">
+    <span class="mega-label">SSB Interview</span>
+    <div class="mega-grid mega-grid-4">
+      <a href="/ssb" class="dd-item"><div class="dd-icon"><i class="ti ti-calendar"></i></div><div class="dd-text"><h4>SSB Overview</h4><p>5-day selection process</p></div></a>
+      <a href="/ssb/screening" class="dd-item"><div class="dd-icon"><i class="ti ti-brain"></i></div><div class="dd-text"><h4>Screening</h4><p>OIR test &amp; PPDT</p></div></a>
+      <a href="/ssb/psychology" class="dd-item"><div class="dd-icon"><i class="ti ti-mood-smile"></i></div><div class="dd-text"><h4>Psychology Tests</h4><p>TAT, WAT, SRT &amp; SDT</p></div></a>
+      <a href="/ssb/gto" class="dd-item"><div class="dd-icon"><i class="ti ti-users"></i></div><div class="dd-text"><h4>GTO Tasks</h4><p>Group outdoor tasks</p></div></a>
+      <a href="/ssb/personal-interview" class="dd-item"><div class="dd-icon"><i class="ti ti-message"></i></div><div class="dd-text"><h4>Interview</h4><p>Personal interview prep</p></div></a>
+      <a href="/ssb/cpss" class="dd-item"><div class="dd-icon"><i class="ti ti-plane"></i></div><div class="dd-text"><h4>CPSS <span class="badge badge-beta">Pilots</span></h4><p>Pilot aptitude battery</p></div></a>
+      <a href="/medical" class="dd-item"><div class="dd-icon"><i class="ti ti-stethoscope"></i></div><div class="dd-text"><h4>Medical Examination</h4><p>Medical standards &amp; prep</p></div></a>
+    </div>
+  </div>
+</div>
+
+<!-- CAREER -->
+<div id="mega-career" class="mega-wrap" role="region" aria-label="Career menu"
+  onmouseenter="keepMega('mega-career')" onmouseleave="closeMega()">
+  <div class="mega-inner">
+    <span class="mega-label">Career</span>
+    <div class="mega-grid mega-grid-4">
+      <a href="/salary" class="dd-item"><div class="dd-icon"><i class="ti ti-coin"></i></div><div class="dd-text"><h4>Salary &amp; Perks</h4><p>Complete pay breakdown</p></div></a>
+      <a href="/rank-structure" class="dd-item"><div class="dd-icon"><i class="ti ti-award"></i></div><div class="dd-text"><h4>Rank Structure</h4><p>Army, Navy &amp; Air Force</p></div></a>
+      <a href="/training" class="dd-item"><div class="dd-icon"><i class="ti ti-building"></i></div><div class="dd-text"><h4>NDA Training Life</h4><p>3-year academy life</p></div></a>
+      <a href="/success-stories" class="dd-item"><div class="dd-icon"><i class="ti ti-star"></i></div><div class="dd-text"><h4>Success Stories</h4><p>Real aspirant journeys</p></div></a>
+      <a href="/defence-news" class="dd-item"><div class="dd-icon"><i class="ti ti-news"></i></div><div class="dd-text"><h4>Defence News</h4><p>Latest from the forces</p></div></a>
+    </div>
+  </div>
+</div>
+
+<!-- TOOLS -->
+<div id="mega-tools" class="mega-wrap" role="region" aria-label="Tools menu"
+  onmouseenter="keepMega('mega-tools')" onmouseleave="closeMega()">
+  <div class="mega-inner">
+    <span class="mega-label">Quick Tools</span>
+    <div class="mega-grid mega-grid-4">
+      <a href="/rank-predictor" class="dd-item"><div class="dd-icon"><i class="ti ti-chart-bar"></i></div><div class="dd-text"><h4>AIR Rank Predictor <span class="badge badge-live">Live</span></h4><p>Predict rank with UPSC data</p></div></a>
+      <a href="/rank-predictor" class="dd-item"><div class="dd-icon"><i class="ti ti-calculator"></i></div><div class="dd-text"><h4>Marks Calculator</h4><p>Calculate your total score</p></div></a>
+      <a href="/eligibility" class="dd-item"><div class="dd-icon"><i class="ti ti-shield-check"></i></div><div class="dd-text"><h4>Eligibility Checker</h4><p>Quick eligibility check</p></div></a>
+      <a href="/cutoff-analysis" class="dd-item"><div class="dd-icon"><i class="ti ti-trending-up"></i></div><div class="dd-text"><h4>Cutoff Predictor</h4><p>Written cutoff estimator</p></div></a>
+      <a href="/rank-predictor" class="dd-item"><div class="dd-icon"><i class="ti ti-git-branch"></i></div><div class="dd-text"><h4>Branch Predictor</h4><p>Army / Navy / Air Force</p></div></a>
+      <a href="/fitness" class="dd-item"><div class="dd-icon"><i class="ti ti-run"></i></div><div class="dd-text"><h4>Fitness Tracker</h4><p>PT &amp; physical prep guide</p></div></a>
+    </div>
+  </div>
+</div>
 
 <!-- ══════════════════════════════════════
      HERO
@@ -1022,23 +1111,81 @@ export default function HomePage() {
   useEffect(() => {
     if (!containerRef.current) return;
 
-    // Inject the javascript functions into the global window so the inline onclick handlers work
-    (window as any).togNav = function (id: string, btn: HTMLElement) {
-      var dd = document.getElementById(id);
-      if (!dd) return;
-      var isOpen = dd.classList.contains('show');
-      document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('show'));
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('open'));
-      if (!isOpen) { dd.classList.add('show'); btn.classList.add('open'); }
+    // Mega-menu open/close with hover + keyboard
+    let closeTimer: ReturnType<typeof setTimeout> | null = null;
+    let currentMega: string | null = null;
+
+    (window as any).openMega = function(id: string, btn: HTMLElement) {
+      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+      if (currentMega && currentMega !== id) {
+        const prev = document.getElementById(currentMega);
+        if (prev) prev.classList.remove('show');
+        document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('open'); (b as HTMLElement).setAttribute('aria-expanded','false'); });
+      }
+      const panel = document.getElementById(id);
+      if (panel) { panel.classList.add('show'); }
+      btn.classList.add('open');
+      btn.setAttribute('aria-expanded', 'true');
+      currentMega = id;
     };
 
-    const handleOutsideClick = function (e: MouseEvent) {
-      if (!(e.target as Element).closest('.nav-item')) {
-        document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('show'));
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('open'));
+    (window as any).keepMega = function(id: string) {
+      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+      currentMega = id;
+    };
+
+    (window as any).closeMega = function() {
+      closeTimer = setTimeout(() => {
+        document.querySelectorAll('.mega-wrap').forEach(p => p.classList.remove('show'));
+        document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('open'); (b as HTMLElement).setAttribute('aria-expanded','false'); });
+        currentMega = null;
+      }, 120);
+    };
+
+    (window as any).handleNavKey = function(e: KeyboardEvent, id: string, btn: HTMLElement) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const panel = document.getElementById(id);
+        if (!panel) return;
+        const isOpen = panel.classList.contains('show');
+        document.querySelectorAll('.mega-wrap').forEach(p => p.classList.remove('show'));
+        document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('open'); (b as HTMLElement).setAttribute('aria-expanded','false'); });
+        if (!isOpen) { panel.classList.add('show'); btn.classList.add('open'); btn.setAttribute('aria-expanded','true'); currentMega = id; }
+        else { currentMega = null; }
+      }
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.mega-wrap').forEach(p => p.classList.remove('show'));
+        document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('open'); (b as HTMLElement).setAttribute('aria-expanded','false'); });
+        currentMega = null;
+        btn.focus();
+      }
+    };
+
+    // Add mouseleave to each nav-btn too so leaving button starts the close timer
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      (btn as HTMLElement).addEventListener('mouseleave', (window as any).closeMega);
+    });
+
+    // Close on outside click
+    const handleOutsideClick = function(e: MouseEvent) {
+      const target = e.target as Element;
+      if (!target.closest('.nav-btn') && !target.closest('.mega-wrap')) {
+        document.querySelectorAll('.mega-wrap').forEach(p => p.classList.remove('show'));
+        document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('open'); (b as HTMLElement).setAttribute('aria-expanded','false'); });
+        currentMega = null;
       }
     };
     document.addEventListener('click', handleOutsideClick);
+
+    // Escape closes from anywhere
+    const handleEsc = function(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.mega-wrap').forEach(p => p.classList.remove('show'));
+        document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('open'); (b as HTMLElement).setAttribute('aria-expanded','false'); });
+        currentMega = null;
+      }
+    };
+    document.addEventListener('keydown', handleEsc);
 
     (window as any).faqToggle = function (btn: HTMLElement) {
       var fa = btn.nextElementSibling as HTMLElement;
@@ -1075,7 +1222,9 @@ export default function HomePage() {
 
     return () => {
       document.removeEventListener('click', handleOutsideClick);
+      document.removeEventListener('keydown', handleEsc);
       obs.disconnect();
+      if (closeTimer) clearTimeout(closeTimer);
     };
   }, []);
 
