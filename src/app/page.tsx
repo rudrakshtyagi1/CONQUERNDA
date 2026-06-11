@@ -120,9 +120,10 @@ nav{
   z-index:199;
   opacity:0;pointer-events:none;
   transform:translateY(-8px);
-  transition:opacity .15s ease,transform .15s ease;
+  visibility:hidden;
+  transition:opacity .15s ease,transform .15s ease,visibility .15s ease;
 }
-.mega-wrap.show{opacity:1;pointer-events:all;transform:translateY(0)}
+.mega-wrap.show{opacity:1;pointer-events:all;transform:translateY(0);visibility:visible}
 .mega-inner{max-width:1200px;margin:0 auto;padding:28px 36px 24px;}
 .mega-label{
   font-size:10px;font-weight:700;letter-spacing:.14em;
@@ -162,11 +163,12 @@ nav{
   display:flex;align-items:center;gap:7px;
   background:#F9FAFB;border:1px solid #E5E7EB;
   border-radius:20px;padding:7px 16px;
-  font-size:12px;color:#6B7280;cursor:pointer;
+  font-size:12px;color:#6B7280;cursor:text;
   transition:border .15s,background .15s;font-family:'Inter',sans-serif;
 }
-.nav-search:hover{border-color:#93C5FD;background:white}
+.nav-search:focus-within{border-color:#93C5FD;background:white}
 .nav-search i{font-size:13px}
+.nav-search input{border:none;background:transparent;outline:none;font-family:inherit;font-size:inherit;color:inherit;width:140px}
 .nav-cta{background:var(--blue);color:white;padding:8px 22px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .2s;font-family:'Inter',sans-serif;letter-spacing:-0.01em}
 .nav-cta:hover{background:#1D4ED8;transform:translateY(-1px)}
 
@@ -522,7 +524,10 @@ footer{background:var(--text);padding:56px 36px 30px}
   </div>
 
   <div class="nav-right">
-    <div class="nav-search" tabindex="0"><i class="ti ti-search" aria-hidden="true"></i> Search…</div>
+    <div class="nav-search">
+      <i class="ti ti-search" aria-hidden="true"></i>
+      <input type="text" placeholder="Search exams..." />
+    </div>
     <button class="nav-cta">Start Free</button>
   </div>
 </nav>

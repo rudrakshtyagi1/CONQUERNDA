@@ -6,7 +6,7 @@ export default function WhatIsNDA() {
     <div className="min-h-screen bg-surface font-['DM_Sans',sans-serif]">
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-[#1565C0] to-[#0D47A1] text-white py-20 px-6 relative before:absolute before:inset-x-0 before:top-0 before:h-1 before:bg-[#FFB300]">
-        <div className="max-w-[1080px] mx-auto">
+        <div className="max-w-[1200px] mx-auto">
           <Link href="/" className="text-[#E8F2FF] hover:text-white mb-6 inline-block text-sm font-medium transition-colors">
             ← Back to ConquerNDA
           </Link>
@@ -17,10 +17,10 @@ export default function WhatIsNDA() {
         </div>
       </div>
 
-      <div className="max-w-[1080px] mx-auto px-6 py-16 space-y-12 text-[#0D1B2A]">
+      <div className="max-w-[1200px] mx-auto px-6 py-16 space-y-12 text-[#0D1B2A]">
         {/* Overview & Key Facts */}
-        <div className="grid md:grid-cols-3 gap-8">
-          <div className="md:col-span-2 space-y-6 bg-white p-8 rounded-2xl border border-[#C5D8F5] shadow-sm">
+        <div className="grid md:grid-cols-4 gap-8">
+          <div className="md:col-span-3 space-y-6 bg-white p-10 rounded-2xl border border-[#C5D8F5] shadow-sm">
             <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#1565C0] mb-2">Overview</div>
             <h2 className="font-['Bebas_Neue',sans-serif] text-3xl text-[#1565C0] tracking-wide">The Ultimate Training Ground</h2>
             <p className="text-[#455A7A] leading-relaxed">
@@ -31,7 +31,7 @@ export default function WhatIsNDA() {
             </p>
           </div>
 
-          <div className="bg-[#E8F2FF] p-8 rounded-2xl border border-[#C5D8F5] shadow-sm flex flex-col justify-center space-y-6">
+          <div className="md:col-span-1 bg-[#E8F2FF] p-8 rounded-2xl border border-[#C5D8F5] shadow-sm flex flex-col justify-center space-y-8">
             <div>
               <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#1565C0] mb-1">Duration</div>
               <div className="text-2xl font-bold text-[#0D1B2A]">3 Years</div>
@@ -52,7 +52,7 @@ export default function WhatIsNDA() {
         </div>
 
         {/* History & Legacy */}
-        <div className="bg-white p-8 rounded-2xl border border-[#C5D8F5] shadow-sm">
+        <div className="bg-white p-10 rounded-2xl border border-[#C5D8F5] shadow-sm">
           <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#1565C0] mb-2">History & Legacy</div>
           <h2 className="font-['Bebas_Neue',sans-serif] text-3xl text-[#1565C0] tracking-wide mb-4">A Tradition of Valour</h2>
           <p className="text-[#455A7A] leading-relaxed mb-4">
