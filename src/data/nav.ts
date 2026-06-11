@@ -26,7 +26,7 @@ export const NAV_GROUPS: NavGroup[] = [
       { id: 'eligibility', label: 'Eligibility', icon: 'CheckCircle', href: '/eligibility', desc: 'Age, education & physical standards' },
       { id: 'exam-pattern', label: 'Exam Pattern', icon: 'FileText', href: '/exam-pattern', desc: 'Papers, marking & cutoffs' },
       { id: 'syllabus', label: 'Syllabus', icon: 'BookMarked', href: '/syllabus', desc: 'Topic-wise complete syllabus' },
-      { id: 'previous-year-papers', label: 'Previous Year Papers', icon: 'Archive', href: '/previous-year-papers', badge: 'NEW', desc: 'PYQs 2019–2025' },
+      { id: 'previous-year-papers', label: 'Previous Year Papers', icon: 'Archive', href: '/previous-year-papers', badge: 'NEW', desc: 'PYQs 2019–2026' },
       { id: 'cutoff-analysis', label: 'Cutoff Analysis', icon: 'TrendingUp', href: '/cutoff-analysis', desc: 'Historical cutoff trends' },
     ],
   },

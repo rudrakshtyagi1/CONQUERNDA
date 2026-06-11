@@ -546,7 +546,7 @@ footer{background:var(--text);padding:56px 36px 30px}
       <a href="/eligibility" class="dd-item"><div class="dd-icon"><i class="ti ti-shield-check"></i></div><div class="dd-text"><h4>Eligibility</h4><p>Age, education &amp; physical</p></div></a>
       <a href="/exam-pattern" class="dd-item"><div class="dd-icon"><i class="ti ti-file-description"></i></div><div class="dd-text"><h4>Exam Pattern</h4><p>Papers, marking &amp; cutoffs</p></div></a>
       <a href="/syllabus" class="dd-item"><div class="dd-icon"><i class="ti ti-book"></i></div><div class="dd-text"><h4>Syllabus</h4><p>Topic-wise complete guide</p></div></a>
-      <a href="/previous-year-papers" class="dd-item"><div class="dd-icon"><i class="ti ti-history"></i></div><div class="dd-text"><h4>Previous Papers <span class="badge badge-new">New</span></h4><p>PYQs 2019–2025</p></div></a>
+      <a href="/previous-year-papers" class="dd-item"><div class="dd-icon"><i class="ti ti-history"></i></div><div class="dd-text"><h4>Previous Papers <span class="badge badge-new">New</span></h4><p>PYQs 2019–2026</p></div></a>
       <a href="/cutoff-analysis" class="dd-item"><div class="dd-icon"><i class="ti ti-chart-line"></i></div><div class="dd-text"><h4>Cutoff Analysis</h4><p>Historical cutoff trends</p></div></a>
     </div>
   </div>
