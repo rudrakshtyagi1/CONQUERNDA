@@ -8,7 +8,7 @@ const salaryData = [
   { rank: 'Major / Cdr / Sqn Ldr', period: '6–13 Years', pay: '₹69,400 – ₹2,07,200', level: 11, pct: 55, color: '#1E88E5' },
   { rank: 'Lt Colonel / Capt / Wg Cdr', period: '13–26 Years', pay: '₹1,21,200 – ₹2,12,400', level: 12, pct: 68, color: '#1976D2' },
   { rank: 'Colonel / Commodore / Gp Capt', period: '26+ Years', pay: '₹1,30,600 – ₹2,15,900', level: 13, pct: 80, color: '#1565C0' },
-  { rank: 'Brigadier / RAdm / AVM', period: 'Senior Level', pay: '₹1,39,600 – ₹2,17,600', level: 13A, pct: 90, color: '#0D47A1' },
+  { rank: 'Brigadier / RAdm / AVM', period: 'Senior Level', pay: '₹1,39,600 – ₹2,17,600', level: '13A', pct: 90, color: '#0D47A1' },
   { rank: 'Major General / VAdm / AirMshl', period: 'Flag/General Officer', pay: '₹1,44,200 – ₹2,18,200', level: 14, pct: 95, color: '#0D47A1' },
 ];
 

@@ -482,7 +482,7 @@ footer{background:var(--text);padding:56px 36px 30px}
         <a href="/ssb/gto" class="dd-item"><div class="dd-icon"><i class="ti ti-users"></i></div><div class="dd-text"><h4>GTO Tasks</h4><p>Group outdoor tasks</p></div></a>
         <a href="/ssb/personal-interview" class="dd-item"><div class="dd-icon"><i class="ti ti-message"></i></div><div class="dd-text"><h4>Interview</h4><p>Personal interview prep</p></div></a>
         <div class="dd-item"><div class="dd-icon"><i class="ti ti-plane"></i></div><div class="dd-text"><h4>CPSS <span class="badge badge-beta">For Pilots</span></h4><p>Pilot aptitude battery</p></div></div>
-        <div class="dd-item"><div class="dd-icon"><i class="ti ti-stethoscope"></i></div><div class="dd-text"><h4>Medical Examination</h4><p>Medical standards & prep</p></div></div>
+        <a href="/medical" class="dd-item"><div class="dd-icon"><i class="ti ti-stethoscope"></i></div><div class="dd-text"><h4>Medical Examination</h4><p>Medical standards & prep</p></div></a>
       </div>
     </div>
 
@@ -576,42 +576,42 @@ footer{background:var(--text);padding:56px 36px 30px}
   <div class="stitle">Powerful Tools at Your Fingertips</div>
   <div class="ssub">Data-driven tools built with real UPSC data to plan your NDA journey.</div>
   <div class="tools-grid">
-    <div class="tcard">
+    <a href="/rank-predictor" class="tcard">
       <div class="ticon b"><i class="ti ti-chart-line" style="color:var(--blue)"></i></div>
       <div class="tcard-top"><span class="tname">AIR Rank Predictor</span><span class="badge badge-live">Live</span></div>
       <div class="tdesc">Predict your All India Rank using verified UPSC data and real candidate scores.</div>
       <i class="ti ti-arrow-right t-arrow"></i>
-    </div>
-    <div class="tcard">
+    </a>
+    <a href="/rank-predictor" class="tcard">
       <div class="ticon g"><i class="ti ti-calculator" style="color:var(--green)"></i></div>
       <div class="tcard-top"><span class="tname">Marks Calculator</span></div>
       <div class="tdesc">Calculate your total NDA score instantly with the correct marking scheme applied.</div>
       <i class="ti ti-arrow-right t-arrow"></i>
-    </div>
-    <div class="tcard">
+    </a>
+    <a href="/eligibility" class="tcard">
       <div class="ticon a"><i class="ti ti-shield-check" style="color:#E65100"></i></div>
       <div class="tcard-top"><span class="tname">Eligibility Checker</span></div>
       <div class="tdesc">Check if you qualify for NDA based on age, education, and physical standards.</div>
       <i class="ti ti-arrow-right t-arrow"></i>
-    </div>
-    <div class="tcard">
+    </a>
+    <a href="/cutoff-analysis" class="tcard">
       <div class="ticon p"><i class="ti ti-trending-up" style="color:#7B1FA2"></i></div>
       <div class="tcard-top"><span class="tname">Cutoff Predictor</span></div>
       <div class="tdesc">Estimate written cutoff chances based on historical trends across 10 exam datasets.</div>
       <i class="ti ti-arrow-right t-arrow"></i>
-    </div>
-    <div class="tcard">
+    </a>
+    <a href="/rank-predictor" class="tcard">
       <div class="ticon t"><i class="ti ti-git-branch" style="color:#00695C"></i></div>
       <div class="tcard-top"><span class="tname">Branch Predictor</span></div>
       <div class="tdesc">Predict your chances of Army, Navy, or Air Force based on your rank and preferences.</div>
       <i class="ti ti-arrow-right t-arrow"></i>
-    </div>
-    <div class="tcard">
+    </a>
+    <a href="/fitness" class="tcard">
       <div class="ticon r"><i class="ti ti-run" style="color:var(--red)"></i></div>
       <div class="tcard-top"><span class="tname">Fitness Tracker</span></div>
       <div class="tdesc">Track your physical preparation for the NDA medical and SSB fitness requirements.</div>
       <i class="ti ti-arrow-right t-arrow"></i>
-    </div>
+    </a>
   </div>
 </div></div></div>
 
@@ -693,7 +693,7 @@ footer{background:var(--text);padding:56px 36px 30px}
     </div>
   </div>
   <div class="ssb-cta">
-    <button class="btn-ghost">View Complete SSB Guide <i class="ti ti-arrow-right"></i></button>
+    <a href="/ssb" class="btn-ghost">View Complete SSB Guide <i class="ti ti-arrow-right"></i></a>
   </div>
 </div></div></div>
 

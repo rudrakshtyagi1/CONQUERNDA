@@ -140,6 +140,28 @@ export function Gauge({ value, max = 100, label, color = 'var(--blue)', size = 1
 
 export const Card = GlassCard;
 
+/* ===== COMING SOON ===== */
+export function ComingSoon({ section }: { section: string }) {
+  return (
+    <div className="min-h-screen bg-[#F4F8FF] font-['DM_Sans',sans-serif] flex items-center justify-center px-6">
+      <div className="text-center max-w-md">
+        <div className="w-20 h-20 bg-[#E8F2FF] rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg className="w-10 h-10 text-[#1565C0]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6l4 2m6-2a10 10 0 11-20 0 10 10 0 0120 0z" />
+          </svg>
+        </div>
+        <h1 className="font-['Bebas_Neue',sans-serif] text-5xl text-[#1565C0] tracking-wide mb-3">{section}</h1>
+        <p className="text-[16px] text-[#455A7A] mb-6 leading-relaxed">
+          This section is under construction. We&apos;re working hard to bring you comprehensive content soon.
+        </p>
+        <a href="/" className="inline-flex items-center gap-2 bg-[#1565C0] text-white px-6 py-3 rounded-xl font-semibold text-[14px] hover:bg-[#1976D2] transition-colors">
+          ← Back to Home
+        </a>
+      </div>
+    </div>
+  );
+}
+
 /* ===== HORIZONTAL CAROUSEL ===== */
 export function HorizontalCarousel({ children }: { children: React.ReactNode }) {
   const scrollRef = useRef<HTMLDivElement>(null);
