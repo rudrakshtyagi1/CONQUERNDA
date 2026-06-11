@@ -447,10 +447,10 @@ footer{background:var(--text);padding:56px 36px 30px}
         NDA Exam <i class="ti ti-chevron-down chev"></i>
       </button>
       <div class="dropdown" id="dd-exam">
-        <div class="dd-item"><div class="dd-icon"><i class="ti ti-info-circle"></i></div><div class="dd-text"><h4>What is NDA</h4><p>Overview, history & wings</p></div></div>
-        <div class="dd-item"><div class="dd-icon"><i class="ti ti-shield-check"></i></div><div class="dd-text"><h4>Eligibility</h4><p>Age, education & physical</p></div></div>
-        <div class="dd-item"><div class="dd-icon"><i class="ti ti-file-description"></i></div><div class="dd-text"><h4>Exam Pattern</h4><p>Papers, marking & cutoffs</p></div></div>
-        <div class="dd-item"><div class="dd-icon"><i class="ti ti-book"></i></div><div class="dd-text"><h4>Syllabus</h4><p>Topic-wise complete guide</p></div></div>
+        <a href="/what-is-nda" class="dd-item"><div class="dd-icon"><i class="ti ti-info-circle"></i></div><div class="dd-text"><h4>What is NDA</h4><p>Overview, history & wings</p></div></a>
+        <a href="/eligibility" class="dd-item"><div class="dd-icon"><i class="ti ti-shield-check"></i></div><div class="dd-text"><h4>Eligibility</h4><p>Age, education & physical</p></div></a>
+        <a href="/exam-pattern" class="dd-item"><div class="dd-icon"><i class="ti ti-file-description"></i></div><div class="dd-text"><h4>Exam Pattern</h4><p>Papers, marking & cutoffs</p></div></a>
+        <a href="/syllabus" class="dd-item"><div class="dd-icon"><i class="ti ti-book"></i></div><div class="dd-text"><h4>Syllabus</h4><p>Topic-wise complete guide</p></div></a>
         <div class="dd-item"><div class="dd-icon"><i class="ti ti-history"></i></div><div class="dd-text"><h4>Previous Papers <span class="badge badge-new">New</span></h4><p>PYQs 2019–2025</p></div></div>
         <div class="dd-item"><div class="dd-icon"><i class="ti ti-chart-line"></i></div><div class="dd-text"><h4>Cutoff Analysis</h4><p>Historical cutoff trends</p></div></div>
       </div>
@@ -462,11 +462,11 @@ footer{background:var(--text);padding:56px 36px 30px}
         Preparation <i class="ti ti-chevron-down chev"></i>
       </button>
       <div class="dropdown" id="dd-prep">
-        <div class="dd-item"><div class="dd-icon"><i class="ti ti-map"></i></div><div class="dd-text"><h4>Study Roadmap</h4><p>Class 10, 11, 12 & dropper plans</p></div></div>
+        <a href="/roadmap" class="dd-item"><div class="dd-icon"><i class="ti ti-map"></i></div><div class="dd-text"><h4>Study Roadmap</h4><p>Class 10, 11, 12 & dropper plans</p></div></a>
         <div class="dd-item"><div class="dd-icon"><i class="ti ti-books"></i></div><div class="dd-text"><h4>Books & Resources</h4><p>Best books subject-wise</p></div></div>
-        <div class="dd-item"><div class="dd-icon"><i class="ti ti-news"></i></div><div class="dd-text"><h4>Daily Current Affairs <span class="badge badge-daily">Daily</span></h4><p>Defence & GK updates</p></div></div>
+        <a href="/current-affairs" class="dd-item"><div class="dd-icon"><i class="ti ti-news"></i></div><div class="dd-text"><h4>Daily Current Affairs <span class="badge badge-daily">Daily</span></h4><p>Defence & GK updates</p></div></a>
         <div class="dd-item"><div class="dd-icon"><i class="ti ti-clipboard-list"></i></div><div class="dd-text"><h4>Mock Tests <span class="badge badge-beta">Beta</span></h4><p>Practice full-length tests</p></div></div>
-        <div class="dd-item"><div class="dd-icon"><i class="ti ti-run"></i></div><div class="dd-text"><h4>Fitness Tracker</h4><p>PT & physical prep guide</p></div></div>
+        <a href="/fitness" class="dd-item"><div class="dd-icon"><i class="ti ti-run"></i></div><div class="dd-text"><h4>Fitness Tracker</h4><p>PT & physical prep guide</p></div></a>
       </div>
     </div>
 
@@ -476,11 +476,11 @@ footer{background:var(--text);padding:56px 36px 30px}
         SSB <i class="ti ti-chevron-down chev"></i>
       </button>
       <div class="dropdown" id="dd-ssb" style="min-width:520px">
-        <div class="dd-item"><div class="dd-icon"><i class="ti ti-calendar"></i></div><div class="dd-text"><h4>SSB Overview</h4><p>5-day selection process</p></div></div>
-        <div class="dd-item"><div class="dd-icon"><i class="ti ti-brain"></i></div><div class="dd-text"><h4>Screening</h4><p>OIR test & PPDT</p></div></div>
-        <div class="dd-item"><div class="dd-icon"><i class="ti ti-mood-smile"></i></div><div class="dd-text"><h4>Psychology Tests</h4><p>TAT, WAT, SRT & SDT</p></div></div>
-        <div class="dd-item"><div class="dd-icon"><i class="ti ti-users"></i></div><div class="dd-text"><h4>GTO Tasks</h4><p>Group outdoor tasks</p></div></div>
-        <div class="dd-item"><div class="dd-icon"><i class="ti ti-message"></i></div><div class="dd-text"><h4>Interview</h4><p>Personal interview prep</p></div></div>
+        <a href="/ssb" class="dd-item"><div class="dd-icon"><i class="ti ti-calendar"></i></div><div class="dd-text"><h4>SSB Overview</h4><p>5-day selection process</p></div></a>
+        <a href="/ssb/screening" class="dd-item"><div class="dd-icon"><i class="ti ti-brain"></i></div><div class="dd-text"><h4>Screening</h4><p>OIR test & PPDT</p></div></a>
+        <a href="/ssb/psychology" class="dd-item"><div class="dd-icon"><i class="ti ti-mood-smile"></i></div><div class="dd-text"><h4>Psychology Tests</h4><p>TAT, WAT, SRT & SDT</p></div></a>
+        <a href="/ssb/gto" class="dd-item"><div class="dd-icon"><i class="ti ti-users"></i></div><div class="dd-text"><h4>GTO Tasks</h4><p>Group outdoor tasks</p></div></a>
+        <a href="/ssb/personal-interview" class="dd-item"><div class="dd-icon"><i class="ti ti-message"></i></div><div class="dd-text"><h4>Interview</h4><p>Personal interview prep</p></div></a>
         <div class="dd-item"><div class="dd-icon"><i class="ti ti-plane"></i></div><div class="dd-text"><h4>CPSS <span class="badge badge-beta">For Pilots</span></h4><p>Pilot aptitude battery</p></div></div>
         <div class="dd-item"><div class="dd-icon"><i class="ti ti-stethoscope"></i></div><div class="dd-text"><h4>Medical Examination</h4><p>Medical standards & prep</p></div></div>
       </div>
@@ -492,11 +492,11 @@ footer{background:var(--text);padding:56px 36px 30px}
         Career <i class="ti ti-chevron-down chev"></i>
       </button>
       <div class="dropdown" id="dd-car" style="min-width:460px">
-        <div class="dd-item"><div class="dd-icon"><i class="ti ti-coin"></i></div><div class="dd-text"><h4>Salary & Perks</h4><p>Complete pay breakdown</p></div></div>
-        <div class="dd-item"><div class="dd-icon"><i class="ti ti-award"></i></div><div class="dd-text"><h4>Rank Structure</h4><p>Army, Navy & Air Force</p></div></div>
-        <div class="dd-item"><div class="dd-icon"><i class="ti ti-building"></i></div><div class="dd-text"><h4>NDA Training Life</h4><p>3-year academy life</p></div></div>
-        <div class="dd-item"><div class="dd-icon"><i class="ti ti-star"></i></div><div class="dd-text"><h4>Success Stories</h4><p>Real aspirant journeys</p></div></div>
-        <div class="dd-item"><div class="dd-icon"><i class="ti ti-news"></i></div><div class="dd-text"><h4>Defence News</h4><p>Latest from the forces</p></div></div>
+        <a href="/salary" class="dd-item"><div class="dd-icon"><i class="ti ti-coin"></i></div><div class="dd-text"><h4>Salary & Perks</h4><p>Complete pay breakdown</p></div></a>
+        <a href="/rank-structure" class="dd-item"><div class="dd-icon"><i class="ti ti-award"></i></div><div class="dd-text"><h4>Rank Structure</h4><p>Army, Navy & Air Force</p></div></a>
+        <a href="/training" class="dd-item"><div class="dd-icon"><i class="ti ti-building"></i></div><div class="dd-text"><h4>NDA Training Life</h4><p>3-year academy life</p></div></a>
+        <a href="/success-stories" class="dd-item"><div class="dd-icon"><i class="ti ti-star"></i></div><div class="dd-text"><h4>Success Stories</h4><p>Real aspirant journeys</p></div></a>
+        <a href="/defence-news" class="dd-item"><div class="dd-icon"><i class="ti ti-news"></i></div><div class="dd-text"><h4>Defence News</h4><p>Latest from the forces</p></div></a>
       </div>
     </div>
 
@@ -506,10 +506,10 @@ footer{background:var(--text);padding:56px 36px 30px}
         Tools <i class="ti ti-chevron-down chev"></i>
       </button>
       <div class="dropdown" id="dd-tools" style="min-width:520px">
-        <div class="dd-item"><div class="dd-icon"><i class="ti ti-chart-bar"></i></div><div class="dd-text"><h4>AIR Rank Predictor <span class="badge badge-live">Live</span></h4><p>Predict rank with UPSC data</p></div></div>
+        <a href="/rank-predictor" class="dd-item"><div class="dd-icon"><i class="ti ti-chart-bar"></i></div><div class="dd-text"><h4>AIR Rank Predictor <span class="badge badge-live">Live</span></h4><p>Predict rank with UPSC data</p></div></a>
         <div class="dd-item"><div class="dd-icon"><i class="ti ti-calculator"></i></div><div class="dd-text"><h4>Marks Calculator</h4><p>Calculate your total score</p></div></div>
-        <div class="dd-item"><div class="dd-icon"><i class="ti ti-shield-check"></i></div><div class="dd-text"><h4>Eligibility Checker</h4><p>Quick eligibility check</p></div></div>
-        <div class="dd-item"><div class="dd-icon"><i class="ti ti-trending-up"></i></div><div class="dd-text"><h4>Cutoff Predictor</h4><p>Written cutoff estimator</p></div></div>
+        <a href="/eligibility" class="dd-item"><div class="dd-icon"><i class="ti ti-shield-check"></i></div><div class="dd-text"><h4>Eligibility Checker</h4><p>Quick eligibility check</p></div></a>
+        <a href="/cutoff-analysis" class="dd-item"><div class="dd-icon"><i class="ti ti-trending-up"></i></div><div class="dd-text"><h4>Cutoff Predictor</h4><p>Written cutoff estimator</p></div></a>
         <div class="dd-item"><div class="dd-icon"><i class="ti ti-git-branch"></i></div><div class="dd-text"><h4>Branch Predictor</h4><p>Army / Navy / Air Force</p></div></div>
       </div>
     </div>
