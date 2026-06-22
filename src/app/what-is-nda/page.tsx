@@ -1,112 +1,197 @@
 'use client';
 import Link from 'next/link';
 
+const stats = [
+  { icon: '⏱', label: 'Duration', value: '3 Years' },
+  { icon: '🎯', label: 'Intake per cycle', value: '~400 seats' },
+  { icon: '📅', label: 'Established', value: '1954' },
+  { icon: '📍', label: 'Location', value: 'Khadakwasla, Pune' },
+];
+
+const wings = [
+  {
+    name: 'Army Wing',
+    color: '#16A34A',
+    bg: '#F0FDF4',
+    border: '#BBF7D0',
+    emoji: '🪖',
+    desc: 'Trains cadets for branches like Infantry, Armoured Corps, and Artillery. Focused on ground combat tactics, weapon handling, and physical endurance.',
+    postLabel: 'Post-NDA training',
+    postValue: 'Indian Military Academy (IMA), Dehradun',
+  },
+  {
+    name: 'Navy Wing',
+    color: '#1D4ED8',
+    bg: '#EFF6FF',
+    border: '#BFDBFE',
+    emoji: '⚓',
+    desc: 'Prepares cadets for roles as Surface, Submarine, or Aviation officers. Training covers navigation, seamanship, and watermanship.',
+    postLabel: 'Post-NDA training',
+    postValue: 'Indian Naval Academy (INA), Ezhimala',
+  },
+  {
+    name: 'Air Force Wing',
+    color: '#0891B2',
+    bg: '#ECFEFF',
+    border: '#A5F3FC',
+    emoji: '✈️',
+    desc: 'Develops future Fighter, Transport, and Helicopter pilots. Cadets study aerodynamics, meteorology, and basic aviation concepts.',
+    postLabel: 'Post-NDA training',
+    postValue: 'Air Force Academy (AFA), Hyderabad',
+  },
+];
+
 export default function WhatIsNDA() {
   return (
-    <div className="min-h-screen bg-surface font-['DM_Sans',sans-serif]">
-      {/* Hero Section */}
-      <div className="bg-gradient-to-br from-[#1565C0] to-[#0D47A1] text-white py-20 px-6 relative before:absolute before:inset-x-0 before:top-0 before:h-1 before:bg-[#FFB300]">
-        <div className="max-w-[1200px] mx-auto">
-          <Link href="/" className="text-[#E8F2FF] hover:text-white mb-6 inline-block text-sm font-medium transition-colors">
+    <div style={{ fontFamily: "'Inter', 'DM Sans', sans-serif", background: '#F7F8FC', color: '#1A1A2E', minHeight: '100vh' }}>
+
+      {/* ── 1. HERO ────────────────────────────────────────────── */}
+      <section style={{ background: '#0F1B5C', minHeight: 340, display: 'flex', alignItems: 'center', overflow: 'visible', padding: '72px 24px' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', width: '100%' }}>
+          <Link href="/" style={{ color: 'rgba(255,255,255,0.55)', fontSize: 13, fontWeight: 500, textDecoration: 'none', display: 'inline-block', marginBottom: 24, letterSpacing: '0.01em' }}>
             ← Back to ConquerNDA
           </Link>
-          <h1 className="font-['Bebas_Neue',sans-serif] text-5xl md:text-7xl mb-4 tracking-wide">What is NDA?</h1>
-          <p className="text-xl md:text-2xl text-[#E8F2FF] max-w-2xl font-light">
-            The National Defence Academy — The cradle of military leadership and the world's first tri-service academy.
-          </p>
-        </div>
-      </div>
 
-      <div className="max-w-[1200px] mx-auto px-6 py-16 space-y-12 text-[#0D1B2A]">
-        {/* Overview & Key Facts */}
-        <div className="grid md:grid-cols-4 gap-8">
-          <div className="md:col-span-3 space-y-6 bg-white p-10 rounded-2xl border border-[#C5D8F5] shadow-sm">
-            <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#1565C0] mb-2">Overview</div>
-            <h2 className="font-['Bebas_Neue',sans-serif] text-3xl text-[#1565C0] tracking-wide">The Ultimate Training Ground</h2>
-            <p className="text-[#455A7A] leading-relaxed">
-              Established in 1954 and located in Khadakwasla, Pune, the National Defence Academy (NDA) is the Joint Services academy of the Indian Armed Forces. Here, cadets of the three services—the Army, the Navy, and the Air Force—train together before they go on to pre-commissioning training in their respective service academies.
+          <div style={{ display: 'flex', gap: 48, alignItems: 'center', flexWrap: 'wrap' }}>
+            {/* Left: heading + sub */}
+            <div style={{ flex: '1 1 400px', minWidth: 280 }}>
+              <h1 style={{ fontSize: 'clamp(38px, 6vw, 56px)', fontWeight: 700, color: '#ffffff', margin: '0 0 16px', lineHeight: 1.15, letterSpacing: '-0.02em' }}>
+                What is NDA?
+              </h1>
+              <p style={{ fontSize: 18, color: 'rgba(255,255,255,0.65)', maxWidth: 520, lineHeight: 1.7, margin: 0 }}>
+                The National Defence Academy — India's cradle of military leadership and the world's first tri-service academy.
+              </p>
+            </div>
+
+            {/* Right: 2×2 stat grid */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, flex: '0 0 auto', width: 'min(380px, 100%)' }}>
+              {stats.map(s => (
+                <div key={s.label} style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 14, padding: '18px 20px', backdropFilter: 'blur(8px)' }}>
+                  <div style={{ fontSize: 20, marginBottom: 6 }}>{s.icon}</div>
+                  <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', fontWeight: 500, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>{s.label}</div>
+                  <div style={{ fontSize: 20, fontWeight: 700, color: '#fff' }}>{s.value}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 2. OVERVIEW ────────────────────────────────────────── */}
+      <section style={{ background: '#ffffff', padding: '80px 24px' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', gap: 48, flexWrap: 'wrap', alignItems: 'flex-start' }}>
+          {/* Left: body copy */}
+          <div style={{ flex: '1 1 500px', minWidth: 280 }}>
+            <p style={{ fontSize: 12, fontWeight: 500, color: '#6B7280', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 12 }}>Overview</p>
+            <h2 style={{ fontSize: 'clamp(26px, 4vw, 34px)', fontWeight: 700, color: '#1D3FAB', margin: '0 0 24px', letterSpacing: '-0.02em', lineHeight: 1.25 }}>
+              The ultimate training ground
+            </h2>
+            <p style={{ fontSize: 16, color: '#374151', lineHeight: 1.8, marginBottom: 18 }}>
+              Established in 1954 and located in Khadakwasla, Pune, the National Defence Academy is the Joint Services academy of the Indian Armed Forces. Here, cadets of the three services — the Army, the Navy, and the Air Force — train together before going on to pre-commissioning training at their respective service academies.
             </p>
-            <p className="text-[#455A7A] leading-relaxed">
-              The NDA offers a rigorous 3-year training program encompassing academics, physical fitness, and military leadership. Out of lakhs of applicants, only around 400 are selected per cycle, making it one of the most competitive academies globally.
+            <p style={{ fontSize: 16, color: '#374151', lineHeight: 1.8 }}>
+              The NDA offers a rigorous 3-year training program encompassing academics, physical fitness, and military leadership. Out of lakhs of applicants, only around 400 are selected per cycle, making it one of the most competitive academies in the world.
             </p>
           </div>
 
-          <div className="md:col-span-1 bg-[#E8F2FF] p-8 rounded-2xl border border-[#C5D8F5] shadow-sm flex flex-col justify-center space-y-8">
-            <div>
-              <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#1565C0] mb-1">Duration</div>
-              <div className="text-2xl font-bold text-[#0D1B2A]">3 Years</div>
-            </div>
-            <div>
-              <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#1565C0] mb-1">Intake</div>
-              <div className="text-2xl font-bold text-[#0D1B2A]">~400 Seats / Cycle</div>
-            </div>
-            <div>
-              <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#1565C0] mb-1">Established</div>
-              <div className="text-2xl font-bold text-[#0D1B2A]">1954</div>
-            </div>
-            <div>
-              <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#1565C0] mb-1">Location</div>
-              <div className="text-2xl font-bold text-[#0D1B2A]">Khadakwasla, Pune</div>
-            </div>
+          {/* Right: Quick Facts card */}
+          <div style={{ flex: '0 1 280px', minWidth: 240, background: '#F7F8FC', borderRadius: 16, padding: 28, borderLeft: '4px solid #D4900A' }}>
+            <p style={{ fontSize: 12, fontWeight: 600, color: '#6B7280', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 20 }}>Quick facts</p>
+            {stats.map(s => (
+              <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 18 }}>
+                <span style={{ fontSize: 20 }}>{s.icon}</span>
+                <div>
+                  <div style={{ fontSize: 11, color: '#9CA3AF', fontWeight: 500, marginBottom: 2 }}>{s.label}</div>
+                  <div style={{ fontSize: 15, fontWeight: 700, color: '#1A1A2E' }}>{s.value}</div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
+      </section>
 
-        {/* History & Legacy */}
-        <div className="bg-white p-10 rounded-2xl border border-[#C5D8F5] shadow-sm">
-          <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#1565C0] mb-2">History & Legacy</div>
-          <h2 className="font-['Bebas_Neue',sans-serif] text-3xl text-[#1565C0] tracking-wide mb-4">A Tradition of Valour</h2>
-          <p className="text-[#455A7A] leading-relaxed mb-4">
-            Born out of the lessons of World War II, the concept of a joint training institution led to the foundation of the NDA. The academy's first batch commenced training in 1955. Over the decades, the NDA has produced top military commanders, including several Chiefs of Staff of the Army, Navy, and Air Force, as well as heroes who have received the highest gallantry awards.
+      {/* ── 3. HISTORY & LEGACY ────────────────────────────────── */}
+      <section style={{ background: '#F0F2FA', padding: '80px 24px' }}>
+        <div style={{ maxWidth: 800, margin: '0 auto' }}>
+          <p style={{ fontSize: 12, fontWeight: 500, color: '#6B7280', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 12 }}>History & Legacy</p>
+          <h2 style={{ fontSize: 'clamp(26px, 4vw, 34px)', fontWeight: 700, color: '#1D3FAB', margin: '0 0 28px', letterSpacing: '-0.02em' }}>
+            A tradition of valour
+          </h2>
+          <p style={{ fontSize: 16, color: '#374151', lineHeight: 1.8, marginBottom: 20 }}>
+            Born out of the lessons of World War II, the concept of a joint tri-service training institution led to the founding of the NDA. The academy's first batch commenced training in 1955. Over the decades, the NDA has produced top military commanders, including several Chiefs of Staff of all three services, as well as heroes who have received the highest gallantry awards the nation can bestow.
           </p>
-          <p className="text-[#455A7A] leading-relaxed">
-            In a historic milestone, the NDA opened its doors to women cadets in 2022, transforming into a co-educational institution and paving the way for gender-neutral leadership in the armed forces.
+
+          {/* Pull quote */}
+          <blockquote style={{ borderLeft: '4px solid #D4900A', paddingLeft: 24, margin: '32px 0', fontStyle: 'italic', color: '#4B5563', fontSize: 16, lineHeight: 1.8, background: 'rgba(212,144,10,0.05)', borderRadius: '0 12px 12px 0', padding: '20px 24px' }}>
+            "In 2022, NDA became co-educational — a historic milestone for gender-neutral leadership in the armed forces."
+          </blockquote>
+
+          <p style={{ fontSize: 16, color: '#374151', lineHeight: 1.8 }}>
+            The NDA's legacy is not merely academic — it is forged on the parade ground, in gruelling obstacle courses, and in the shared bonds of service that last a lifetime. It represents the highest ideal of disciplined, selfless leadership.
           </p>
         </div>
+      </section>
 
-        {/* The Three Wings */}
-        <div>
-          <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#1565C0] mb-4 text-center">The Three Wings</div>
-          <h2 className="font-['Bebas_Neue',sans-serif] text-4xl text-center text-[#0D1B2A] tracking-wide mb-10">Choose Your Path</h2>
-          
-          <div className="grid md:grid-cols-3 gap-6">
-            {/* Army */}
-            <div className="bg-white p-6 rounded-2xl border border-[#C5D8F5] shadow-sm hover:-translate-y-1 transition-transform">
-              <h3 className="font-['Bebas_Neue',sans-serif] text-2xl text-[#2E7D32] tracking-wide mb-3">Army Wing</h3>
-              <p className="text-[#455A7A] text-sm mb-4 leading-relaxed">
-                Trains cadets for branches like Infantry, Armoured Corps, and Artillery. Focuses heavily on ground combat tactics, weapon handling, and endurance.
-              </p>
-              <div className="mt-auto pt-4 border-t border-gray-100">
-                <div className="text-xs text-gray-500 font-medium">Post-NDA Training:</div>
-                <div className="text-[#0D1B2A] font-semibold text-sm">Indian Military Academy (IMA), Dehradun</div>
-              </div>
-            </div>
+      {/* ── 4. THREE WINGS ─────────────────────────────────────── */}
+      <section style={{ background: '#ffffff', padding: '80px 24px' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          {/* Section tag */}
+          <div style={{ textAlign: 'center', marginBottom: 12 }}>
+            <span style={{ display: 'inline-block', fontSize: 11, fontWeight: 600, color: '#6B7280', background: '#F3F4F6', borderRadius: 20, padding: '4px 14px', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+              The three wings
+            </span>
+          </div>
+          <h2 style={{ textAlign: 'center', fontSize: 'clamp(28px, 4vw, 36px)', fontWeight: 700, color: '#1A1A2E', margin: '0 0 48px', letterSpacing: '-0.02em' }}>
+            Choose your path
+          </h2>
 
-            {/* Navy */}
-            <div className="bg-white p-6 rounded-2xl border border-[#C5D8F5] shadow-sm hover:-translate-y-1 transition-transform">
-              <h3 className="font-['Bebas_Neue',sans-serif] text-2xl text-[#1565C0] tracking-wide mb-3">Navy Wing</h3>
-              <p className="text-[#455A7A] text-sm mb-4 leading-relaxed">
-                Prepares cadets for roles as Surface, Submarine, or Aviation officers. Training involves navigation, seamanship, and watermanship.
-              </p>
-              <div className="mt-auto pt-4 border-t border-gray-100">
-                <div className="text-xs text-gray-500 font-medium">Post-NDA Training:</div>
-                <div className="text-[#0D1B2A] font-semibold text-sm">Indian Naval Academy (INA), Ezhimala</div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
+            {wings.map(w => (
+              <div key={w.name} style={{
+                background: '#fff', border: `1px solid ${w.border}`, borderRadius: 20, padding: 28,
+                display: 'flex', flexDirection: 'column', gap: 0,
+                transition: 'box-shadow 0.2s, transform 0.2s',
+                boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
+              }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 32px rgba(0,0,0,0.1)'; (e.currentTarget as HTMLElement).style.transform = 'translateY(-4px)'; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = '0 1px 4px rgba(0,0,0,0.04)'; (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; }}
+              >
+                {/* Icon badge */}
+                <div style={{ width: 52, height: 52, borderRadius: 14, background: w.bg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 26, marginBottom: 20 }}>
+                  {w.emoji}
+                </div>
+                <h3 style={{ fontSize: 20, fontWeight: 700, color: w.color, margin: '0 0 12px', letterSpacing: '-0.01em' }}>{w.name}</h3>
+                <p style={{ fontSize: 14, color: '#4B5563', lineHeight: 1.75, flex: 1, marginBottom: 24 }}>{w.desc}</p>
+                {/* Divider */}
+                <div style={{ borderTop: `1px solid ${w.border}`, paddingTop: 16 }}>
+                  <div style={{ fontSize: 11, color: '#9CA3AF', fontWeight: 500, marginBottom: 4, textTransform: 'uppercase', letterSpacing: '0.08em' }}>{w.postLabel}</div>
+                  <div style={{ fontSize: 14, fontWeight: 600, color: '#1A1A2E', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    {w.postValue}
+                    <span style={{ color: w.color, fontSize: 16 }}>→</span>
+                  </div>
+                </div>
               </div>
-            </div>
-
-            {/* Air Force */}
-            <div className="bg-white p-6 rounded-2xl border border-[#C5D8F5] shadow-sm hover:-translate-y-1 transition-transform">
-              <h3 className="font-['Bebas_Neue',sans-serif] text-2xl text-[#0D47A1] tracking-wide mb-3">Air Force Wing</h3>
-              <p className="text-[#455A7A] text-sm mb-4 leading-relaxed">
-                Develops future Fighter, Transport, and Helicopter pilots. Cadets learn aerodynamics, meteorology, and basic flying concepts.
-              </p>
-              <div className="mt-auto pt-4 border-t border-gray-100">
-                <div className="text-xs text-gray-500 font-medium">Post-NDA Training:</div>
-                <div className="text-[#0D1B2A] font-semibold text-sm">Air Force Academy (AFA), Hyderabad</div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* ── 5. FOOTER CTA ──────────────────────────────────────── */}
+      <section style={{ background: '#0F1B5C', padding: '64px 24px', textAlign: 'center' }}>
+        <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 16 }}>Ready to begin?</p>
+        <h2 style={{ fontSize: 'clamp(24px, 4vw, 32px)', fontWeight: 700, color: '#fff', margin: '0 0 28px', letterSpacing: '-0.02em' }}>
+          Start your NDA preparation today
+        </h2>
+        <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <Link href="/rank-predictor" style={{ background: '#D4900A', color: '#fff', padding: '14px 32px', borderRadius: 12, fontWeight: 700, fontSize: 15, textDecoration: 'none', transition: 'opacity 0.2s' }}>
+            Predict my rank
+          </Link>
+          <Link href="/syllabus" style={{ background: 'rgba(255,255,255,0.1)', color: '#fff', padding: '14px 32px', borderRadius: 12, fontWeight: 600, fontSize: 15, textDecoration: 'none', border: '1px solid rgba(255,255,255,0.2)' }}>
+            View syllabus
+          </Link>
+        </div>
+      </section>
+
     </div>
   );
 }
