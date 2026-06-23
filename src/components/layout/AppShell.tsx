@@ -10,7 +10,14 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   const isHomepage = pathname === '/';
 
   if (isHomepage) {
-    return <>{children}</>;
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+        <Navbar />
+        <main style={{ paddingTop: 64, flex: 1 }}>
+          {children}
+        </main>
+      </div>
+    );
   }
 
   return (

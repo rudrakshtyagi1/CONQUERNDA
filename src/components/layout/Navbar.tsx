@@ -37,13 +37,20 @@ function AuthModal({ onClose }: { onClose: () => void }) {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [stage, setStage] = useState('Class 12');
+  const [loadingMsg, setLoadingMsg] = useState('');
   const { signIn } = useAuth();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const displayName = tab === 'signup' ? name : (email.split('@')[0] || 'User');
-    signIn(email, displayName.charAt(0).toUpperCase() + displayName.slice(1));
-    onClose();
+    setLoadingMsg('Sending magic link...');
+    const { error } = await signIn(email);
+    if (error) {
+      alert('Error signing in: ' + error.message);
+    } else {
+      alert('Check your email for the magic link!');
+      onClose();
+    }
+    setLoadingMsg('');
   };
 
   const inputStyle: React.CSSProperties = {
@@ -95,7 +102,7 @@ function AuthModal({ onClose }: { onClose: () => void }) {
                 width: '100%', padding: '13px 0', borderRadius: 28, background: '#1D3FAB', color: '#fff',
                 fontWeight: 700, fontSize: 15, border: 'none', cursor: 'pointer', fontFamily: 'inherit',
                 transition: 'background .15s',
-              }}>Sign in</button>
+              }}>{loadingMsg || 'Sign in'}</button>
             </form>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, margin: '20px 0' }}>
               <div style={{ flex: 1, height: 1, background: '#E5E7EB' }} />
@@ -131,7 +138,7 @@ function AuthModal({ onClose }: { onClose: () => void }) {
               <button type="submit" style={{
                 width: '100%', padding: '13px 0', borderRadius: 28, background: '#1D3FAB', color: '#fff',
                 fontWeight: 700, fontSize: 15, border: 'none', cursor: 'pointer', fontFamily: 'inherit',
-              }}>Create account</button>
+              }}>{loadingMsg || 'Create account'}</button>
             </form>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, margin: '20px 0' }}>
               <div style={{ flex: 1, height: 1, background: '#E5E7EB' }} />

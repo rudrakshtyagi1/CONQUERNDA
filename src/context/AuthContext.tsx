@@ -1,13 +1,15 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createClient } from '@/lib/supabase/client';
 
 export interface User {
+  id: string;
   name: string;
   email: string;
   plan: 'free' | 'pro';
   avatarUrl?: string;
-  memberSince: string; // e.g. "January 2025"
+  memberSince: string;
   stats: {
     testsTaken: number;
     avgScore: number;
@@ -19,57 +21,91 @@ export interface User {
 
 interface AuthCtx {
   user: User | null;
-  signIn: (email: string, name: string) => void;
-  signOut: () => void;
+  loading: boolean;
+  signIn: (email: string) => Promise<{ error: Error | null }>;
+  signOut: () => Promise<void>;
   updateUser: (patch: Partial<User>) => void;
 }
 
 const AuthContext = createContext<AuthCtx>({
   user: null,
-  signIn: () => {},
-  signOut: () => {},
+  loading: true,
+  signIn: async () => ({ error: null }),
+  signOut: async () => {},
   updateUser: () => {},
 });
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+  const supabase = createClient();
 
-  // Rehydrate from localStorage on mount
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem('conquernda_user');
-      if (stored) setUser(JSON.parse(stored));
-    } catch {}
+    // Check active session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user) {
+        mapSupabaseUserToLocal(session.user);
+      } else {
+        setLoading(false);
+      }
+    });
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        if (session?.user) {
+          mapSupabaseUserToLocal(session.user);
+        } else {
+          setUser(null);
+          setLoading(false);
+        }
+      }
+    );
+
+    return () => subscription.unsubscribe();
   }, []);
 
-  const signIn = (email: string, name: string) => {
+  const mapSupabaseUserToLocal = (supabaseUser: any) => {
+    // Merge database state later; using default mock stats for now
     const u: User = {
-      name,
-      email,
+      id: supabaseUser.id,
+      name: supabaseUser.user_metadata?.full_name || supabaseUser.email?.split('@')[0] || 'User',
+      email: supabaseUser.email || '',
       plan: 'free',
-      memberSince: new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
+      memberSince: new Date(supabaseUser.created_at || Date.now()).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
+      avatarUrl: supabaseUser.user_metadata?.avatar_url,
       stats: { testsTaken: 3, avgScore: 412, streak: 7, topicsComplete: 12, bestScore: 524 },
     };
     setUser(u);
-    localStorage.setItem('conquernda_user', JSON.stringify(u));
+    setLoading(false);
   };
 
-  const signOut = () => {
+  const signIn = async (email: string) => {
+    // Using magic link login
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo: window.location.origin,
+      },
+    });
+    return { error };
+  };
+
+  const signOut = async () => {
+    await supabase.auth.signOut();
     setUser(null);
-    localStorage.removeItem('conquernda_user');
   };
 
   const updateUser = (patch: Partial<User>) => {
     setUser(prev => {
       if (!prev) return prev;
-      const updated = { ...prev, ...patch };
-      localStorage.setItem('conquernda_user', JSON.stringify(updated));
-      return updated;
+      return { ...prev, ...patch };
     });
+    // TODO: persist patch to Supabase profiles table
   };
 
   return (
-    <AuthContext.Provider value={{ user, signIn, signOut, updateUser }}>
+    <AuthContext.Provider value={{ user, loading, signIn, signOut, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

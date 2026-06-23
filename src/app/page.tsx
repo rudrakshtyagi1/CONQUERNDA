@@ -474,146 +474,7 @@ footer{background:var(--text);padding:56px 36px 30px}
 .fade-up.visible{opacity:1;transform:translateY(0)}
 </style>
 
-<!-- ══════════════════════════════════════
-     NAV
-══════════════════════════════════════ -->
-<nav id="site-nav" role="navigation" aria-label="Main navigation">
-  <a href="/" class="logo">
-    <div class="logo-icon">
-      <svg viewBox="0 0 24 24"><path d="M12 2L4 7v6c0 5 3.5 9.3 8 10.5C16.5 22.3 20 18 20 13V7L12 2z"/></svg>
-    </div>
-    ConquerNDA
-  </a>
 
-  <div class="nav-center" role="menubar">
-    <!-- NDA Exam -->
-    <div class="nav-item" role="none">
-      <button class="nav-btn" role="menuitem" aria-haspopup="true" aria-expanded="false"
-        data-mega="mega-exam" onmouseenter="openMega('mega-exam',this)" onkeydown="handleNavKey(event,'mega-exam',this)">
-        NDA Exam <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-      </button>
-    </div>
-    <!-- Preparation -->
-    <div class="nav-item" role="none">
-      <button class="nav-btn" role="menuitem" aria-haspopup="true" aria-expanded="false"
-        data-mega="mega-prep" onmouseenter="openMega('mega-prep',this)" onkeydown="handleNavKey(event,'mega-prep',this)">
-        Preparation <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-      </button>
-    </div>
-    <!-- SSB -->
-    <div class="nav-item" role="none">
-      <button class="nav-btn" role="menuitem" aria-haspopup="true" aria-expanded="false"
-        data-mega="mega-ssb" onmouseenter="openMega('mega-ssb',this)" onkeydown="handleNavKey(event,'mega-ssb',this)">
-        SSB <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-      </button>
-    </div>
-    <!-- Career -->
-    <div class="nav-item" role="none">
-      <button class="nav-btn" role="menuitem" aria-haspopup="true" aria-expanded="false"
-        data-mega="mega-career" onmouseenter="openMega('mega-career',this)" onkeydown="handleNavKey(event,'mega-career',this)">
-        Career <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-      </button>
-    </div>
-    <!-- Tools -->
-    <div class="nav-item" role="none">
-      <button class="nav-btn" role="menuitem" aria-haspopup="true" aria-expanded="false"
-        data-mega="mega-tools" onmouseenter="openMega('mega-tools',this)" onkeydown="handleNavKey(event,'mega-tools',this)">
-        Tools <i class="ti ti-chevron-down chev" aria-hidden="true"></i>
-      </button>
-    </div>
-  </div>
-
-  <div class="nav-right">
-    <div class="nav-search">
-      <i class="ti ti-search" aria-hidden="true"></i>
-      <input type="text" placeholder="Search exams..." />
-    </div>
-    <button class="nav-cta">Start Free</button>
-  </div>
-</nav>
-
-<!-- ══════════════════════════════════════
-     MEGA MENU PANELS
-══════════════════════════════════════ -->
-
-<!-- NDA EXAM -->
-<div id="mega-exam" class="mega-wrap" role="region" aria-label="NDA Exam menu"
-  onmouseenter="keepMega('mega-exam')" onmouseleave="closeMega()">
-  <div class="mega-inner">
-    <span class="mega-label">NDA Exam</span>
-    <div class="mega-grid mega-grid-4">
-      <a href="/what-is-nda" class="dd-item"><div class="dd-icon"><i class="ti ti-info-circle"></i></div><div class="dd-text"><h4>What is NDA</h4><p>Overview, history &amp; wings</p></div></a>
-      <a href="/eligibility" class="dd-item"><div class="dd-icon"><i class="ti ti-shield-check"></i></div><div class="dd-text"><h4>Eligibility</h4><p>Age, education &amp; physical</p></div></a>
-      <a href="/exam-pattern" class="dd-item"><div class="dd-icon"><i class="ti ti-file-description"></i></div><div class="dd-text"><h4>Exam Pattern</h4><p>Papers, marking &amp; cutoffs</p></div></a>
-      <a href="/syllabus" class="dd-item"><div class="dd-icon"><i class="ti ti-book"></i></div><div class="dd-text"><h4>Syllabus</h4><p>Topic-wise complete guide</p></div></a>
-      <a href="/previous-year-papers" class="dd-item"><div class="dd-icon"><i class="ti ti-history"></i></div><div class="dd-text"><h4>Previous Papers <span class="badge badge-new">New</span></h4><p>PYQs 2019–2026</p></div></a>
-      <a href="/cutoff-analysis" class="dd-item"><div class="dd-icon"><i class="ti ti-chart-line"></i></div><div class="dd-text"><h4>Cutoff Analysis</h4><p>Historical cutoff trends</p></div></a>
-    </div>
-  </div>
-</div>
-
-<!-- PREPARATION -->
-<div id="mega-prep" class="mega-wrap" role="region" aria-label="Preparation menu"
-  onmouseenter="keepMega('mega-prep')" onmouseleave="closeMega()">
-  <div class="mega-inner">
-    <span class="mega-label">Preparation</span>
-    <div class="mega-grid mega-grid-4">
-      <a href="/roadmap" class="dd-item"><div class="dd-icon"><i class="ti ti-map"></i></div><div class="dd-text"><h4>Study Roadmap</h4><p>Class 10, 11, 12 &amp; dropper</p></div></a>
-      <a href="/roadmap" class="dd-item"><div class="dd-icon"><i class="ti ti-books"></i></div><div class="dd-text"><h4>Books &amp; Resources</h4><p>Best books subject-wise</p></div></a>
-      <a href="/current-affairs" class="dd-item"><div class="dd-icon"><i class="ti ti-news"></i></div><div class="dd-text"><h4>Daily Current Affairs <span class="badge badge-daily">Daily</span></h4><p>Defence &amp; GK updates</p></div></a>
-      <a href="/mock-tests" class="dd-item"><div class="dd-icon"><i class="ti ti-clipboard-list"></i></div><div class="dd-text"><h4>Mock Tests <span class="badge badge-beta">Beta</span></h4><p>Practice full-length tests</p></div></a>
-      <a href="/fitness" class="dd-item"><div class="dd-icon"><i class="ti ti-run"></i></div><div class="dd-text"><h4>Fitness Tracker</h4><p>PT &amp; physical prep guide</p></div></a>
-    </div>
-  </div>
-</div>
-
-<!-- SSB -->
-<div id="mega-ssb" class="mega-wrap" role="region" aria-label="SSB menu"
-  onmouseenter="keepMega('mega-ssb')" onmouseleave="closeMega()">
-  <div class="mega-inner">
-    <span class="mega-label">SSB Interview</span>
-    <div class="mega-grid mega-grid-4">
-      <a href="/ssb" class="dd-item"><div class="dd-icon"><i class="ti ti-calendar"></i></div><div class="dd-text"><h4>SSB Overview</h4><p>5-day selection process</p></div></a>
-      <a href="/ssb/screening" class="dd-item"><div class="dd-icon"><i class="ti ti-brain"></i></div><div class="dd-text"><h4>Screening</h4><p>OIR test &amp; PPDT</p></div></a>
-      <a href="/ssb/psychology" class="dd-item"><div class="dd-icon"><i class="ti ti-mood-smile"></i></div><div class="dd-text"><h4>Psychology Tests</h4><p>TAT, WAT, SRT &amp; SDT</p></div></a>
-      <a href="/ssb/gto" class="dd-item"><div class="dd-icon"><i class="ti ti-users"></i></div><div class="dd-text"><h4>GTO Tasks</h4><p>Group outdoor tasks</p></div></a>
-      <a href="/ssb/personal-interview" class="dd-item"><div class="dd-icon"><i class="ti ti-message"></i></div><div class="dd-text"><h4>Interview</h4><p>Personal interview prep</p></div></a>
-      <a href="/ssb/cpss" class="dd-item"><div class="dd-icon"><i class="ti ti-plane"></i></div><div class="dd-text"><h4>CPSS <span class="badge badge-beta">Pilots</span></h4><p>Pilot aptitude battery</p></div></a>
-      <a href="/medical" class="dd-item"><div class="dd-icon"><i class="ti ti-stethoscope"></i></div><div class="dd-text"><h4>Medical Examination</h4><p>Medical standards &amp; prep</p></div></a>
-    </div>
-  </div>
-</div>
-
-<!-- CAREER -->
-<div id="mega-career" class="mega-wrap" role="region" aria-label="Career menu"
-  onmouseenter="keepMega('mega-career')" onmouseleave="closeMega()">
-  <div class="mega-inner">
-    <span class="mega-label">Career</span>
-    <div class="mega-grid mega-grid-4">
-      <a href="/salary" class="dd-item"><div class="dd-icon"><i class="ti ti-coin"></i></div><div class="dd-text"><h4>Salary &amp; Perks</h4><p>Complete pay breakdown</p></div></a>
-      <a href="/rank-structure" class="dd-item"><div class="dd-icon"><i class="ti ti-award"></i></div><div class="dd-text"><h4>Rank Structure</h4><p>Army, Navy &amp; Air Force</p></div></a>
-      <a href="/training" class="dd-item"><div class="dd-icon"><i class="ti ti-building"></i></div><div class="dd-text"><h4>NDA Training Life</h4><p>3-year academy life</p></div></a>
-      <a href="/success-stories" class="dd-item"><div class="dd-icon"><i class="ti ti-star"></i></div><div class="dd-text"><h4>Success Stories</h4><p>Real aspirant journeys</p></div></a>
-      <a href="/defence-news" class="dd-item"><div class="dd-icon"><i class="ti ti-news"></i></div><div class="dd-text"><h4>Defence News</h4><p>Latest from the forces</p></div></a>
-    </div>
-  </div>
-</div>
-
-<!-- TOOLS -->
-<div id="mega-tools" class="mega-wrap" role="region" aria-label="Tools menu"
-  onmouseenter="keepMega('mega-tools')" onmouseleave="closeMega()">
-  <div class="mega-inner">
-    <span class="mega-label">Quick Tools</span>
-    <div class="mega-grid mega-grid-4">
-      <a href="/rank-predictor" class="dd-item"><div class="dd-icon"><i class="ti ti-chart-bar"></i></div><div class="dd-text"><h4>AIR Rank Predictor <span class="badge badge-live">Live</span></h4><p>Predict rank with UPSC data</p></div></a>
-      <a href="/rank-predictor" class="dd-item"><div class="dd-icon"><i class="ti ti-calculator"></i></div><div class="dd-text"><h4>Marks Calculator</h4><p>Calculate your total score</p></div></a>
-      <a href="/eligibility" class="dd-item"><div class="dd-icon"><i class="ti ti-shield-check"></i></div><div class="dd-text"><h4>Eligibility Checker</h4><p>Quick eligibility check</p></div></a>
-      <a href="/cutoff-analysis" class="dd-item"><div class="dd-icon"><i class="ti ti-trending-up"></i></div><div class="dd-text"><h4>Cutoff Predictor</h4><p>Written cutoff estimator</p></div></a>
-      <a href="/rank-predictor" class="dd-item"><div class="dd-icon"><i class="ti ti-git-branch"></i></div><div class="dd-text"><h4>Branch Predictor</h4><p>Army / Navy / Air Force</p></div></a>
-      <a href="/fitness" class="dd-item"><div class="dd-icon"><i class="ti ti-run"></i></div><div class="dd-text"><h4>Fitness Tracker</h4><p>PT &amp; physical prep guide</p></div></a>
-    </div>
-  </div>
-</div>
 
 <!-- ══════════════════════════════════════
      HERO
@@ -634,7 +495,7 @@ footer{background:var(--text);padding:56px 36px 30px}
       <div style="font-size:12px;color:#6B7280;margin-top:4px;font-style:italic">You are 1 in 500,000</div>
     </div>
     <div style="padding:24px 20px;text-align:center;border-right:1px solid #E5E7EB">
-      <div style="font-size:42px;font-weight:800;color:#1D3FAB;line-height:1">~20,000</div>
+      <div style="font-size:42px;font-weight:800;color:#1D3FAB;line-height:1">~8,000</div>
       <div style="font-size:14px;font-weight:600;color:#1A1A2E;margin-top:6px">Clear the written exam</div>
       <div style="font-size:12px;color:#6B7280;margin-top:4px">Top <strong style="color:#D4900A;font-weight:700">4%</strong> make it past here</div>
     </div>
@@ -697,7 +558,7 @@ footer{background:var(--text);padding:56px 36px 30px}
         <div class="frow">
           <span class="flbl">Clear Written</span>
           <div class="ftrack"><div class="fbar" style="width:70%;background:#93C5FD"></div></div>
-          <span class="fval" style="color:#1D3FAB">~20,000</span>
+          <span class="fval" style="color:#1D3FAB">~8,000</span>
         </div>
         <div style="text-align:center;color:#9CA3AF;font-size:12px;padding:2px 0"><i class="ti ti-arrow-down"></i></div>
         <div class="frow">
