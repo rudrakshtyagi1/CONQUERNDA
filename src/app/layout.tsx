@@ -4,27 +4,58 @@ import AppShell from '@/components/layout/AppShell';
 
 export const metadata: Metadata = {
   title: {
-    default: "NDA Platform — India's Most Complete NDA Guide & Rank Predictor",
-    template: '%s | NDA Platform',
+    default: "ConquerNDA — India's Most Complete NDA Guide & Rank Predictor",
+    template: '%s | ConquerNDA',
   },
   description: 'Complete NDA preparation platform: Rank Predictor, Eligibility, Syllabus, SSB Guide, Cutoff Analysis, Salary Calculator, Previous Year Papers and more.',
-  keywords: ['NDA exam', 'NDA rank predictor', 'NDA eligibility', 'NDA syllabus', 'NDA cutoff', 'NDA salary', 'SSB interview', 'NDA preparation', 'NDA 2026'],
-  openGraph: { type: 'website', siteName: 'NDA Platform' },
-  twitter: { card: 'summary_large_image' },
-  robots: { index: true, follow: true },
+  keywords: ['NDA exam', 'NDA rank predictor', 'NDA eligibility', 'NDA syllabus', 'NDA cutoff', 'NDA salary', 'SSB interview', 'NDA preparation', 'NDA 2026', 'ConquerNDA'],
+  authors: [{ name: 'ConquerNDA' }],
+  creator: 'ConquerNDA',
+  publisher: 'ConquerNDA',
+  openGraph: {
+    type: 'website',
+    siteName: 'ConquerNDA',
+    title: "ConquerNDA — India's Most Complete NDA Guide & Rank Predictor",
+    description: 'Complete NDA preparation platform: Rank Predictor, Eligibility, Syllabus, SSB Guide, Cutoff Analysis, Salary Calculator, Previous Year Papers and more.',
+    url: 'https://conquernda.in', // Placeholder domain
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "ConquerNDA — India's Most Complete NDA Guide",
+    description: 'Complete NDA preparation platform: Rank Predictor, Eligibility, Syllabus, SSB Guide, Cutoff Analysis, Salary Calculator.',
+  },
+  robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-video-preview': -1, 'max-image-preview': 'large', 'max-snippet': -1 } },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        '@id': 'https://conquernda.in/#website',
+        url: 'https://conquernda.in',
+        name: 'ConquerNDA',
+        description: "India's most complete NDA preparation platform",
+        publisher: { '@id': 'https://conquernda.in/#organization' },
+        potentialAction: [{ '@type': 'SearchAction', target: { '@type': 'EntryPoint', urlTemplate: 'https://conquernda.in/search?q={search_term_string}' }, 'query-input': 'required name=search_term_string' }],
+      },
+      {
+        '@type': 'Organization',
+        '@id': 'https://conquernda.in/#organization',
+        name: 'ConquerNDA',
+        url: 'https://conquernda.in',
+        logo: { '@type': 'ImageObject', url: 'https://conquernda.in/logo.png' }
+      }
+    ]
+  };
+
   return (
     <html lang="en">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-          '@context': 'https://schema.org', '@type': 'WebSite',
-          name: 'NDA Platform', url: 'https://nda-platform.vercel.app',
-          description: "India's most complete NDA preparation platform",
-        })}} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       </head>
       <body>
         <AppShell>{children}</AppShell>
