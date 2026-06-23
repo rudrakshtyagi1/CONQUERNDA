@@ -1,188 +1,271 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Shield, Search, ChevronDown, Menu, X, Target, Home, Users } from 'lucide-react';
+import { Shield, Search, ChevronDown, Menu, X, Target, Users } from 'lucide-react';
 import { NAV_GROUPS } from '@/data/nav';
+import { useAuth, getInitials } from '@/context/AuthContext';
 
-const ICON_MAP: Record<string, any> = {
-  Shield, Users, Target, Home,
-  // Fallback icon
-  Default: Shield,
-};
-
-function NavIcon({ name, size = 16 }: { name: string; size?: number }) {
-  const Icon = ICON_MAP[name] || ICON_MAP.Default;
-  return <Icon size={size} />;
+// ─── OS DETECTION ─────────────────────────────────────────────────────────────
+function useMac() {
+  const [isMac, setIsMac] = useState(false);
+  useEffect(() => { setIsMac(navigator.platform.toUpperCase().includes('MAC')); }, []);
+  return isMac;
 }
 
-export default function Navbar() {
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [activeGroup, setActiveGroup] = useState<string | null>(null);
-  const pathname = usePathname();
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => { setMobileOpen(false); setActiveGroup(null); }, [pathname]);
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); setSearchOpen(v => !v); }
-      if (e.key === 'Escape') { setSearchOpen(false); setActiveGroup(null); }
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, []);
-
-  const handleMouseEnter = (id: string) => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    setActiveGroup(id);
-  };
-  const handleMouseLeave = () => {
-    closeTimer.current = setTimeout(() => setActiveGroup(null), 150);
-  };
-
-  const currentGroup = NAV_GROUPS.find(g => g.id === activeGroup);
-
+// ─── AVATAR CIRCLE ────────────────────────────────────────────────────────────
+function Avatar({ name, size = 36, url }: { name: string; size?: number; url?: string }) {
+  const initials = getInitials(name);
+  if (url) return (
+    <img src={url} alt={name} style={{ width: size, height: size, borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }} />
+  );
   return (
-    <>
-      <header className="fixed top-0 left-0 right-0 z-[100] bg-white border-b border-[var(--border)]">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-10 h-[72px] flex items-center justify-between gap-6" onMouseLeave={handleMouseLeave}>
-          
-          {/* LEFT: LOGO */}
-          <Link href="/" className="flex items-center gap-2.5 flex-shrink-0 lg:w-[240px]">
-            <div className="w-8 h-8 bg-[#1D4ED8] rounded-md flex items-center justify-center">
-              <Shield size={18} className="text-white" />
-            </div>
-            <div className="text-[18px] font-bold text-[#111827] tracking-tight">ConquerNDA</div>
-          </Link>
-
-          {/* CENTER: NAV LINKS */}
-          <div className="hidden lg:flex items-center justify-center gap-8 flex-1">
-            {NAV_GROUPS.map(group => (
-              <button key={group.id}
-                onMouseEnter={() => handleMouseEnter(group.id)}
-                onClick={() => setActiveGroup(activeGroup === group.id ? null : group.id)}
-                className="text-[14px] font-medium text-[#4B5563] hover:text-[#111827] transition-colors"
-              >
-                {group.label}
-              </button>
-            ))}
-          </div>
-
-          {/* RIGHT: SEARCH + BUTTON */}
-          <div className="flex items-center justify-end gap-3 lg:gap-4 lg:w-[360px]">
-            <button onClick={() => setSearchOpen(true)}
-              className="hidden md:flex items-center gap-2 px-4 py-2 text-[13px] text-[#6B7280] bg-[#F9FAFB] border border-[#E5E7EB] rounded-full hover:border-[#D1D5DB] transition-all flex-1"
-            >
-              <Search size={14} className="text-[#9CA3AF]" />
-              <span className="flex-1 text-left font-medium">Search exams, cutoffs...</span>
-            </button>
-            
-            <Link href="/rank-predictor" className="hidden sm:flex bg-[#1D4ED8] text-white px-5 py-2 rounded-full text-[13px] font-medium hover:bg-blue-800 transition-colors whitespace-nowrap shadow-sm">
-              Start Free
-            </Link>
-
-            {/* Mobile Nav Toggle */}
-            <button onClick={() => setMobileOpen(true)} className="lg:hidden p-2 text-[#4B5563] bg-[#F9FAFB] rounded-md border border-[#E5E7EB]">
-              <Menu size={20} />
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* MEGA DROPDOWN */}
-      {activeGroup && currentGroup && (
-        <div className="fixed top-[68px] left-0 right-0 z-[99] bg-white border-b border-[var(--border)] shadow-[0_24px_56px_rgba(0,0,0,0.08)]"
-          style={{ animation: 'slide-down 0.15s ease-out both' }}
-          onMouseEnter={() => { if (closeTimer.current) clearTimeout(closeTimer.current); }}
-          onMouseLeave={handleMouseLeave}>
-          <div className="max-w-[1400px] mx-auto px-10 py-8">
-            <div className="mb-5 border-b border-[var(--slate-100)] pb-3">
-              <span className="text-[12px] font-black text-[var(--slate-400)] tracking-wider uppercase">{currentGroup.label}</span>
-            </div>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              {currentGroup.items.map(item => (
-                <Link key={item.id} href={item.href} onClick={() => setActiveGroup(null)}
-                  className="flex items-start gap-4 p-4 rounded-2xl hover:bg-[var(--slate-50)] hover:shadow-[0_4px_20px_rgba(0,0,0,0.04)] border border-transparent transition-all group">
-                  <div className="w-12 h-12 rounded-2xl bg-[var(--blue-50)] flex items-center justify-center flex-shrink-0 group-hover:bg-[var(--blue)] group-hover:text-white text-[var(--blue)] transition-colors shadow-sm">
-                    <NavIcon name={item.icon} size={20} />
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2 mb-1.5">
-                      <span className="text-[15px] font-bold text-[var(--slate-900)] group-hover:text-[var(--blue)] transition-colors">{item.label}</span>
-                      {item.badge && <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${item.badge === 'LIVE' ? 'bg-blue-100 text-blue-700' : 'bg-green-100 text-green-700'}`}>{item.badge}</span>}
-                    </div>
-                    {item.desc && <p className="text-[13px] font-medium text-[var(--slate-500)] leading-snug">{item.desc}</p>}
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* MOBILE DRAWER */}
-      {mobileOpen && (
-        <>
-          <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[110] lg:hidden" onClick={() => setMobileOpen(false)} />
-          <div className="fixed top-0 right-0 bottom-0 w-[320px] bg-white z-[120] lg:hidden flex flex-col shadow-2xl" style={{ animation: 'slide-down 0.2s ease' }}>
-            <div className="flex items-center justify-between px-6 py-5 border-b border-[var(--border)]">
-              <span className="text-[18px] font-black text-[var(--slate-900)] tracking-tight">Menu</span>
-              <button onClick={() => setMobileOpen(false)} className="w-8 h-8 flex items-center justify-center rounded-xl bg-[var(--slate-100)] text-[var(--slate-600)] hover:bg-[var(--slate-200)]"><X size={18} /></button>
-            </div>
-            <div className="px-5 py-4 border-b border-[var(--border)]">
-              <button onClick={() => { setMobileOpen(false); setSearchOpen(true); }}
-                className="w-full flex items-center gap-3 px-4 py-3.5 text-[15px] font-medium text-[var(--slate-500)] bg-[var(--slate-50)] border border-[var(--border)] rounded-2xl">
-                <Search size={18} /> Search anything…
-              </button>
-            </div>
-            <nav className="flex-1 overflow-y-auto px-4 py-4 space-y-2">
-              {NAV_GROUPS.map(group => <MobileNavGroup key={group.id} group={group} onClose={() => setMobileOpen(false)} />)}
-            </nav>
-            <div className="p-6 border-t border-[var(--border)] bg-[var(--slate-50)]">
-              <Link href="/rank-predictor" onClick={() => setMobileOpen(false)} className="btn-primary w-full justify-center py-4 rounded-2xl text-[16px]">
-                <Target size={18} /> Predict My Rank
-              </Link>
-            </div>
-          </div>
-        </>
-      )}
-
-      {/* SEARCH MODAL */}
-      {searchOpen && <SearchModal onClose={() => setSearchOpen(false)} />}
-
-    </>
+    <div style={{
+      width: size, height: size, borderRadius: '50%', background: '#EEF2FF', color: '#1D3FAB',
+      fontSize: size < 40 ? 13 : 16, fontWeight: 700, display: 'flex', alignItems: 'center',
+      justifyContent: 'center', flexShrink: 0, userSelect: 'none',
+    }}>{initials}</div>
   );
 }
 
-function MobileNavGroup({ group, onClose }: { group: typeof NAV_GROUPS[0]; onClose: () => void }) {
-  const [open, setOpen] = useState(false);
+// ─── AUTH MODAL ───────────────────────────────────────────────────────────────
+function AuthModal({ onClose }: { onClose: () => void }) {
+  const [tab, setTab] = useState<'signin' | 'signup'>('signin');
+  const [showPass, setShowPass] = useState(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [pass, setPass] = useState('');
+  const [stage, setStage] = useState('Class 12');
+  const { signIn } = useAuth();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const displayName = tab === 'signup' ? name : (email.split('@')[0] || 'User');
+    signIn(email, displayName.charAt(0).toUpperCase() + displayName.slice(1));
+    onClose();
+  };
+
+  const inputStyle: React.CSSProperties = {
+    width: '100%', padding: '11px 14px', borderRadius: 10,
+    border: '1px solid #E5E7EB', fontSize: 14, color: '#1A1A2E',
+    background: '#F9FAFB', outline: 'none', boxSizing: 'border-box',
+    fontFamily: 'inherit',
+  };
+
   return (
-    <div className="mb-2">
-      <button onClick={() => setOpen(v => !v)}
-        className={`w-full flex items-center justify-between px-5 py-4 text-[16px] font-bold rounded-2xl transition-all ${open ? 'bg-[var(--blue-50)] text-[var(--blue)] shadow-sm' : 'text-[var(--slate-700)] hover:bg-[var(--slate-50)]'}`}>
-        {group.label}
-        <ChevronDown size={18} className={`transition-transform ${open ? 'rotate-180 text-[var(--blue)]' : 'text-[var(--slate-400)]'}`} />
-      </button>
-      {open && (
-        <div className="pl-5 pr-2 py-3 space-y-2">
-          {group.items.map(item => (
-            <Link key={item.id} href={item.href} onClick={onClose}
-              className="flex items-center gap-4 px-4 py-3 text-[15px] font-bold text-[var(--slate-600)] hover:text-[var(--blue)] hover:bg-[var(--blue-50)] rounded-xl transition-all group">
-              <div className="w-8 h-8 rounded-xl bg-[var(--slate-100)] group-hover:bg-[var(--blue)] flex items-center justify-center text-[var(--slate-500)] group-hover:text-white transition-colors">
-                <NavIcon name={item.icon} size={14} />
-              </div>
-              {item.label}
-            </Link>
+    <div
+      style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(4px)', zIndex: 300, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}
+      onClick={onClose}
+    >
+      <div
+        style={{ background: '#fff', borderRadius: 16, padding: 32, width: '100%', maxWidth: 440, boxShadow: '0 24px 64px rgba(0,0,0,0.15)' }}
+        onClick={e => e.stopPropagation()}
+      >
+        {/* Tabs */}
+        <div style={{ display: 'flex', background: '#F3F4F6', borderRadius: 10, padding: 4, marginBottom: 28, gap: 4 }}>
+          {(['signin', 'signup'] as const).map(t => (
+            <button key={t} onClick={() => setTab(t)} style={{
+              flex: 1, padding: '8px 0', borderRadius: 8, border: 'none', cursor: 'pointer',
+              fontWeight: 600, fontSize: 14, fontFamily: 'inherit',
+              background: tab === t ? '#fff' : 'transparent',
+              color: tab === t ? '#1A1A2E' : '#6B7280',
+              boxShadow: tab === t ? '0 1px 4px rgba(0,0,0,0.08)' : 'none',
+              transition: 'all .15s',
+            }}>{t === 'signin' ? 'Sign in' : 'Sign up'}</button>
           ))}
         </div>
-      )}
+
+        {tab === 'signin' ? (
+          <>
+            <h2 style={{ fontSize: 22, fontWeight: 700, color: '#1A1A2E', margin: '0 0 6px' }}>Welcome back</h2>
+            <p style={{ fontSize: 14, color: '#6B7280', margin: '0 0 24px' }}>Sign in to continue your NDA preparation</p>
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+              <input style={inputStyle} type="email" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} required />
+              <div style={{ position: 'relative' }}>
+                <input style={{ ...inputStyle, paddingRight: 44 }} type={showPass ? 'text' : 'password'} placeholder="Password" value={pass} onChange={e => setPass(e.target.value)} required />
+                <button type="button" onClick={() => setShowPass(v => !v)} style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: '#9CA3AF', display: 'flex' }}>
+                  <i className={`ti ti-eye${showPass ? '-off' : ''}`} style={{ fontSize: 18 }} />
+                </button>
+              </div>
+              <div style={{ textAlign: 'right', marginTop: -6 }}>
+                <a href="#" style={{ fontSize: 13, color: '#1D3FAB', textDecoration: 'none', fontWeight: 500 }}>Forgot password?</a>
+              </div>
+              <button type="submit" style={{
+                width: '100%', padding: '13px 0', borderRadius: 28, background: '#1D3FAB', color: '#fff',
+                fontWeight: 700, fontSize: 15, border: 'none', cursor: 'pointer', fontFamily: 'inherit',
+                transition: 'background .15s',
+              }}>Sign in</button>
+            </form>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, margin: '20px 0' }}>
+              <div style={{ flex: 1, height: 1, background: '#E5E7EB' }} />
+              <span style={{ fontSize: 12, color: '#9CA3AF' }}>or</span>
+              <div style={{ flex: 1, height: 1, background: '#E5E7EB' }} />
+            </div>
+            <button style={{
+              width: '100%', padding: '13px 0', borderRadius: 28, background: '#fff', color: '#374151',
+              fontWeight: 600, fontSize: 14, border: '1px solid #E5E7EB', cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, fontFamily: 'inherit',
+              transition: 'background .15s',
+            }}>
+              <img src="https://www.google.com/favicon.ico" alt="Google" style={{ width: 16, height: 16 }} />
+              Continue with Google
+            </button>
+          </>
+        ) : (
+          <>
+            <h2 style={{ fontSize: 22, fontWeight: 700, color: '#1A1A2E', margin: '0 0 6px' }}>Create your account</h2>
+            <p style={{ fontSize: 14, color: '#6B7280', margin: '0 0 24px' }}>Join 1,900+ NDA aspirants on ConquerNDA</p>
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+              <input style={inputStyle} type="text" placeholder="Full name" value={name} onChange={e => setName(e.target.value)} required />
+              <input style={inputStyle} type="email" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} required />
+              <div style={{ position: 'relative' }}>
+                <input style={{ ...inputStyle, paddingRight: 44 }} type={showPass ? 'text' : 'password'} placeholder="Password" value={pass} onChange={e => setPass(e.target.value)} required />
+                <button type="button" onClick={() => setShowPass(v => !v)} style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: '#9CA3AF', display: 'flex' }}>
+                  <i className={`ti ti-eye${showPass ? '-off' : ''}`} style={{ fontSize: 18 }} />
+                </button>
+              </div>
+              <select value={stage} onChange={e => setStage(e.target.value)} style={{ ...inputStyle, cursor: 'pointer' }}>
+                {['Class 10', 'Class 11', 'Class 12', 'Dropper'].map(s => <option key={s}>{s}</option>)}
+              </select>
+              <button type="submit" style={{
+                width: '100%', padding: '13px 0', borderRadius: 28, background: '#1D3FAB', color: '#fff',
+                fontWeight: 700, fontSize: 15, border: 'none', cursor: 'pointer', fontFamily: 'inherit',
+              }}>Create account</button>
+            </form>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, margin: '20px 0' }}>
+              <div style={{ flex: 1, height: 1, background: '#E5E7EB' }} />
+              <span style={{ fontSize: 12, color: '#9CA3AF' }}>or</span>
+              <div style={{ flex: 1, height: 1, background: '#E5E7EB' }} />
+            </div>
+            <button style={{
+              width: '100%', padding: '13px 0', borderRadius: 28, background: '#fff', color: '#374151',
+              fontWeight: 600, fontSize: 14, border: '1px solid #E5E7EB', cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, fontFamily: 'inherit',
+            }}>
+              <img src="https://www.google.com/favicon.ico" alt="Google" style={{ width: 16, height: 16 }} />
+              Continue with Google
+            </button>
+            <p style={{ fontSize: 12, color: '#9CA3AF', textAlign: 'center', marginTop: 16 }}>
+              By signing up you agree to our{' '}
+              <a href="#" style={{ color: '#1D3FAB' }}>Terms</a> and{' '}
+              <a href="#" style={{ color: '#1D3FAB' }}>Privacy Policy</a>
+            </p>
+          </>
+        )}
+      </div>
     </div>
   );
 }
 
+// ─── PROFILE DROPDOWN ─────────────────────────────────────────────────────────
+function ProfileDropdown({ onClose, onSignOut }: { onClose: () => void; onSignOut: () => void }) {
+  const { user } = useAuth();
+  const [confirmSignOut, setConfirmSignOut] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => { if (ref.current && !ref.current.contains(e.target as Node)) onClose(); };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [onClose]);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [onClose]);
+
+  if (!user) return null;
+
+  const links = [
+    { icon: 'ti-user', label: 'My profile', href: '/profile' },
+    { icon: 'ti-clipboard-list', label: 'My tests', href: '/mock-tests' },
+    { icon: 'ti-bookmark', label: 'Saved pages', href: '/profile#saved' },
+    { icon: 'ti-chart-bar', label: 'My progress', href: '/profile#progress' },
+    { icon: 'ti-settings', label: 'Settings', href: '/profile#settings' },
+    ...(user.plan === 'free' ? [{ icon: 'ti-crown', label: 'Upgrade to Pro', href: '/profile#upgrade', amber: true }] : []),
+  ];
+
+  return (
+    <div ref={ref} style={{
+      position: 'absolute', right: 0, top: 'calc(100% + 8px)', width: 280,
+      background: '#fff', border: '1px solid #E5E7EB', borderRadius: 12,
+      boxShadow: '0 8px 24px rgba(0,0,0,0.1)', zIndex: 200, overflow: 'hidden',
+    }}>
+      {/* Identity */}
+      <div style={{ padding: 16, borderBottom: '1px solid #F3F4F6', display: 'flex', gap: 12, alignItems: 'center' }}>
+        <Avatar name={user.name} size={44} url={user.avatarUrl} />
+        <div>
+          <div style={{ fontSize: 15, fontWeight: 600, color: '#1A1A2E' }}>{user.name}</div>
+          <div style={{ fontSize: 12, color: '#6B7280', marginBottom: 6 }}>{user.email}</div>
+          <span style={{
+            fontSize: 11, fontWeight: 700, padding: '2px 10px', borderRadius: 12,
+            background: user.plan === 'free' ? '#FEF3C7' : '#EEF2FF',
+            color: user.plan === 'free' ? '#92400E' : '#1D3FAB',
+          }}>{user.plan === 'free' ? 'Free plan' : '⭐ Pro'}</span>
+        </div>
+      </div>
+
+      {/* Quick Stats */}
+      <div style={{ padding: '12px 16px', borderBottom: '1px solid #F3F4F6', display: 'flex', gap: 0 }}>
+        {[
+          { val: user.stats.testsTaken, label: 'Tests' },
+          { val: user.stats.avgScore, label: 'Avg score' },
+          { val: `${user.stats.streak}🔥`, label: 'Day streak' },
+        ].map((s, i) => (
+          <div key={i} style={{ flex: 1, textAlign: 'center', borderRight: i < 2 ? '1px solid #F3F4F6' : 'none' }}>
+            <div style={{ fontSize: 16, fontWeight: 600, color: '#1D3FAB' }}>{s.val}</div>
+            <div style={{ fontSize: 11, color: '#9CA3AF' }}>{s.label}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Nav Links */}
+      <div style={{ padding: 8 }}>
+        {links.map(link => (
+          <Link key={link.href} href={link.href} onClick={onClose} style={{
+            display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px',
+            borderRadius: 8, fontSize: 14, color: (link as any).amber ? '#D97706' : '#374151',
+            textDecoration: 'none', transition: 'background .12s', cursor: 'pointer',
+          }}
+          onMouseOver={e => (e.currentTarget.style.background = '#F3F4F6')}
+          onMouseOut={e => (e.currentTarget.style.background = 'transparent')}
+          >
+            <i className={link.icon} style={{ fontSize: 16, color: (link as any).amber ? '#D97706' : '#6B7280' }} />
+            {link.label}
+          </Link>
+        ))}
+      </div>
+
+      {/* Sign Out */}
+      <div style={{ padding: 8, borderTop: '1px solid #F3F4F6' }}>
+        {confirmSignOut ? (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', fontSize: 13, color: '#374151' }}>
+            <span>Sure?</span>
+            <button onClick={onSignOut} style={{ background: '#FEE2E2', color: '#EF4444', border: 'none', borderRadius: 6, padding: '4px 10px', fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit' }}>Yes, sign out</button>
+            <button onClick={() => setConfirmSignOut(false)} style={{ background: '#F3F4F6', color: '#6B7280', border: 'none', borderRadius: 6, padding: '4px 10px', fontSize: 12, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit' }}>Cancel</button>
+          </div>
+        ) : (
+          <button onClick={() => setConfirmSignOut(true)} style={{
+            width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px',
+            borderRadius: 8, fontSize: 14, color: '#374151', background: 'none',
+            border: 'none', cursor: 'pointer', fontFamily: 'inherit', textAlign: 'left',
+            transition: 'background .12s',
+          }}
+          onMouseOver={e => { e.currentTarget.style.background = '#FFF1F2'; e.currentTarget.style.color = '#EF4444'; }}
+          onMouseOut={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#374151'; }}
+          >
+            <i className="ti ti-logout" style={{ fontSize: 16, color: '#EF4444' }} />
+            Sign out
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ─── SEARCH MODAL ─────────────────────────────────────────────────────────────
 const SEARCH_ITEMS = [
   { label: 'AIR Rank Predictor', desc: 'Predict your rank with UPSC data', href: '/rank-predictor', tag: 'Tool' },
   { label: 'Eligibility Criteria', desc: 'Age, education & physical standards', href: '/eligibility', tag: 'NDA' },
@@ -197,38 +280,345 @@ function SearchModal({ onClose }: { onClose: () => void }) {
   const [query, setQuery] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => { inputRef.current?.focus(); }, []);
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [onClose]);
 
   const results = query.trim()
     ? SEARCH_ITEMS.filter(i => i.label.toLowerCase().includes(query.toLowerCase()) || i.desc.toLowerCase().includes(query.toLowerCase()))
     : SEARCH_ITEMS.slice(0, 5);
 
   return (
-    <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-md z-[200] flex items-start justify-center pt-24 px-6" onClick={onClose}>
-      <div className="bg-white rounded-[24px] shadow-[0_24px_56px_rgba(0,0,0,0.1)] w-full max-w-[640px] overflow-hidden" onClick={e => e.stopPropagation()} style={{ animation: 'slide-down 0.2s ease' }}>
-        <div className="flex items-center gap-3 px-6 py-5 border-b border-[var(--border)] bg-[var(--slate-50)]">
-          <Search size={22} className="text-[var(--blue)] flex-shrink-0" />
+    <div style={{ position: 'fixed', inset: 0, background: 'rgba(15,23,42,0.5)', backdropFilter: 'blur(4px)', zIndex: 300, display: 'flex', alignItems: 'flex-start', justifyContent: 'center', paddingTop: 80, padding: '80px 24px 24px' }}
+      onClick={onClose}>
+      <div style={{ background: '#fff', borderRadius: 20, width: '100%', maxWidth: 600, overflow: 'hidden', boxShadow: '0 24px 64px rgba(0,0,0,0.15)' }}
+        onClick={e => e.stopPropagation()}>
+        {/* Input row */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '16px 20px', borderBottom: '1px solid #F3F4F6', background: '#FAFAFA' }}>
+          <Search size={20} style={{ color: '#1D3FAB', flexShrink: 0 }} />
           <input ref={inputRef} type="text" value={query} onChange={e => setQuery(e.target.value)}
             placeholder="Search for tools, guides, cutoffs..."
-            className="flex-1 bg-transparent text-[var(--slate-900)] font-bold text-[18px] outline-none placeholder:text-[var(--slate-400)]" />
-          <button onClick={onClose} className="text-[12px] font-black text-[var(--slate-500)] bg-[var(--slate-200)] px-3 py-1.5 rounded-lg hover:bg-[var(--slate-300)] transition-colors">ESC</button>
+            style={{ flex: 1, background: 'transparent', border: 'none', outline: 'none', fontSize: 17, fontWeight: 600, color: '#1A1A2E', fontFamily: 'inherit' }} />
+          <button onClick={onClose} style={{ fontSize: 12, fontWeight: 700, color: '#6B7280', background: '#E5E7EB', padding: '4px 10px', borderRadius: 8, border: 'none', cursor: 'pointer' }}>ESC</button>
         </div>
-        <div className="max-h-[450px] overflow-y-auto py-4 px-3">
-          {results.length === 0 && <div className="text-center py-12 text-[var(--slate-500)] font-bold">No results found for &ldquo;{query}&rdquo;</div>}
+        {/* Results */}
+        <div style={{ maxHeight: 420, overflowY: 'auto', padding: '8px 10px' }}>
+          {results.length === 0 && (
+            <div style={{ textAlign: 'center', padding: '40px 0', color: '#9CA3AF', fontSize: 14 }}>No results for &ldquo;{query}&rdquo;</div>
+          )}
           {results.map(item => (
-            <Link key={item.href + item.label} href={item.href} onClick={onClose}
-              className="flex items-center gap-3 px-4 py-3.5 rounded-2xl hover:bg-[var(--blue-50)] transition-colors group">
-              <div className="w-10 h-10 rounded-xl bg-[var(--slate-100)] flex items-center justify-center flex-shrink-0 group-hover:bg-white group-hover:shadow-sm transition-all">
-                <Search size={16} className="text-[var(--slate-500)] group-hover:text-[var(--blue)] transition-colors" />
+            <Link key={item.href} href={item.href} onClick={onClose}
+              style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 10px', borderRadius: 12, textDecoration: 'none', transition: 'background .12s' }}
+              onMouseOver={e => (e.currentTarget.style.background = '#EEF2FF')}
+              onMouseOut={e => (e.currentTarget.style.background = 'transparent')}>
+              <div style={{ width: 36, height: 36, borderRadius: 10, background: '#F3F4F6', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <Search size={15} style={{ color: '#6B7280' }} />
               </div>
-              <div className="flex-1 min-w-0 overflow-hidden">
-                <div className="text-[14px] font-bold text-[var(--slate-800)] group-hover:text-[var(--blue)] transition-colors truncate">{item.label}</div>
-                <div className="text-[12px] font-medium text-[var(--slate-500)] truncate">{item.desc}</div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontSize: 14, fontWeight: 600, color: '#1A1A2E', marginBottom: 2 }}>{item.label}</div>
+                <div style={{ fontSize: 12, color: '#6B7280' }}>{item.desc}</div>
               </div>
-              <span className="flex-shrink-0 text-[11px] font-bold px-2.5 py-1 rounded-full whitespace-nowrap" style={{ background: '#EEF2FF', color: '#1D3FAB' }}>{item.tag}</span>
+              <span style={{ fontSize: 11, fontWeight: 700, padding: '2px 10px', borderRadius: 12, background: '#EEF2FF', color: '#1D3FAB', flexShrink: 0, whiteSpace: 'nowrap' }}>{item.tag}</span>
             </Link>
           ))}
         </div>
       </div>
     </div>
+  );
+}
+
+// ─── MOBILE NAV GROUP ─────────────────────────────────────────────────────────
+function MobileNavGroup({ group, onClose }: { group: typeof NAV_GROUPS[0]; onClose: () => void }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{ marginBottom: 4 }}>
+      <button onClick={() => setOpen(v => !v)} style={{
+        width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        padding: '14px 16px', borderRadius: 12, border: 'none', cursor: 'pointer', fontFamily: 'inherit',
+        fontSize: 15, fontWeight: 600, background: open ? '#EEF2FF' : 'transparent',
+        color: open ? '#1D3FAB' : '#374151', transition: 'all .15s',
+      }}>
+        {group.label}
+        <ChevronDown size={16} style={{ transform: open ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform .2s', color: open ? '#1D3FAB' : '#9CA3AF' }} />
+      </button>
+      {open && (
+        <div style={{ paddingLeft: 12, paddingRight: 4, paddingBottom: 8, display: 'flex', flexDirection: 'column', gap: 2 }}>
+          {group.items.map(item => (
+            <Link key={item.id} href={item.href} onClick={onClose} style={{
+              display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', borderRadius: 10,
+              textDecoration: 'none', fontSize: 14, fontWeight: 500, color: '#374151', transition: 'background .12s',
+            }}
+            onMouseOver={e => (e.currentTarget.style.background = '#EEF2FF')}
+            onMouseOut={e => (e.currentTarget.style.background = 'transparent')}>
+              {item.label}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── MAIN NAVBAR ──────────────────────────────────────────────────────────────
+export default function Navbar() {
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeGroup, setActiveGroup] = useState<string | null>(null);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [authOpen, setAuthOpen] = useState(false);
+  const [searchFocused, setSearchFocused] = useState(false);
+  const pathname = usePathname();
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const profileRef = useRef<HTMLDivElement>(null);
+  const isMac = useMac();
+  const { user, signOut } = useAuth();
+
+  useEffect(() => { setMobileOpen(false); setActiveGroup(null); setProfileOpen(false); }, [pathname]);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); setSearchOpen(v => !v); }
+      if (e.key === 'Escape') { setSearchOpen(false); setActiveGroup(null); setProfileOpen(false); }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  const handleMouseEnter = (id: string) => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setActiveGroup(id);
+  };
+  const handleMouseLeave = () => {
+    closeTimer.current = setTimeout(() => setActiveGroup(null), 150);
+  };
+
+  const handleSignOut = () => {
+    signOut();
+    setProfileOpen(false);
+  };
+
+  const currentGroup = NAV_GROUPS.find(g => g.id === activeGroup);
+
+  return (
+    <>
+      <header style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, background: '#fff', borderBottom: '1px solid #E5E7EB', height: 64 }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px', height: '100%', display: 'flex', alignItems: 'center', gap: 20 }}
+          onMouseLeave={handleMouseLeave}>
+
+          {/* LOGO */}
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none', flexShrink: 0 }}>
+            <div style={{ width: 32, height: 32, background: '#1D3FAB', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Shield size={18} color="#fff" />
+            </div>
+            <span style={{ fontSize: 18, fontWeight: 800, color: '#1A1A2E', letterSpacing: '-0.02em' }}>ConquerNDA</span>
+          </Link>
+
+          {/* NAV LINKS — desktop */}
+          <nav style={{ display: 'flex', alignItems: 'center', gap: 28, flex: 1, justifyContent: 'center' }} className="hide-mobile">
+            {NAV_GROUPS.map(group => (
+              <button key={group.id}
+                onMouseEnter={() => handleMouseEnter(group.id)}
+                onClick={() => setActiveGroup(activeGroup === group.id ? null : group.id)}
+                style={{
+                  background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit',
+                  fontSize: 14, fontWeight: 500, color: activeGroup === group.id ? '#1D3FAB' : '#4B5563',
+                  transition: 'color .15s', display: 'flex', alignItems: 'center', gap: 4, padding: 0,
+                }}>
+                {group.label}
+                <ChevronDown size={14} style={{ transition: 'transform .2s', transform: activeGroup === group.id ? 'rotate(180deg)' : 'rotate(0)' }} />
+              </button>
+            ))}
+          </nav>
+
+          {/* RIGHT SECTION */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+
+            {/* SEARCH BAR — desktop */}
+            <div className="hide-mobile" style={{ position: 'relative' }}>
+              <div
+                onClick={() => setSearchOpen(true)}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 8,
+                  width: searchFocused ? 320 : 260, height: 38,
+                  background: searchFocused ? '#fff' : '#F3F4F6',
+                  border: `1px solid ${searchFocused ? '#1D3FAB' : '#E5E7EB'}`,
+                  boxShadow: searchFocused ? '0 0 0 3px rgba(29,63,171,0.1)' : 'none',
+                  borderRadius: 20, padding: '0 12px', cursor: 'pointer',
+                  transition: 'all .2s ease',
+                }}
+                onMouseOver={e => { if (!searchFocused) (e.currentTarget as HTMLElement).style.borderColor = '#1D3FAB'; }}
+                onMouseOut={e => { if (!searchFocused) (e.currentTarget as HTMLElement).style.borderColor = '#E5E7EB'; }}
+              >
+                <Search size={16} style={{ color: '#9CA3AF', flexShrink: 0 }} />
+                <span style={{ flex: 1, fontSize: 13, color: '#9CA3AF' }}>Search pages, tools...</span>
+                <span style={{ fontSize: 11, fontFamily: 'monospace', color: '#9CA3AF', background: '#fff', border: '1px solid #E5E7EB', borderRadius: 6, padding: '2px 6px', flexShrink: 0, whiteSpace: 'nowrap' }}>
+                  {isMac ? '⌘K' : 'Ctrl K'}
+                </span>
+              </div>
+            </div>
+
+            {/* Search icon — mobile only */}
+            <button
+              className="show-mobile-only"
+              onClick={() => setSearchOpen(true)}
+              style={{ width: 36, height: 36, borderRadius: '50%', background: '#F3F4F6', border: '1px solid #E5E7EB', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+              <Search size={16} style={{ color: '#6B7280' }} />
+            </button>
+
+            {/* DIVIDER */}
+            <div className="hide-mobile" style={{ width: 1, height: 24, background: '#E5E7EB', flexShrink: 0 }} />
+
+            {/* AUTH STATE */}
+            {user ? (
+              <div style={{ position: 'relative' }} ref={profileRef}>
+                <button
+                  onClick={() => setProfileOpen(v => !v)}
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: 8, padding: '4px 8px 4px 4px',
+                    borderRadius: 24, border: 'none', background: profileOpen ? '#F3F4F6' : 'transparent',
+                    cursor: 'pointer', fontFamily: 'inherit', transition: 'background .15s',
+                  }}
+                  onMouseOver={e => (e.currentTarget.style.background = '#F3F4F6')}
+                  onMouseOut={e => { if (!profileOpen) e.currentTarget.style.background = 'transparent'; }}>
+                  <Avatar name={user.name} size={36} url={user.avatarUrl} />
+                  <span className="hide-mobile" style={{ fontSize: 14, fontWeight: 500, color: '#1A1A2E', maxWidth: 100, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {user.name.split(' ')[0].slice(0, 10)}
+                  </span>
+                  <ChevronDown size={14} className="hide-mobile" style={{ color: '#6B7280', transform: profileOpen ? 'rotate(180deg)' : 'rotate(0)', transition: 'transform .2s', flexShrink: 0 }} />
+                </button>
+                {profileOpen && (
+                  <ProfileDropdown onClose={() => setProfileOpen(false)} onSignOut={handleSignOut} />
+                )}
+              </div>
+            ) : (
+              <div className="hide-mobile" style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <button onClick={() => setAuthOpen(true)} style={{
+                  background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit',
+                  fontSize: 14, fontWeight: 500, color: '#374151', transition: 'color .15s', padding: '8px 4px',
+                }}
+                onMouseOver={e => (e.currentTarget.style.color = '#1D3FAB')}
+                onMouseOut={e => (e.currentTarget.style.color = '#374151')}>
+                  Sign in
+                </button>
+                <button onClick={() => setAuthOpen(true)} style={{
+                  background: '#1D3FAB', color: '#fff', border: 'none', cursor: 'pointer',
+                  fontFamily: 'inherit', fontSize: 14, fontWeight: 500, padding: '8px 18px',
+                  borderRadius: 20, transition: 'background .15s',
+                }}
+                onMouseOver={e => (e.currentTarget.style.background = '#1630A0')}
+                onMouseOut={e => (e.currentTarget.style.background = '#1D3FAB')}>
+                  Start free
+                </button>
+              </div>
+            )}
+
+            {/* Hamburger — mobile */}
+            <button
+              onClick={() => setMobileOpen(true)}
+              className="show-mobile-only"
+              style={{ width: 36, height: 36, borderRadius: 8, background: '#F3F4F6', border: '1px solid #E5E7EB', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+              <Menu size={18} style={{ color: '#4B5563' }} />
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* MEGA DROPDOWN */}
+      {activeGroup && currentGroup && (
+        <div style={{ position: 'fixed', top: 64, left: 0, right: 0, zIndex: 99, background: '#fff', borderBottom: '1px solid #E5E7EB', boxShadow: '0 16px 48px rgba(0,0,0,0.08)' }}
+          onMouseEnter={() => { if (closeTimer.current) clearTimeout(closeTimer.current); }}
+          onMouseLeave={handleMouseLeave}>
+          <div style={{ maxWidth: 1200, margin: '0 auto', padding: '24px 24px 28px' }}>
+            <div style={{ fontSize: 11, fontWeight: 700, color: '#9CA3AF', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 16 }}>{currentGroup.label}</div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 8 }}>
+              {currentGroup.items.map(item => (
+                <Link key={item.id} href={item.href} onClick={() => setActiveGroup(null)}
+                  style={{ display: 'flex', alignItems: 'flex-start', gap: 12, padding: '12px 14px', borderRadius: 12, textDecoration: 'none', border: '1px solid transparent', transition: 'all .15s' }}
+                  onMouseOver={e => { e.currentTarget.style.background = '#F8FAFF'; e.currentTarget.style.borderColor = '#E5E7EB'; }}
+                  onMouseOut={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'transparent'; }}>
+                  <div style={{ width: 36, height: 36, borderRadius: 10, background: '#EEF2FF', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <Shield size={16} style={{ color: '#1D3FAB' }} />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 14, fontWeight: 600, color: '#1A1A2E', marginBottom: 2, display: 'flex', gap: 6, alignItems: 'center' }}>
+                      {item.label}
+                      {item.badge && <span style={{ fontSize: 9, fontWeight: 700, padding: '1px 6px', borderRadius: 10, background: '#EEF2FF', color: '#1D3FAB' }}>{item.badge}</span>}
+                    </div>
+                    {item.desc && <div style={{ fontSize: 12, color: '#6B7280', lineHeight: 1.4 }}>{item.desc}</div>}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MOBILE DRAWER */}
+      {mobileOpen && (
+        <>
+          <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(4px)', zIndex: 110 }} onClick={() => setMobileOpen(false)} />
+          <div style={{ position: 'fixed', top: 0, right: 0, bottom: 0, width: 320, background: '#fff', zIndex: 120, display: 'flex', flexDirection: 'column', boxShadow: '-8px 0 32px rgba(0,0,0,0.12)' }}>
+            {/* Drawer header */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px', borderBottom: '1px solid #E5E7EB' }}>
+              <span style={{ fontSize: 17, fontWeight: 700, color: '#1A1A2E' }}>Menu</span>
+              <button onClick={() => setMobileOpen(false)} style={{ width: 32, height: 32, borderRadius: 8, background: '#F3F4F6', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <X size={18} style={{ color: '#4B5563' }} />
+              </button>
+            </div>
+
+            {/* User or auth buttons */}
+            <div style={{ padding: '16px 20px', borderBottom: '1px solid #E5E7EB' }}>
+              {user ? (
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                  <Avatar name={user.name} size={40} url={user.avatarUrl} />
+                  <div>
+                    <div style={{ fontSize: 14, fontWeight: 600, color: '#1A1A2E' }}>{user.name}</div>
+                    <span style={{ fontSize: 11, fontWeight: 700, padding: '2px 8px', borderRadius: 12, background: '#FEF3C7', color: '#92400E' }}>Free plan</span>
+                  </div>
+                </div>
+              ) : (
+                <div style={{ display: 'flex', gap: 10 }}>
+                  <button onClick={() => { setMobileOpen(false); setAuthOpen(true); }} style={{
+                    flex: 1, padding: '10px 0', borderRadius: 20, border: '1px solid #E5E7EB',
+                    background: '#fff', color: '#374151', fontSize: 14, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
+                  }}>Sign in</button>
+                  <button onClick={() => { setMobileOpen(false); setAuthOpen(true); }} style={{
+                    flex: 1, padding: '10px 0', borderRadius: 20, border: 'none',
+                    background: '#1D3FAB', color: '#fff', fontSize: 14, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
+                  }}>Start free</button>
+                </div>
+              )}
+            </div>
+
+            {/* Nav links */}
+            <nav style={{ flex: 1, overflowY: 'auto', padding: '12px 12px' }}>
+              {NAV_GROUPS.map(group => <MobileNavGroup key={group.id} group={group} onClose={() => setMobileOpen(false)} />)}
+            </nav>
+
+            {/* Profile / sign out in footer */}
+            {user && (
+              <div style={{ padding: '12px 16px', borderTop: '1px solid #E5E7EB', display: 'flex', gap: 10 }}>
+                <Link href="/profile" onClick={() => setMobileOpen(false)} style={{ flex: 1, padding: '10px 0', textAlign: 'center', borderRadius: 20, border: '1px solid #E5E7EB', color: '#1D3FAB', fontSize: 14, fontWeight: 600, textDecoration: 'none' }}>My profile</Link>
+                <button onClick={() => { signOut(); setMobileOpen(false); }} style={{ flex: 1, padding: '10px 0', borderRadius: 20, border: 'none', background: '#FEE2E2', color: '#EF4444', fontSize: 14, fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit' }}>Sign out</button>
+              </div>
+            )}
+          </div>
+        </>
+      )}
+
+      {/* SEARCH MODAL */}
+      {searchOpen && <SearchModal onClose={() => setSearchOpen(false)} />}
+
+      {/* AUTH MODAL */}
+      {authOpen && <AuthModal onClose={() => setAuthOpen(false)} />}
+
+      {/* CSS helpers */}
+      <style>{`
+        @media (min-width: 768px) { .show-mobile-only { display: none !important; } }
+        @media (max-width: 767px) { .hide-mobile { display: none !important; } }
+      `}</style>
+    </>
   );
 }
