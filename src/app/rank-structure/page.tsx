@@ -1,91 +1,116 @@
 'use client';
-import Link from 'next/link';
+import { PageHero, PageLayout, Callout, Card, RelatedStrip, T, SectionLabel } from '@/components/ui/PageShell';
 
 const army = ['Second Lieutenant','Lieutenant','Captain','Major','Lieutenant Colonel','Colonel','Brigadier','Major General','Lieutenant General','General (COAS)'];
 const navy = ['Sub Lieutenant','Lieutenant','Lieutenant Commander','Commander','Captain','Commodore','Rear Admiral','Vice Admiral','Admiral','Admiral of the Fleet'];
 const af = ['Flying Officer','Flight Lieutenant','Squadron Leader','Wing Commander','Group Captain','Air Commodore','Air Vice Marshal','Air Marshal','Air Chief Marshal','Marshal of IAF'];
 
-export default function RankStructure() {
+const services = [
+  { name: 'Indian Army', subtitle: 'After NDA → IMA Dehradun', color: '#2D6A4F', ranks: army },
+  { name: 'Indian Navy', subtitle: 'After NDA → INA Ezhimala', color: T.navyM, ranks: navy },
+  { name: 'Indian Air Force', subtitle: 'After NDA → AFA Hyderabad', color: '#6B3FA0', ranks: af },
+];
+
+const timeline = [
+  { years: '0', label: 'Commission', rank: 'Army: 2nd Lt / Navy: Sub Lt / AF: Flying Officer' },
+  { years: '6', label: 'Captain / Lt Cdr / Sqn Ldr', rank: 'Time-based seniority' },
+  { years: '16', label: 'Colonel / Captain / Gp Capt', rank: 'Merit + ACR-based beyond this' },
+  { years: '26', label: 'Brigadier / Commodore / Air Cdre', rank: 'Selection board' },
+  { years: '34+', label: 'General / Admiral / ACM', rank: 'Top-level appointment' },
+];
+
+export default function RankStructurePage() {
   return (
-    <div className="min-h-screen bg-[#F4F8FF] font-['DM_Sans',sans-serif]">
-      <div className="bg-gradient-to-br from-[#1565C0] to-[#0D47A1] text-white py-20 px-6 relative before:absolute before:inset-x-0 before:top-0 before:h-1 before:bg-[#FFB300]">
-        <div className="max-w-[1080px] mx-auto">
-          <Link href="/" className="text-[#E8F2FF] hover:text-white mb-6 inline-block text-sm font-medium transition-colors">← Back to ConquerNDA</Link>
-          <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#90CAF9] mb-3">Career Path</div>
-          <h1 className="font-['Bebas_Neue',sans-serif] text-5xl md:text-7xl mb-4 tracking-wide">Rank Structure</h1>
-          <p className="text-xl text-[#E8F2FF] max-w-2xl font-light">The complete hierarchy of all three services — Army, Navy, and Air Force.</p>
-        </div>
-      </div>
+    <div style={{ fontFamily: "'Inter','DM Sans',sans-serif", background: T.page, minHeight: '100vh' }}>
+      <PageHero
+        bg={T.navy}
+        badge="Career path"
+        badgeBg="rgba(255,255,255,0.15)"
+        badgeColor="rgba(255,255,255,0.9)"
+        h1="Rank structure"
+        lead="All three services — from NDA entry rank to the very top of the hierarchy."
+        breadcrumbs={[{ label: 'Career', href: '/salary' }, { label: 'Rank Structure' }]}
+      />
 
-      <div className="max-w-[1080px] mx-auto px-6 py-16 space-y-12">
-        <div className="bg-[#E8F2FF] border border-[#C5D8F5] rounded-2xl p-6 text-center">
-          <p className="text-[#1565C0] font-medium text-[15px]">NDA cadets are commissioned as officers at the <strong>lowest commissioned rank</strong> after completing their respective service academy training.</p>
-        </div>
+      <PageLayout sidebarGroup="career">
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {/* Army */}
-          <div className="bg-white rounded-2xl border border-[#C5D8F5] shadow-sm overflow-hidden">
-            <div className="bg-[#2E7D32] p-5 text-white">
-              <h2 className="font-['Bebas_Neue',sans-serif] text-3xl tracking-wide">Indian Army</h2>
-              <p className="text-[#A5D6A7] text-[13px] mt-1">After NDA → IMA Dehradun</p>
-            </div>
-            <div className="p-5">
-              {army.map((rank, i) => (
-                <div key={rank} className={`flex items-center gap-3 py-3 border-b border-gray-50 last:border-0 ${i === 0 ? 'bg-[#E8F5E9] -mx-5 px-5 rounded-lg mb-1' : ''}`}>
-                  <div className="w-7 h-7 rounded-full bg-[#E8F5E9] border border-[#A5D6A7] flex items-center justify-center text-[11px] font-bold text-[#2E7D32] shrink-0">{army.length - i}</div>
-                  <span className={`text-[14px] ${i === 0 ? 'font-bold text-[#2E7D32]' : 'text-[#455A7A]'}`}>{rank}</span>
-                  {i === 0 && <span className="ml-auto text-[10px] bg-[#2E7D32] text-white px-2 py-0.5 rounded-full font-bold">NDA Entry</span>}
+        <Callout type="info" style={{ marginBottom: 32 }}>
+          NDA cadets are commissioned as officers at the <strong>lowest commissioned rank</strong> after completing their respective service academy training post-NDA.
+        </Callout>
+
+        {/* Three service columns */}
+        <div style={{ marginBottom: 40 }}>
+          <SectionLabel>Service rank hierarchy</SectionLabel>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}>
+            {services.map(svc => (
+              <div key={svc.name} style={{ background: T.white, border: `1px solid ${T.border}`, borderTop: `6px solid ${svc.color}`, borderRadius: 12, overflow: 'hidden', boxShadow: T.shadow }}>
+                <div style={{ padding: '20px 24px', borderBottom: `1px solid ${T.border}` }}>
+                  <h2 style={{ fontWeight: 700, fontSize: 20, color: svc.color, marginBottom: 4 }}>{svc.name}</h2>
+                  <p style={{ fontSize: 13, color: T.textMuted }}>{svc.subtitle}</p>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Navy */}
-          <div className="bg-white rounded-2xl border border-[#C5D8F5] shadow-sm overflow-hidden">
-            <div className="bg-[#1565C0] p-5 text-white">
-              <h2 className="font-['Bebas_Neue',sans-serif] text-3xl tracking-wide">Indian Navy</h2>
-              <p className="text-[#90CAF9] text-[13px] mt-1">After NDA → INA Ezhimala</p>
-            </div>
-            <div className="p-5">
-              {navy.map((rank, i) => (
-                <div key={rank} className={`flex items-center gap-3 py-3 border-b border-gray-50 last:border-0 ${i === 0 ? 'bg-[#E8F2FF] -mx-5 px-5 rounded-lg mb-1' : ''}`}>
-                  <div className="w-7 h-7 rounded-full bg-[#E8F2FF] border border-[#90CAF9] flex items-center justify-center text-[11px] font-bold text-[#1565C0] shrink-0">{navy.length - i}</div>
-                  <span className={`text-[14px] ${i === 0 ? 'font-bold text-[#1565C0]' : 'text-[#455A7A]'}`}>{rank}</span>
-                  {i === 0 && <span className="ml-auto text-[10px] bg-[#1565C0] text-white px-2 py-0.5 rounded-full font-bold">NDA Entry</span>}
+                <div style={{ padding: '16px 24px' }}>
+                  {svc.ranks.map((rank, i) => (
+                    <div key={rank} style={{
+                      display: 'flex', alignItems: 'center', gap: 12,
+                      padding: '10px 0',
+                      borderBottom: i < svc.ranks.length - 1 ? `1px solid ${T.border}` : 'none',
+                      background: i === 0 ? 'transparent' : 'none',
+                      borderLeft: i === 0 ? `3px solid ${T.amber}` : 'none',
+                      paddingLeft: i === 0 ? 10 : 0,
+                      marginLeft: i === 0 ? -10 : 0,
+                    }}>
+                      <div style={{
+                        width: 28, height: 28, borderRadius: '50%',
+                        background: i === 0 ? svc.color : T.page,
+                        color: i === 0 ? '#fff' : T.textMuted,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        fontSize: 11, fontWeight: 700, flexShrink: 0,
+                      }}>{svc.ranks.length - i}</div>
+                      <span style={{ fontSize: 14, fontWeight: i === 0 ? 600 : 400, color: i === 0 ? T.text : T.slate600, flex: 1 }}>{rank}</span>
+                      {i === 0 && (
+                        <span style={{ fontSize: 11, fontWeight: 700, color: T.amber, background: T.amberBg, padding: '2px 8px', borderRadius: 20 }}>NDA entry</span>
+                      )}
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Air Force */}
-          <div className="bg-white rounded-2xl border border-[#C5D8F5] shadow-sm overflow-hidden">
-            <div className="bg-[#7B1FA2] p-5 text-white">
-              <h2 className="font-['Bebas_Neue',sans-serif] text-3xl tracking-wide">Indian Air Force</h2>
-              <p className="text-[#CE93D8] text-[13px] mt-1">After NDA → AFA Hyderabad</p>
-            </div>
-            <div className="p-5">
-              {af.map((rank, i) => (
-                <div key={rank} className={`flex items-center gap-3 py-3 border-b border-gray-50 last:border-0 ${i === 0 ? 'bg-[#F3E5F5] -mx-5 px-5 rounded-lg mb-1' : ''}`}>
-                  <div className="w-7 h-7 rounded-full bg-[#F3E5F5] border border-[#CE93D8] flex items-center justify-center text-[11px] font-bold text-[#7B1FA2] shrink-0">{af.length - i}</div>
-                  <span className={`text-[14px] ${i === 0 ? 'font-bold text-[#7B1FA2]' : 'text-[#455A7A]'}`}>{rank}</span>
-                  {i === 0 && <span className="ml-auto text-[10px] bg-[#7B1FA2] text-white px-2 py-0.5 rounded-full font-bold">NDA Entry</span>}
-                </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Note */}
-        <div className="bg-[#FFF8E1] border border-[#FFE082] rounded-2xl p-6">
-          <h3 className="font-bold text-[#B78103] mb-2">Key Notes on Promotions</h3>
-          <ul className="text-[#455A7A] text-[14px] space-y-2 list-disc list-inside">
-            <li>Promotions up to Colonel/Captain (Navy)/Group Captain are largely time-based (seniority).</li>
-            <li>Above these ranks, promotions are based on merit, ACRs (Annual Confidential Reports), and vacancies.</li>
-            <li>The rank of Marshal of the IAF / Admiral of the Fleet / Field Marshal is an honorary rank, rarely conferred.</li>
-            <li>NDA cadets, after the passing-out parade, join their respective service academies (IMA, INA, AFA) for final training before commissioning.</li>
-          </ul>
+        {/* Career timeline */}
+        <div style={{ marginBottom: 40 }}>
+          <SectionLabel>Time to each rank (approximate)</SectionLabel>
+          <Card>
+            <div style={{ position: 'relative', paddingLeft: 24 }}>
+              <div style={{ position: 'absolute', left: 0, top: 8, bottom: 8, width: 2, background: T.border }} />
+              {timeline.map((t, i) => (
+                <div key={i} style={{ position: 'relative', marginBottom: i < timeline.length - 1 ? 28 : 0 }}>
+                  <div style={{ position: 'absolute', left: -30, top: 4, width: 14, height: 14, borderRadius: '50%', background: i === 0 ? T.amber : T.navyM, border: `3px solid ${T.page}` }} />
+                  <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                    <span style={{ fontSize: 12, fontWeight: 700, color: T.navyM, background: '#EEF2FF', padding: '2px 10px', borderRadius: 20, whiteSpace: 'nowrap', flexShrink: 0 }}>Year {t.years}</span>
+                    <div>
+                      <div style={{ fontWeight: 600, fontSize: 15, color: T.text }}>{t.label}</div>
+                      <div style={{ fontSize: 13, color: T.textMuted, marginTop: 2 }}>{t.rank}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Card>
         </div>
-      </div>
+
+        <Callout type="info">
+          <strong>Promotions up to Colonel/Captain/Group Captain</strong> are largely time-based (seniority). Above these ranks, promotions depend on merit, Annual Confidential Reports, and vacancies. The rank of Marshal of IAF / Admiral of the Fleet / Field Marshal is honorary and rarely conferred.
+        </Callout>
+
+      </PageLayout>
+
+      <RelatedStrip items={[
+        { label: 'Salary & Perks', href: '/salary', desc: 'Pay scale breakdown', icon: '💰' },
+        { label: 'NDA Training Life', href: '/training', desc: '3 years at the academy', icon: '🏛️' },
+        { label: 'What is NDA', href: '/what-is-nda', desc: 'Overview and wings', icon: '🛡️' },
+      ]} />
     </div>
   );
 }

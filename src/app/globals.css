@@ -353,3 +353,10 @@ body {
   display: flex; align-items: center; gap: 1rem; margin: 3rem 0;
 }
 .section-divider .line { flex: 1; height: 1px; background: var(--border); }
+
+/* ===== PAGE SHELL UTILITIES ===== */
+.hidden-mobile { display: block; }
+@media (max-width: 768px) {
+  .hidden-mobile { display: none !important; }
+}
+table { overflow-x: auto; }

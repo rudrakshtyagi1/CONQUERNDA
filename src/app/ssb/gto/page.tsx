@@ -1,85 +1,104 @@
 'use client';
-import Link from 'next/link';
+import { PageHero, PageLayout, Callout, Card, RelatedStrip, T, SectionLabel } from '@/components/ui/PageShell';
 
-export default function SSBGTO() {
+const tasks = [
+  { num: 1, name: 'Group Discussion (GD)', duration: '~20 min', desc: 'Two topics discussed back-to-back — one current affairs, one social or abstract. No conclusion is expected.', tip: 'Be logical, listen actively, and do not dominate. Bring in others who have not spoken.' },
+  { num: 2, name: 'Group Planning Exercise (GPE)', duration: '~45 min', desc: 'A military or disaster scenario on a 3D model. Write an individual plan, then form a final group plan.', tip: 'Prioritise lives over material. Your individual plan and group plan should be coherent.' },
+  { num: 3, name: 'Progressive Group Task (PGT)', duration: '~30 min', desc: 'Navigate 4 obstacle lines without touching the ground using planks, ropes, and barrels. Difficulty increases.', tip: 'Think cantilever solutions quickly. Help teammates — individual brilliance is secondary.' },
+  { num: 4, name: 'Half Group Task (HGT)', duration: '~20 min', desc: 'Same as PGT but the group is halved (4–5 members). Gives the GTO a closer look at each individual.', tip: 'Show practical intelligence. This is your best chance to stand out as a contributor.' },
+  { num: 5, name: 'Individual Obstacles (IO)', duration: '~3 min', desc: 'Complete 10 physical obstacles in 3 minutes. Obstacles are numbered 1–10 by difficulty and marks.', tip: 'Stamina and fearlessness matter. Attempt higher-numbered obstacles first if possible.' },
+  { num: 6, name: 'Command Task (CT)', duration: '~15 min', desc: 'You are made the commander and choose 2 subordinates from your group to help you solve an obstacle.', tip: 'Treat subordinates with respect and brief them clearly. The GTO watches leadership style.' },
+];
+
+const qualities = [
+  { icon: '🚀', title: 'Initiative', desc: 'Taking the lead without waiting to be told. NDA officers must act under uncertainty.' },
+  { icon: '🤝', title: 'Cooperation', desc: 'Working effectively as part of a team. Self before team is a red flag for assessors.' },
+  { icon: '💪', title: 'Physical courage', desc: 'Willingness to attempt obstacles and take calculated risks.' },
+  { icon: '🗣️', title: 'Communication', desc: 'Expressing ideas clearly and listening to others — equally important.' },
+];
+
+export default function GTOPage() {
   return (
-    <div className="min-h-screen bg-surface font-['DM_Sans',sans-serif]">
-      <div className="bg-gradient-to-br from-[#1565C0] to-[#0D47A1] text-white py-20 px-6 relative before:absolute before:inset-x-0 before:top-0 before:h-1 before:bg-[#FFB300]">
-        <div className="max-w-[1080px] mx-auto">
-          <Link href="/ssb" className="text-[#E8F2FF] hover:text-white mb-6 inline-block text-sm font-medium transition-colors">
-            ← Back to SSB Overview
-          </Link>
-          <h1 className="font-['Bebas_Neue',sans-serif] text-5xl md:text-7xl mb-4 tracking-wide">SSB GTO Tasks</h1>
-          <p className="text-xl md:text-2xl text-[#E8F2FF] max-w-2xl font-light">
-            Group Testing Officer Tasks — Leadership in Action
-          </p>
-        </div>
-      </div>
+    <div style={{ fontFamily: "'Inter','DM Sans',sans-serif", background: T.page, minHeight: '100vh' }}>
+      <PageHero
+        bg={T.navy}
+        badge="SSB Day 3 & 4"
+        badgeBg="rgba(255,255,255,0.15)"
+        badgeColor="rgba(255,255,255,0.9)"
+        h1="GTO tasks"
+        lead="Group Testing Officer tasks assess physical fitness, mental agility, teamwork, and leadership in real group environments."
+        breadcrumbs={[{ label: 'SSB', href: '/ssb' }, { label: 'GTO Tasks' }]}
+        stats={[
+          { label: 'Days', value: 'Day 3 & 4' },
+          { label: 'Group size', value: '8–10 cadets' },
+          { label: 'Total tasks', value: '7' },
+        ]}
+      />
 
-      <div className="max-w-[1080px] mx-auto px-6 py-16 space-y-10 text-[#0D1B2A]">
-        <div className="bg-white p-8 rounded-2xl border border-[#C5D8F5] shadow-sm mb-8">
-          <p className="text-[#455A7A] leading-relaxed">
-            The Group Testing Officer (GTO) tasks assess your physical fitness, mental agility, teamwork, and leadership skills in group environments. You will be divided into groups of 8-10 candidates. The tasks are spread across Day 3 and Day 4.
-          </p>
-        </div>
+      <PageLayout sidebarGroup="ssb">
 
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-white p-6 rounded-2xl border border-[#C5D8F5] shadow-sm hover:border-[#1565C0] transition-colors">
-            <h3 className="font-['Bebas_Neue',sans-serif] text-2xl text-[#1565C0] tracking-wide mb-2">1. Group Discussion (GD)</h3>
-            <p className="text-[#455A7A] text-sm mb-3">
-              Two topics are discussed back-to-back (one current affairs, one social/abstract). No conclusions are expected.
-            </p>
-            <div className="text-xs font-bold text-[#1565C0] uppercase">Tip: Be logical, listen, and do not dominate.</div>
+        {/* Tasks 1–6 grid */}
+        <div style={{ marginBottom: 40 }}>
+          <SectionLabel>All 7 GTO tasks</SectionLabel>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 20, marginBottom: 20 }}>
+            {tasks.map(task => (
+              <div key={task.num} style={{ background: T.white, border: `1px solid ${T.border}`, borderRadius: 12, padding: '20px 24px', boxShadow: T.shadow, display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12, marginBottom: 10 }}>
+                  <div style={{ width: 32, height: 32, borderRadius: '50%', background: T.navyM, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 14, flexShrink: 0 }}>{task.num}</div>
+                  <div>
+                    <h3 style={{ fontWeight: 700, fontSize: 16, color: T.text, marginBottom: 2 }}>{task.name}</h3>
+                    <span style={{ fontSize: 12, color: T.textMuted }}>{task.duration}</span>
+                  </div>
+                </div>
+                <p style={{ fontSize: 14, color: T.slate600, lineHeight: 1.6, marginBottom: 12, flex: 1 }}>{task.desc}</p>
+                <div style={{ borderLeft: `3px solid ${T.navyM}`, background: '#EEF2FF', padding: '8px 12px', borderRadius: '0 6px 6px 0', fontSize: 13, color: T.text }}>
+                  💡 {task.tip}
+                </div>
+              </div>
+            ))}
           </div>
 
-          <div className="bg-white p-6 rounded-2xl border border-[#C5D8F5] shadow-sm hover:border-[#1565C0] transition-colors">
-            <h3 className="font-['Bebas_Neue',sans-serif] text-2xl text-[#1565C0] tracking-wide mb-2">2. Group Planning Exercise (GPE)</h3>
-            <p className="text-[#455A7A] text-sm mb-3">
-              A military or disaster scenario is presented on a 3D model. You must write an individual plan, then discuss to form a final group plan.
-            </p>
-            <div className="text-xs font-bold text-[#1565C0] uppercase">Tip: Prioritize lives over material things.</div>
-          </div>
-
-          <div className="bg-white p-6 rounded-2xl border border-[#C5D8F5] shadow-sm hover:border-[#1565C0] transition-colors">
-            <h3 className="font-['Bebas_Neue',sans-serif] text-2xl text-[#1565C0] tracking-wide mb-2">3. Progressive Group Task (PGT)</h3>
-            <p className="text-[#455A7A] text-sm mb-3">
-              Navigate 4 obstacle lines without touching the ground. You are given helping materials like a plank, rope, and barrel. The difficulty increases progressively.
-            </p>
-            <div className="text-xs font-bold text-[#1565C0] uppercase">Tip: Look for cantilever solutions.</div>
-          </div>
-
-          <div className="bg-white p-6 rounded-2xl border border-[#C5D8F5] shadow-sm hover:border-[#1565C0] transition-colors">
-            <h3 className="font-['Bebas_Neue',sans-serif] text-2xl text-[#1565C0] tracking-wide mb-2">4. Half Group Task (HGT)</h3>
-            <p className="text-[#455A7A] text-sm mb-3">
-              Similar to PGT, but the group is halved (4-5 members). This gives the GTO a closer look at your individual contribution when the crowd is smaller.
-            </p>
-            <div className="text-xs font-bold text-[#1565C0] uppercase">Tip: Show your practical intelligence here.</div>
-          </div>
-
-          <div className="bg-white p-6 rounded-2xl border border-[#C5D8F5] shadow-sm hover:border-[#1565C0] transition-colors">
-            <h3 className="font-['Bebas_Neue',sans-serif] text-2xl text-[#1565C0] tracking-wide mb-2">5. Individual Obstacles (IO)</h3>
-            <p className="text-[#455A7A] text-sm mb-3">
-              Complete 10 physical obstacles in 3 minutes. Each obstacle carries marks from 1 to 10 based on difficulty.
-            </p>
-            <div className="text-xs font-bold text-[#1565C0] uppercase">Tip: Stamina and fearlessness matter.</div>
-          </div>
-
-          <div className="bg-white p-6 rounded-2xl border border-[#C5D8F5] shadow-sm hover:border-[#1565C0] transition-colors">
-            <h3 className="font-['Bebas_Neue',sans-serif] text-2xl text-[#1565C0] tracking-wide mb-2">6. Command Task (CT)</h3>
-            <p className="text-[#455A7A] text-sm mb-3">
-              You are made the commander and asked to choose 2 subordinates from your group to help you solve an obstacle.
-            </p>
-            <div className="text-xs font-bold text-[#1565C0] uppercase">Tip: Treat subordinates with respect.</div>
+          {/* Task 7 — FGT */}
+          <div style={{ background: T.white, border: `1px solid ${T.border}`, borderTop: `4px solid ${T.amber}`, borderRadius: 12, padding: '24px 28px', boxShadow: T.shadow }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
+              <div style={{ width: 32, height: 32, borderRadius: '50%', background: T.amber, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 14 }}>7</div>
+              <div>
+                <h3 style={{ fontWeight: 700, fontSize: 18, color: T.text }}>Final Group Task (FGT)</h3>
+                <span style={{ fontSize: 12, fontWeight: 600, color: T.amber, background: T.amberBg, padding: '2px 10px', borderRadius: 20 }}>Culminating task — most visible</span>
+              </div>
+            </div>
+            <p style={{ fontSize: 14, color: T.slate600, lineHeight: 1.6, marginBottom: 12 }}>Also known as the Snake Race or Group Obstacle Race. The entire group carries a heavy canvas tube (the "snake") through 6 obstacles. You compete against other groups. The GTO checks enthusiasm, team spirit, and rule compliance under fatigue.</p>
+            <Callout type="warning" style={{ margin: 0 }}>
+              This is the final test — energy and team spirit are everything. Give 100% even if you are exhausted. Assessors specifically watch candidates who slow down or disengage here.
+            </Callout>
           </div>
         </div>
 
-        <div className="bg-white p-8 rounded-2xl border border-[#C5D8F5] shadow-sm">
-          <h3 className="font-['Bebas_Neue',sans-serif] text-3xl text-[#1565C0] tracking-wide mb-2">7. Final Group Task (FGT)</h3>
-          <p className="text-[#455A7A] leading-relaxed">
-            Also known as the Snake Race or Group Obstacle Race. The entire group carries a heavy tent-like snake through 6 obstacles. It is a highly energetic task where you compete against other groups. The GTO checks your enthusiasm, team spirit, and rule compliance.
-          </p>
+        {/* What GTO assesses */}
+        <div style={{ marginBottom: 32 }}>
+          <SectionLabel>What the GTO is assessing</SectionLabel>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16 }}>
+            {qualities.map(q => (
+              <Card key={q.title}>
+                <div style={{ fontSize: 28, marginBottom: 10 }}>{q.icon}</div>
+                <h3 style={{ fontWeight: 700, fontSize: 15, color: T.text, marginBottom: 6 }}>{q.title}</h3>
+                <p style={{ fontSize: 14, color: T.textMuted, lineHeight: 1.6 }}>{q.desc}</p>
+              </Card>
+            ))}
+          </div>
         </div>
-      </div>
+
+        <Callout type="tip">
+          The GTO never tells you the "correct" method for an obstacle. There are multiple valid solutions. The assessor watches <em>how</em> you behave, not whether you succeed.
+        </Callout>
+
+      </PageLayout>
+
+      <RelatedStrip items={[
+        { label: 'SSB Overview', href: '/ssb', desc: 'Full 5-day process', icon: '📅' },
+        { label: 'Psychology Tests', href: '/ssb/psychology', desc: 'TAT, WAT, SRT, SDT', icon: '🧠' },
+        { label: 'Personal Interview', href: '/ssb/personal-interview', desc: 'PI preparation', icon: '💬' },
+      ]} />
     </div>
   );
 }

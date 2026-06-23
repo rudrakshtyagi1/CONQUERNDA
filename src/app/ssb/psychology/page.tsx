@@ -1,82 +1,114 @@
 'use client';
-import Link from 'next/link';
+import { PageHero, PageLayout, Callout, Card, RelatedStrip, T } from '@/components/ui/PageShell';
 
-export default function SSBPsychology() {
+export default function PsychologyTestsPage() {
   return (
-    <div className="min-h-screen bg-surface font-['DM_Sans',sans-serif]">
-      <div className="bg-gradient-to-br from-[#1565C0] to-[#0D47A1] text-white py-20 px-6 relative before:absolute before:inset-x-0 before:top-0 before:h-1 before:bg-[#FFB300]">
-        <div className="max-w-[1080px] mx-auto">
-          <Link href="/ssb" className="text-[#E8F2FF] hover:text-white mb-6 inline-block text-sm font-medium transition-colors">
-            ← Back to SSB Overview
-          </Link>
-          <h1 className="font-['Bebas_Neue',sans-serif] text-5xl md:text-7xl mb-4 tracking-wide">SSB Day 2 — Psychology Tests</h1>
-          <p className="text-xl md:text-2xl text-[#E8F2FF] max-w-2xl font-light">
-            Revealing your subconscious thoughts and reactions
-          </p>
-        </div>
-      </div>
+    <div style={{ fontFamily: "'Inter','DM Sans',sans-serif", background: T.page, minHeight: '100vh' }}>
+      <PageHero
+        bg="#EEF2FF"
+        h1="SSB psychology tests"
+        lead="TAT, WAT, SRT and SDT — understand what each test assesses and how to prepare."
+        breadcrumbs={[{ label: 'SSB', href: '/ssb' }, { label: 'Psychology Tests' }]}
+      />
 
-      <div className="max-w-[1080px] mx-auto px-6 py-16 space-y-8 text-[#0D1B2A]">
-        <p className="text-lg text-[#455A7A] mb-8">
-          The psychological tests are based on the premise of projective techniques. Since time is strictly limited, you are forced to react naturally, revealing your true personality to the psychologist.
-        </p>
-
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="bg-white p-8 rounded-2xl border border-[#C5D8F5] shadow-sm">
-            <h2 className="font-['Bebas_Neue',sans-serif] text-3xl text-[#1565C0] tracking-wide mb-2">TAT</h2>
-            <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#455A7A] mb-4">Thematic Apperception Test</div>
-            <p className="text-[#455A7A] text-sm mb-4">
-              You are shown 11 ambiguous pictures and 1 blank slide. Each picture is shown for 30 seconds, and you get 4 minutes to write a story.
-            </p>
-            <ul className="list-disc list-inside text-[#455A7A] text-sm space-y-1">
-              <li>Create a hero who takes initiative.</li>
-              <li>Ensure the story has a logical beginning, middle, and a positive end.</li>
-              <li>For the blank slide, prepare a story in advance about an achievement in your life.</li>
-            </ul>
+      <PageLayout sidebarGroup="ssb">
+        
+        {/* TAT */}
+        <Card style={{ marginBottom: 32, borderTop: `4px solid ${T.navy}` }}>
+          <h2 style={{ fontSize: 24, fontWeight: 800, color: T.navy, marginBottom: 12 }}>TAT — Thematic Apperception Test</h2>
+          <div style={{ marginBottom: 16, fontSize: 14, color: T.text, lineHeight: 1.6 }}>
+            <strong>What it is:</strong> 12 pictures (11 with scenes + 1 blank) shown for 30 seconds each. Write a complete story for each within 4 minutes.
+            <br /><strong>What is assessed:</strong> Imagination, creativity, positive attitude, leadership potential, Officer-Like Qualities.
+            <br /><strong>Duration:</strong> 12 × 4 minutes = ~48 minutes.
           </div>
+          <blockquote style={{ borderLeft: `4px solid ${T.amber}`, margin: '0 0 20px 0', padding: '12px 16px', background: T.amberBg, borderRadius: '0 8px 8px 0', fontSize: 14, fontStyle: 'italic', color: T.slate600 }}>
+            Example prompt: 'Picture shows a young man in uniform standing near a jeep in a rural area...'
+          </blockquote>
+          <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 8 }}>Preparation Tips:</h3>
+          <ol style={{ paddingLeft: 20, fontSize: 14, color: T.slate600, lineHeight: 1.6, display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <li>Always have a clear hero in your story — they should take initiative and solve the problem.</li>
+            <li>Keep stories positive — the hero succeeds even if obstacles exist.</li>
+            <li>Show teamwork, leadership, and social awareness in your stories.</li>
+            <li>Avoid negative endings — no deaths, failures, or unresolved conflicts.</li>
+            <li>Write in simple, clear language — examiners read hundreds of sheets.</li>
+          </ol>
+        </Card>
 
-          <div className="bg-white p-8 rounded-2xl border border-[#C5D8F5] shadow-sm">
-            <h2 className="font-['Bebas_Neue',sans-serif] text-3xl text-[#1565C0] tracking-wide mb-2">WAT</h2>
-            <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#455A7A] mb-4">Word Association Test</div>
-            <p className="text-[#455A7A] text-sm mb-4">
-              60 words are flashed consecutively for 15 seconds each. You must write the first positive or meaningful thought that comes to mind.
-            </p>
-            <ul className="list-disc list-inside text-[#455A7A] text-sm space-y-1">
-              <li>Avoid purely instructional or factual sentences.</li>
-              <li>Show your values. (e.g., Word: "Failure" → "Failure is a stepping stone to success").</li>
-              <li>Keep it short and write fast.</li>
-            </ul>
+        {/* WAT */}
+        <Card style={{ marginBottom: 32, borderTop: `4px solid #059669` }}>
+          <h2 style={{ fontSize: 24, fontWeight: 800, color: '#059669', marginBottom: 12 }}>WAT — Word Association Test</h2>
+          <div style={{ marginBottom: 16, fontSize: 14, color: T.text, lineHeight: 1.6 }}>
+            <strong>What it is:</strong> 60 stimulus words flashed on screen, one every 15 seconds. Write the first meaningful sentence that comes to your mind.
+            <br /><strong>What is assessed:</strong> Subconscious personality, positive thinking, vocabulary, speed of thought.
+            <br /><strong>Duration:</strong> 60 × 15 seconds = 15 minutes.
           </div>
+          <blockquote style={{ borderLeft: `4px solid ${T.amber}`, margin: '0 0 20px 0', padding: '12px 16px', background: T.amberBg, borderRadius: '0 8px 8px 0', fontSize: 14, fontStyle: 'italic', color: T.slate600 }}>
+            Example: Word: 'LEADER' → Your response: 'A good leader puts the team's mission above personal comfort.'
+          </blockquote>
+          <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 8 }}>Preparation Tips:</h3>
+          <ol style={{ paddingLeft: 20, fontSize: 14, color: T.slate600, lineHeight: 1.6, display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <li>Respond instantly — don't overthink. Your first instinct reflects your real personality.</li>
+            <li>Write complete sentences, not just one word.</li>
+            <li>Keep a positive, action-oriented tone.</li>
+            <li>Avoid clichés like 'honesty is the best policy'.</li>
+            <li>Practice 30 words daily in timed conditions.</li>
+          </ol>
+        </Card>
 
-          <div className="bg-white p-8 rounded-2xl border border-[#C5D8F5] shadow-sm">
-            <h2 className="font-['Bebas_Neue',sans-serif] text-3xl text-[#1565C0] tracking-wide mb-2">SRT</h2>
-            <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#455A7A] mb-4">Situation Reaction Test</div>
-            <p className="text-[#455A7A] text-sm mb-4">
-              A booklet with 60 everyday situations is given. You have 30 minutes to write your reactions to all of them.
-            </p>
-            <ul className="list-disc list-inside text-[#455A7A] text-sm space-y-1">
-              <li>Write complete but short actions, not thoughts.</li>
-              <li>Do not leave situations blank. Try to attempt at least 45+.</li>
-              <li>Solve the problem using available resources without overthinking.</li>
-            </ul>
+        {/* SRT */}
+        <Card style={{ marginBottom: 32, borderTop: `4px solid #D97706` }}>
+          <h2 style={{ fontSize: 24, fontWeight: 800, color: '#D97706', marginBottom: 12 }}>SRT — Situation Reaction Test</h2>
+          <div style={{ marginBottom: 16, fontSize: 14, color: T.text, lineHeight: 1.6 }}>
+            <strong>What it is:</strong> 60 practical situations described in a booklet. Write your immediate reaction to each. 30 minutes total.
+            <br /><strong>What is assessed:</strong> Practical intelligence, presence of mind, social responsibility, leadership under pressure.
+            <br /><strong>Duration:</strong> 30 minutes (30 seconds per situation).
           </div>
+          <blockquote style={{ borderLeft: `4px solid ${T.amber}`, margin: '0 0 20px 0', padding: '12px 16px', background: T.amberBg, borderRadius: '0 8px 8px 0', fontSize: 14, fontStyle: 'italic', color: T.slate600 }}>
+            Example: 'Situation: You are walking home and see a house on fire with people trapped inside. You...' → 'Check for fire extinguisher, call 112, alert neighbours, help evacuate calmly.'
+          </blockquote>
+          <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 8 }}>Preparation Tips:</h3>
+          <ol style={{ paddingLeft: 20, fontSize: 14, color: T.slate600, lineHeight: 1.6, display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <li>Be practical and action-oriented — not just emotional.</li>
+            <li>Think in terms of what a responsible, calm, resourceful officer would do.</li>
+            <li>Write at least 2–3 concrete actions per situation.</li>
+            <li>Avoid illegal or self-harm responses.</li>
+            <li>Speed matters — practice with a timer.</li>
+          </ol>
+        </Card>
 
-          <div className="bg-white p-8 rounded-2xl border border-[#C5D8F5] shadow-sm">
-            <h2 className="font-['Bebas_Neue',sans-serif] text-3xl text-[#1565C0] tracking-wide mb-2">SDT</h2>
-            <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#455A7A] mb-4">Self Description Test</div>
-            <p className="text-[#455A7A] text-sm mb-4">
-              You must write 5 paragraphs in 15 minutes describing what different people think of you.
-            </p>
-            <ul className="list-disc list-inside text-[#455A7A] text-sm space-y-1">
-              <li>Opinion of your Parents.</li>
-              <li>Opinion of your Teachers/Employers.</li>
-              <li>Opinion of your Friends.</li>
-              <li>Your own opinion about yourself.</li>
-              <li>Qualities you would like to improve.</li>
-            </ul>
+        {/* SDT */}
+        <Card style={{ marginBottom: 32, borderTop: `4px solid #7C3AED` }}>
+          <h2 style={{ fontSize: 24, fontWeight: 800, color: '#7C3AED', marginBottom: 12 }}>SDT — Self Description Test</h2>
+          <div style={{ marginBottom: 16, fontSize: 14, color: T.text, lineHeight: 1.6 }}>
+            <strong>What it is:</strong> Write what 5 different people say about you — Parents, Teachers, Friends, yourself, and what you want to be.
+            <br /><strong>What is assessed:</strong> Self-awareness, consistency of personality, realism, aspirational thinking.
+            <br /><strong>Duration:</strong> ~15–20 minutes.
           </div>
-        </div>
-      </div>
+          <h3 style={{ fontSize: 16, fontWeight: 700, marginBottom: 8 }}>Preparation Tips:</h3>
+          <ol style={{ paddingLeft: 20, fontSize: 14, color: T.slate600, lineHeight: 1.6, display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <li>Be honest — inconsistency between SDT and your interview answers is a red flag.</li>
+            <li>Show awareness of your weaknesses and a plan to improve them.</li>
+            <li>Each description should feel distinct — parents notice different things than friends.</li>
+            <li>Your 'ideal self' section should align with officer qualities.</li>
+            <li>Practice writing SDT weekly and compare with your actual behavior.</li>
+          </ol>
+        </Card>
+
+        <Callout type="tip">
+          All 4 tests are cross-referenced by the psychologist. Inconsistency across tests is the most common reason for not being recommended.
+        </Callout>
+
+        <Callout type="info" style={{ marginTop: 16 }}>
+          There are no model answers for psychology tests. Assessors look at patterns across all 4 tests to build a personality profile.
+        </Callout>
+
+      </PageLayout>
+
+      <RelatedStrip items={[
+        { label: 'SSB Overview', href: '/ssb', desc: '5-day process', icon: '📅' },
+        { label: 'GTO Tasks', href: '/ssb/gto', desc: 'Outdoor tasks guide', icon: '🏃' },
+        { label: 'Personal Interview', href: '/ssb/personal-interview', desc: 'PI prep', icon: '💬' },
+      ]} />
     </div>
   );
 }

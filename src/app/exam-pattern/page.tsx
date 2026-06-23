@@ -1,132 +1,131 @@
 'use client';
-import Link from 'next/link';
+import { PageHero, PageLayout, StatsRow, Callout, Card, RelatedStrip, Btn, T, SectionLabel } from '@/components/ui/PageShell';
 
-export default function ExamPattern() {
+const bars = [
+  { label: 'Algebra', pct: 30, qs: 36 },
+  { label: 'Calculus', pct: 25, qs: 30 },
+  { label: 'Trigonometry', pct: 20, qs: 24 },
+  { label: 'Geometry', pct: 15, qs: 18 },
+  { label: 'Statistics', pct: 10, qs: 12 },
+];
+
+const gatBars = [
+  { label: 'English', pct: 33, qs: 50, marks: 200 },
+  { label: 'Physics', pct: 20, qs: 30, marks: 120 },
+  { label: 'Chemistry', pct: 12, qs: 18, marks: 72 },
+  { label: 'GS / Biology', pct: 10, qs: 15, marks: 60 },
+  { label: 'History / Polity', pct: 12, qs: 18, marks: 72 },
+  { label: 'Geography', pct: 8, qs: 12, marks: 48 },
+  { label: 'Current Events', pct: 5, qs: 7, marks: 28 },
+];
+
+export default function ExamPatternPage() {
   return (
-    <div className="min-h-screen bg-surface font-['DM_Sans',sans-serif]">
-      {/* Hero Section */}
-      <div className="bg-gradient-to-br from-[#1565C0] to-[#0D47A1] text-white py-20 px-6 relative before:absolute before:inset-x-0 before:top-0 before:h-1 before:bg-[#FFB300]">
-        <div className="max-w-[1080px] mx-auto">
-          <Link href="/" className="text-[#E8F2FF] hover:text-white mb-6 inline-block text-sm font-medium transition-colors">
-            ← Back to ConquerNDA
-          </Link>
-          <h1 className="font-['Bebas_Neue',sans-serif] text-5xl md:text-7xl mb-4 tracking-wide">NDA Exam Pattern</h1>
-          <p className="text-xl md:text-2xl text-[#E8F2FF] max-w-2xl font-light">
-            Structure, Marking Scheme, and Historical Cutoffs
-          </p>
-        </div>
-      </div>
+    <div style={{ fontFamily: "'Inter','DM Sans',sans-serif", background: T.page, minHeight: '100vh' }}>
+      <PageHero
+        bg={T.navy}
+        h1="NDA exam pattern"
+        lead="Two papers, 900 marks total. Complete structure, marking scheme, and timing."
+        breadcrumbs={[{ label: 'NDA Exam', href: '/what-is-nda' }, { label: 'Exam Pattern' }]}
+      />
 
-      <div className="max-w-[1080px] mx-auto px-6 py-16 space-y-12 text-[#0D1B2A]">
-        
-        {/* Paper Structure */}
-        <div>
-          <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#1565C0] mb-2 text-center">Written Examination</div>
-          <h2 className="font-['Bebas_Neue',sans-serif] text-4xl text-[#0D1B2A] tracking-wide mb-8 text-center">Paper Structure</h2>
-          
-          <div className="grid md:grid-cols-2 gap-8">
-            {/* Paper 1 */}
-            <div className="bg-white p-8 rounded-2xl border border-[#C5D8F5] shadow-sm relative overflow-hidden">
-              <div className="absolute top-0 right-0 bg-[#E8F5E9] text-[#2E7D32] px-4 py-1 font-bold text-sm rounded-bl-xl border-b border-l border-[#C5D8F5]">300 Marks</div>
-              <h3 className="font-['Bebas_Neue',sans-serif] text-3xl text-[#1565C0] tracking-wide mb-4">Paper I: Mathematics</h3>
-              <ul className="space-y-3 text-[#455A7A] mb-6">
-                <li className="flex justify-between border-b border-gray-100 pb-2"><span>Questions</span> <span className="font-semibold text-[#0D1B2A]">120 (MCQ)</span></li>
-                <li className="flex justify-between border-b border-gray-100 pb-2"><span>Duration</span> <span className="font-semibold text-[#0D1B2A]">2.5 Hours</span></li>
-                <li className="flex justify-between border-b border-gray-100 pb-2"><span>Correct Answer</span> <span className="font-semibold text-[#2E7D32]">+2.50 marks</span></li>
-                <li className="flex justify-between border-b border-gray-100 pb-2"><span>Negative Marking</span> <span className="font-semibold text-red-600">-0.83 marks</span></li>
-              </ul>
-              <div className="bg-gray-50 p-3 rounded-lg text-sm text-center border border-gray-100">
-                <span className="text-[#455A7A]">Sectional Qualifying Mark:</span> <span className="font-bold text-[#1565C0]">25% (75 Marks)</span>
-              </div>
+      <PageLayout sidebarGroup="nda-exam">
+        <StatsRow stats={[
+          { icon: '📝', label: 'Total Papers', value: '2' },
+          { icon: '🏆', label: 'Total Marks', value: '900' },
+          { icon: '⏱', label: 'Each paper', value: '2.5 hours' },
+          { icon: '❌', label: 'Negative marking', value: 'Yes' },
+        ]} />
+
+        {/* Paper cards */}
+        <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap', marginBottom: 40 }}>
+          {/* Paper I */}
+          <div style={{ flex: '1 1 300px', background: T.white, border: `1px solid ${T.border}`, borderTop: `4px solid ${T.navyM}`, borderRadius: 16, padding: '28px 32px', boxShadow: T.shadow }}>
+            <div style={{ fontSize: 12, fontWeight: 700, color: T.navyM, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>Paper I</div>
+            <h2 style={{ fontSize: 28, fontWeight: 800, color: T.text, marginBottom: 4 }}>Mathematics</h2>
+            <div style={{ display: 'flex', gap: 20, margin: '16px 0', flexWrap: 'wrap' }}>
+              {[['300', 'marks'], ['120', 'questions'], ['2.5 hrs', '']].map(([v, l]) => (
+                <div key={v}>
+                  <div style={{ fontSize: 22, fontWeight: 800, color: T.navyM }}>{v}</div>
+                  <div style={{ fontSize: 12, color: T.textMuted }}>{l}</div>
+                </div>
+              ))}
             </div>
-
-            {/* Paper 2 */}
-            <div className="bg-white p-8 rounded-2xl border border-[#C5D8F5] shadow-sm relative overflow-hidden">
-              <div className="absolute top-0 right-0 bg-[#E8F5E9] text-[#2E7D32] px-4 py-1 font-bold text-sm rounded-bl-xl border-b border-l border-[#C5D8F5]">600 Marks</div>
-              <h3 className="font-['Bebas_Neue',sans-serif] text-3xl text-[#1565C0] tracking-wide mb-4">Paper II: GAT</h3>
-              <p className="text-xs text-[#455A7A] mb-2 uppercase tracking-wider font-bold">General Ability Test (English + GK)</p>
-              <ul className="space-y-3 text-[#455A7A] mb-6">
-                <li className="flex justify-between border-b border-gray-100 pb-2"><span>Questions</span> <span className="font-semibold text-[#0D1B2A]">150 (MCQ)</span></li>
-                <li className="flex justify-between border-b border-gray-100 pb-2"><span>Duration</span> <span className="font-semibold text-[#0D1B2A]">2.5 Hours</span></li>
-                <li className="flex justify-between border-b border-gray-100 pb-2"><span>Correct Answer</span> <span className="font-semibold text-[#2E7D32]">+4.00 marks</span></li>
-                <li className="flex justify-between border-b border-gray-100 pb-2"><span>Negative Marking</span> <span className="font-semibold text-red-600">-1.33 marks</span></li>
-              </ul>
-              <div className="bg-gray-50 p-3 rounded-lg text-sm text-center border border-gray-100">
-                <span className="text-[#455A7A]">Sectional Qualifying Mark:</span> <span className="font-bold text-[#1565C0]">25% (150 Marks)</span>
-              </div>
+            <div style={{ background: '#EEF2FF', borderRadius: 10, padding: '12px 16px', marginBottom: 20, fontSize: 14 }}>
+              <div>✅ Correct: <strong>+2.5 marks</strong></div>
+              <div>❌ Wrong: <strong>−0.83 marks</strong></div>
+            </div>
+            <SectionLabel>Topic distribution</SectionLabel>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              {bars.map(b => (
+                <div key={b.label}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, marginBottom: 4 }}>
+                    <span style={{ fontWeight: 500, color: T.text }}>{b.label}</span>
+                    <span style={{ color: T.textMuted }}>~{b.qs} qs</span>
+                  </div>
+                  <div style={{ background: '#EEF2FF', borderRadius: 99, height: 8 }}>
+                    <div style={{ width: `${b.pct}%`, height: '100%', background: T.navyM, borderRadius: 99 }} />
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-          
-          <div className="mt-8 text-center bg-[#E8F2FF] p-6 rounded-2xl border border-[#C5D8F5]">
-            <h3 className="font-['Bebas_Neue',sans-serif] text-3xl text-[#0D1B2A] tracking-wide mb-2">Total Selection Marks</h3>
-            <p className="text-lg text-[#455A7A]">Written (900) + SSB Interview (900) = <strong className="text-[#1565C0] text-2xl">1800 Marks</strong></p>
+
+          {/* Paper II */}
+          <div style={{ flex: '1 1 300px', background: T.white, border: `1px solid ${T.border}`, borderTop: `4px solid ${T.amber}`, borderRadius: 16, padding: '28px 32px', boxShadow: T.shadow }}>
+            <div style={{ fontSize: 12, fontWeight: 700, color: T.amber, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 8 }}>Paper II</div>
+            <h2 style={{ fontSize: 28, fontWeight: 800, color: T.text, marginBottom: 4 }}>General Ability Test</h2>
+            <div style={{ display: 'flex', gap: 20, margin: '16px 0', flexWrap: 'wrap' }}>
+              {[['600', 'marks'], ['150', 'questions'], ['2.5 hrs', '']].map(([v, l]) => (
+                <div key={v}>
+                  <div style={{ fontSize: 22, fontWeight: 800, color: T.amber }}>{v}</div>
+                  <div style={{ fontSize: 12, color: T.textMuted }}>{l}</div>
+                </div>
+              ))}
+            </div>
+            <div style={{ background: T.amberBg, borderRadius: 10, padding: '12px 16px', marginBottom: 20, fontSize: 14 }}>
+              <div>✅ Correct: <strong>+4 marks</strong></div>
+              <div>❌ Wrong: <strong>−1.33 marks</strong></div>
+            </div>
+            <SectionLabel>Topic distribution</SectionLabel>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              {gatBars.map(b => (
+                <div key={b.label}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, marginBottom: 4 }}>
+                    <span style={{ fontWeight: 500, color: T.text }}>{b.label}</span>
+                    <span style={{ color: T.textMuted }}>~{b.qs} qs</span>
+                  </div>
+                  <div style={{ background: T.amberBg, borderRadius: 99, height: 8 }}>
+                    <div style={{ width: `${b.pct}%`, height: '100%', background: T.amber, borderRadius: 99 }} />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Schedule */}
-        <div className="bg-white p-8 rounded-2xl border border-[#C5D8F5] shadow-sm">
-          <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#1565C0] mb-2">Timeline</div>
-          <h2 className="font-['Bebas_Neue',sans-serif] text-3xl text-[#1565C0] tracking-wide mb-6">Annual Exam Schedule</h2>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse min-w-[500px]">
+        {/* Marking scheme table */}
+        <div style={{ marginBottom: 32 }}>
+          <SectionLabel>Marking scheme summary</SectionLabel>
+          <div style={{ overflowX: 'auto', borderRadius: 12, border: `1px solid ${T.border}`, boxShadow: T.shadow }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>
               <thead>
-                <tr className="bg-gray-50 text-[#0D1B2A] text-sm uppercase tracking-wider">
-                  <th className="p-4 border-b-2 border-gray-200">Cycle</th>
-                  <th className="p-4 border-b-2 border-gray-200">Notification</th>
-                  <th className="p-4 border-b-2 border-gray-200">Exam Date</th>
-                  <th className="p-4 border-b-2 border-gray-200">Result</th>
+                <tr style={{ background: T.navyM }}>
+                  {['Paper', 'Correct answer', 'Wrong answer', 'Unattempted'].map((h, i) => (
+                    <th key={i} style={{ color: '#fff', fontWeight: 600, padding: '12px 16px', textAlign: 'left' }}>{h}</th>
+                  ))}
                 </tr>
               </thead>
-              <tbody className="text-[#455A7A]">
-                <tr>
-                  <td className="p-4 border-b border-gray-100 font-bold text-[#1565C0]">NDA 1</td>
-                  <td className="p-4 border-b border-gray-100">Dec / Jan</td>
-                  <td className="p-4 border-b border-gray-100 bg-[#FFF8E1]">April</td>
-                  <td className="p-4 border-b border-gray-100">June / July</td>
-                </tr>
-                <tr>
-                  <td className="p-4 border-b border-gray-100 font-bold text-[#1565C0]">NDA 2</td>
-                  <td className="p-4 border-b border-gray-100">May / June</td>
-                  <td className="p-4 border-b border-gray-100 bg-[#FFF8E1]">September</td>
-                  <td className="p-4 border-b border-gray-100">November / Dec</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        {/* Cutoffs */}
-        <div className="bg-white p-8 rounded-2xl border border-[#C5D8F5] shadow-sm">
-          <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#1565C0] mb-2">Historical Data</div>
-          <h2 className="font-['Bebas_Neue',sans-serif] text-3xl text-[#1565C0] tracking-wide mb-6">5-Year Cutoff Trends</h2>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse min-w-[500px]">
-              <thead>
-                <tr className="bg-[#1565C0] text-white text-sm uppercase tracking-wider">
-                  <th className="p-3 border-b border-[#0D47A1] rounded-tl-lg">Year</th>
-                  <th className="p-3 border-b border-[#0D47A1]">Cycle</th>
-                  <th className="p-3 border-b border-[#0D47A1]">Written Cutoff (900)</th>
-                  <th className="p-3 border-b border-[#0D47A1] rounded-tr-lg">Final Cutoff (1800)</th>
-                </tr>
-              </thead>
-              <tbody className="text-[#455A7A]">
+              <tbody>
                 {[
-                  { year: '2024', cycle: 'NDA 2', written: '305', final: '673' },
-                  { year: '2024', cycle: 'NDA 1', written: '291', final: '654' },
-                  { year: '2023', cycle: 'NDA 2', written: '292', final: '656' },
-                  { year: '2023', cycle: 'NDA 1', written: '301', final: '664' },
-                  { year: '2022', cycle: 'NDA 2', written: '316', final: '678' },
-                  { year: '2022', cycle: 'NDA 1', written: '360', final: '720' },
-                  { year: '2021', cycle: 'NDA 2', written: '355', final: '726' },
-                  { year: '2021', cycle: 'NDA 1', written: '343', final: '709' },
-                  { year: '2020', cycle: 'NDA 2', written: '355', final: '719' },
-                  { year: '2020', cycle: 'NDA 1', written: '355', final: '723' },
-                ].map((row, i) => (
-                  <tr key={i} className={i % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
-                    <td className="p-3 border-b border-gray-100 font-medium">{row.year}</td>
-                    <td className="p-3 border-b border-gray-100">{row.cycle}</td>
-                    <td className="p-3 border-b border-gray-100 font-bold text-[#0D1B2A]">{row.written}</td>
-                    <td className="p-3 border-b border-gray-100 font-bold text-[#1565C0]">{row.final}</td>
+                  ['Paper I – Mathematics', '+2.5 marks', '−0.83 marks', '0'],
+                  ['Paper II – GAT', '+4 marks', '−1.33 marks', '0'],
+                ].map((row, idx) => (
+                  <tr key={idx} style={{ background: idx % 2 === 0 ? T.white : T.page }}>
+                    <td style={{ padding: '12px 16px', fontWeight: 600, color: T.navyM, borderBottom: `1px solid ${T.border}` }}>{row[0]}</td>
+                    <td style={{ padding: '12px 16px', color: '#16A34A', fontWeight: 600, borderBottom: `1px solid ${T.border}` }}>{row[1]}</td>
+                    <td style={{ padding: '12px 16px', color: '#DC2626', fontWeight: 600, borderBottom: `1px solid ${T.border}` }}>{row[2]}</td>
+                    <td style={{ padding: '12px 16px', color: T.textMuted, borderBottom: `1px solid ${T.border}` }}>{row[3]}</td>
                   </tr>
                 ))}
               </tbody>
@@ -134,7 +133,36 @@ export default function ExamPattern() {
           </div>
         </div>
 
-      </div>
+        <Callout type="warning">
+          Negative marking is heavy — a wrong answer costs you about 1/3rd of the marks for a correct answer. Avoid random guessing; skip if unsure.
+        </Callout>
+
+        {/* SSB marks */}
+        <Card style={{ background: 'linear-gradient(135deg,#FEF3C7 0%,#fff 60%)', border: `1px solid ${T.amber}`, marginTop: 32, marginBottom: 32 }}>
+          <div style={{ display: 'flex', gap: 24, alignItems: 'center', flexWrap: 'wrap' }}>
+            <div style={{ fontSize: 56, fontWeight: 900, color: T.amber, lineHeight: 1 }}>900</div>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: 18, marginBottom: 6 }}>SSB Interview marks</div>
+              <p style={{ fontSize: 14, color: T.slate600, lineHeight: 1.7 }}>
+                SSB Interview adds 900 marks on top of the written exam.<br />
+                <strong>Final merit = Written (900) + SSB (900) = 1800 marks total.</strong>
+              </p>
+            </div>
+          </div>
+        </Card>
+
+        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+          <Btn href="/syllabus" variant="secondary">View complete syllabus →</Btn>
+          <Btn href="/cutoff-analysis" variant="ghost">See historical cutoffs →</Btn>
+        </div>
+
+      </PageLayout>
+
+      <RelatedStrip items={[
+        { label: 'Syllabus', href: '/syllabus', desc: 'Topic-wise breakdown', icon: '📚' },
+        { label: 'Cutoff Analysis', href: '/cutoff-analysis', desc: 'Historical trends', icon: '📈' },
+        { label: 'Previous Papers', href: '/previous-year-papers', desc: 'Practice real PYQs', icon: '📄' },
+      ]} />
     </div>
   );
 }

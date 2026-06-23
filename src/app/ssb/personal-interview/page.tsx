@@ -1,87 +1,132 @@
 'use client';
-import Link from 'next/link';
+import { PageHero, PageLayout, Callout, Card, RelatedStrip, T, SectionLabel } from '@/components/ui/PageShell';
 
-export default function SSBPersonalInterview() {
+const topics = [
+  { num: 1, topic: 'Family & background', detail: 'Relationship with parents and siblings, family income, responsibilities at home.', badge: 'Tests rootedness' },
+  { num: 2, topic: 'Academics & sports', detail: 'Grades, favourite/least favourite subjects, sports played, positions of responsibility held.', badge: 'Tests discipline' },
+  { num: 3, topic: 'Current affairs', detail: 'National and international news of the last 6 months, India\'s foreign relations, and defence updates.', badge: 'Tests awareness' },
+  { num: 4, topic: 'Defence knowledge', detail: 'Ranks, commands, weapons, and recent acquisitions of the service you are applying for.', badge: 'Tests motivation' },
+  { num: 5, topic: 'Why Armed Forces?', detail: 'Your genuine reason for wanting to serve — not a scripted answer. Must match your PIQ.', badge: 'Tests sincerity' },
+  { num: 6, topic: 'Strengths & weaknesses', detail: 'Be specific and honest. Back each point with a real-life example.', badge: 'Tests self-awareness' },
+];
+
+const questions = [
+  { q: 'Why do you want to join the Defence Forces?', hint: 'Be personal and genuine. Avoid clichés like "I want to serve the nation." Cite a specific formative moment.' },
+  { q: 'What if you are not recommended this time?', hint: 'Show resilience without arrogance. You will try again and work on specific weaknesses — name them.' },
+  { q: 'Tell me your 3 strengths and 3 weaknesses.', hint: 'Strengths backed with examples. Weaknesses must be real — and show a plan to improve them.' },
+  { q: 'Who is your role model and why?', hint: 'Can be a family member. Explain the specific qualities you admire and want to emulate as an officer.' },
+  { q: 'Tell me about a time you faced a difficult challenge.', hint: 'Use the STAR format: Situation → Task → Action → Result. Keep it crisp and honest.' },
+  { q: 'How do you spend your pocket money?', hint: 'Shows financial responsibility and priorities. Mention savings and any giving-back habits.' },
+];
+
+const prepSteps = [
+  { num: '01', title: 'Fill the PIQ carefully', desc: 'Everything you write in the Personal Information Questionnaire will be questioned. Think twice before writing each entry.' },
+  { num: '02', title: 'Know yourself deeply', desc: 'Spend 2–3 hours writing about yourself — strengths, weaknesses, values, failures, achievements. Surprises in the PI happen when you don\'t know yourself.' },
+  { num: '03', title: 'Read defence news daily', desc: '15 minutes of defence-specific news daily for 3 months before your SSB. Know the CDS, all Service Chiefs, and major current acquisitions.' },
+  { num: '04', title: 'Practice speaking clearly', desc: 'Record yourself answering mock PI questions. Your tone, pace, and clarity under pressure matters as much as the content.' },
+];
+
+export default function PersonalInterviewPage() {
   return (
-    <div className="min-h-screen bg-surface font-['DM_Sans',sans-serif]">
-      <div className="bg-gradient-to-br from-[#1565C0] to-[#0D47A1] text-white py-20 px-6 relative before:absolute before:inset-x-0 before:top-0 before:h-1 before:bg-[#FFB300]">
-        <div className="max-w-[1080px] mx-auto">
-          <Link href="/ssb" className="text-[#E8F2FF] hover:text-white mb-6 inline-block text-sm font-medium transition-colors">
-            ← Back to SSB Overview
-          </Link>
-          <h1 className="font-['Bebas_Neue',sans-serif] text-5xl md:text-7xl mb-4 tracking-wide">SSB Personal Interview</h1>
-          <p className="text-xl md:text-2xl text-[#E8F2FF] max-w-2xl font-light">
-            One-on-One Assessment of your Character and Awareness
-          </p>
-        </div>
-      </div>
+    <div style={{ fontFamily: "'Inter','DM Sans',sans-serif", background: T.page, minHeight: '100vh' }}>
+      <PageHero
+        bg={T.navy}
+        badge="SSB Day 5"
+        badgeBg="rgba(255,255,255,0.15)"
+        badgeColor="rgba(255,255,255,0.9)"
+        h1="Personal interview"
+        lead="30–60 minutes of direct, honest conversation that determines if you are officer material."
+        breadcrumbs={[{ label: 'SSB', href: '/ssb' }, { label: 'Personal Interview' }]}
+        stats={[
+          { label: 'Duration', value: '30–60 min' },
+          { label: 'Day', value: 'Day 5' },
+          { label: 'Conducted by', value: 'Board President' },
+        ]}
+      />
 
-      <div className="max-w-[1080px] mx-auto px-6 py-16 space-y-10 text-[#0D1B2A]">
-        <div className="bg-white p-8 rounded-2xl border border-[#C5D8F5] shadow-sm">
-          <h2 className="font-['Bebas_Neue',sans-serif] text-3xl text-[#1565C0] tracking-wide mb-4">The Interview Framework</h2>
-          <p className="text-[#455A7A] leading-relaxed mb-4">
-            The Personal Interview usually lasts between 30 to 60 minutes and is conducted by a senior officer (often the President or Deputy President of the Board). The entire interview revolves around your <strong className="text-[#0D1B2A]">PIQ (Personal Information Questionnaire)</strong> form which you fill out on Day 1.
-          </p>
-          <p className="text-[#455A7A] leading-relaxed">
-            The Interviewing Officer assesses your honesty, clarity of thought, general awareness, and how you handle pressure. They check if the person sitting in front of them matches the psychological profile generated by the Psychologist and GTO.
-          </p>
-        </div>
+      <PageLayout sidebarGroup="ssb">
 
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="bg-white p-8 rounded-2xl border border-[#C5D8F5] shadow-sm">
-            <h2 className="font-['Bebas_Neue',sans-serif] text-3xl text-[#1565C0] tracking-wide mb-6">Common Topics</h2>
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3">
-                <span className="w-6 h-6 rounded-full bg-[#E8F2FF] text-[#1565C0] flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">1</span>
-                <div>
-                  <h4 className="font-bold text-[#0D1B2A]">Family & Background</h4>
-                  <p className="text-sm text-[#455A7A]">Relationship with parents/siblings, family income, responsibilities you take at home.</p>
-                </div>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="w-6 h-6 rounded-full bg-[#E8F2FF] text-[#1565C0] flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">2</span>
-                <div>
-                  <h4 className="font-bold text-[#0D1B2A]">Academics & Sports</h4>
-                  <p className="text-sm text-[#455A7A]">Your grades, favorite/least favorite subjects, sports you play, and positions of responsibility held.</p>
-                </div>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="w-6 h-6 rounded-full bg-[#E8F2FF] text-[#1565C0] flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">3</span>
-                <div>
-                  <h4 className="font-bold text-[#0D1B2A]">Current Affairs</h4>
-                  <p className="text-sm text-[#455A7A]">National and international news of the past 6 months, India's foreign relations, and defence updates.</p>
-                </div>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="w-6 h-6 rounded-full bg-[#E8F2FF] text-[#1565C0] flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">4</span>
-                <div>
-                  <h4 className="font-bold text-[#0D1B2A]">Defence Knowledge</h4>
-                  <p className="text-sm text-[#455A7A]">Ranks, commands, weapons, and recent acquisitions of the service you are applying for.</p>
-                </div>
-              </li>
-            </ul>
-          </div>
+        <Card style={{ marginBottom: 32 }}>
+          <h2 style={{ fontSize: 20, fontWeight: 700, color: T.text, marginBottom: 12 }}>How the interview works</h2>
+          <p style={{ fontSize: 14, color: T.slate600, lineHeight: 1.7, marginBottom: 10 }}>
+            The Personal Interview revolves entirely around your <strong>PIQ (Personal Information Questionnaire)</strong> form, which you fill on Day 1. The Interviewing Officer — usually the President or Deputy President — checks if the person in front of them matches the personality profile built by the Psychologist and GTO.
+          </p>
+          <p style={{ fontSize: 14, color: T.slate600, lineHeight: 1.7 }}>
+            Assessors are not looking for perfect answers. They are looking for <strong>authenticity, self-awareness, and pressure handling</strong>.
+          </p>
+        </Card>
 
-          <div className="bg-[#E8F2FF] p-8 rounded-2xl border border-[#C5D8F5]">
-            <h2 className="font-['Bebas_Neue',sans-serif] text-3xl text-[#1565C0] tracking-wide mb-6">Common Questions</h2>
-            <div className="space-y-3 text-sm text-[#0D1B2A] font-medium">
-              <div className="bg-white p-3 rounded-lg shadow-sm border border-[#C5D8F5]">"Why do you want to join the Defence Forces?"</div>
-              <div className="bg-white p-3 rounded-lg shadow-sm border border-[#C5D8F5]">"What if you are not recommended this time?"</div>
-              <div className="bg-white p-3 rounded-lg shadow-sm border border-[#C5D8F5]">"Tell me your 3 strengths and 3 weaknesses."</div>
-              <div className="bg-white p-3 rounded-lg shadow-sm border border-[#C5D8F5]">"Who is your role model and why?"</div>
-              <div className="bg-white p-3 rounded-lg shadow-sm border border-[#C5D8F5]">"How do you spend your pocket money?"</div>
-              <div className="bg-white p-3 rounded-lg shadow-sm border border-[#C5D8F5]">"Tell me about a time you faced a difficult challenge."</div>
+        {/* Two-column layout */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24, marginBottom: 40 }}>
+
+          {/* Common topics */}
+          <div>
+            <SectionLabel>Common interview topics</SectionLabel>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {topics.map(t => (
+                <div key={t.num} style={{ background: T.white, border: `1px solid ${T.border}`, borderRadius: 10, padding: '14px 18px', boxShadow: T.shadow, display: 'flex', gap: 12, alignItems: 'flex-start' }}>
+                  <div style={{ width: 28, height: 28, borderRadius: '50%', background: '#EEF2FF', color: T.navyM, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 13, flexShrink: 0 }}>{t.num}</div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                      <h4 style={{ fontWeight: 600, fontSize: 14, color: T.text }}>{t.topic}</h4>
+                      <span style={{ fontSize: 11, fontWeight: 600, color: T.navyM, background: '#EEF2FF', padding: '2px 8px', borderRadius: 20, whiteSpace: 'nowrap' }}>{t.badge}</span>
+                    </div>
+                    <p style={{ fontSize: 13, color: T.textMuted, lineHeight: 1.5 }}>{t.detail}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
+
+          {/* Common questions */}
+          <div>
+            <SectionLabel>Common questions asked</SectionLabel>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {questions.map((item, i) => (
+                <div key={i} style={{ background: T.white, border: `1px solid ${T.border}`, borderRadius: 10, padding: '16px 18px', boxShadow: T.shadow }}>
+                  <div style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
+                    <span style={{ fontSize: 32, color: '#EEF2FF', fontWeight: 900, lineHeight: 1, flexShrink: 0, marginTop: -4 }}>"</span>
+                    <p style={{ fontSize: 14, fontStyle: 'italic', color: T.text, lineHeight: 1.5, fontWeight: 500 }}>{item.q}</p>
+                  </div>
+                  <div style={{ borderLeft: `3px solid ${T.navyM}`, background: '#EEF2FF', padding: '6px 10px', borderRadius: '0 6px 6px 0', fontSize: 13, color: T.slate600 }}>
+                    💡 {item.hint}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
         </div>
 
-        <div className="bg-white p-8 rounded-2xl border border-green-200 shadow-sm border-l-4 border-l-green-500">
-          <h3 className="font-bold text-[#0D1B2A] text-lg mb-2">Golden Rule</h3>
-          <p className="text-[#455A7A]">
-            Never lie in the personal interview. The Interviewing Officer is highly experienced and trained to catch bluffs. If you do not know the answer to a GK question, simply say, "Sorry sir, I do not know the answer to this, but I will find out." Honesty is always respected.
-          </p>
+        {/* Golden rule — amber warning callout */}
+        <Callout type="warning" style={{ marginBottom: 40 }}>
+          <div>
+            <strong style={{ display: 'block', marginBottom: 4 }}>The golden rule — never lie in the PI.</strong>
+            The Interviewing Officer is highly trained to catch bluffs and inconsistencies. If you don't know an answer, say: <em>"Sorry sir, I don't know, but I will find out."</em> Honesty is always respected over a confident wrong answer.
+          </div>
+        </Callout>
+
+        {/* How to prepare */}
+        <div style={{ marginBottom: 32 }}>
+          <SectionLabel>How to prepare for the PI</SectionLabel>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 16 }}>
+            {prepSteps.map(s => (
+              <div key={s.num} style={{ background: T.white, border: `1px solid ${T.border}`, borderRadius: 12, padding: '20px 24px', boxShadow: T.shadow }}>
+                <div style={{ fontSize: 36, fontWeight: 900, color: '#EEF2FF', marginBottom: 8, lineHeight: 1 }}>{s.num}</div>
+                <h3 style={{ fontWeight: 700, fontSize: 15, marginBottom: 8, color: T.text }}>{s.title}</h3>
+                <p style={{ fontSize: 14, color: T.textMuted, lineHeight: 1.6 }}>{s.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+
+      </PageLayout>
+
+      <RelatedStrip items={[
+        { label: 'SSB Overview', href: '/ssb', desc: 'Full 5-day process', icon: '📅' },
+        { label: 'GTO Tasks', href: '/ssb/gto', desc: 'Group outdoor tasks', icon: '🏃' },
+        { label: 'Defence News', href: '/defence-news', desc: 'Stay current for PI', icon: '📰' },
+      ]} />
     </div>
   );
 }

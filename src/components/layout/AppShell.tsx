@@ -1,14 +1,16 @@
 'use client';
 
 import Navbar from '@/components/layout/Navbar';
+import { Footer } from '@/components/ui/PageShell';
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-[var(--bg-page)]">
+    <div style={{ minHeight: '100vh', background: '#F7F8FC', display: 'flex', flexDirection: 'column' }}>
       <Navbar />
-      <main className="relative pt-[68px] pb-24 lg:pb-0">
+      <main style={{ paddingTop: 72, flex: 1 }}>
         {children}
       </main>
+      <Footer />
     </div>
   );
 }

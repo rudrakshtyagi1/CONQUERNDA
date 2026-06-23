@@ -1,152 +1,128 @@
 'use client';
-import Link from 'next/link';
+import { PageHero, PageLayout, Callout, Card, RelatedStrip, T, SectionLabel } from '@/components/ui/PageShell';
 
 const phases = [
-  {
-    title: 'Phase I — Basic Training (6 Months)',
-    color: '#1565C0',
-    items: [
-      'Introduction to NDA life, discipline, and military ethos',
-      'Basic drill, weapon handling, map reading, and field craft',
-      'Physical conditioning: swimming, obstacle courses, cross-country running',
-      'Academic foundation: Maths, Physics, English, General Studies',
-      'Equitation (horse riding) — a unique NDA tradition',
-    ],
-  },
-  {
-    title: 'Phase II — Academic Year 1 (1 Year)',
-    color: '#2E7D32',
-    items: [
-      'Formal academic curriculum begins — BSc/BA degree program (JNU-affiliated)',
-      'Service-specific subjects introduced (Navigation for Navy, Aero for AF)',
-      'Summer camp and adventure training (trekking, rafting, mountaineering)',
-      'Sports: mandatory participation in team and individual sports',
-      'Leadership tasks begin — Junior Duty Cadet roles',
-    ],
-  },
-  {
-    title: 'Phase III — Academic Year 2 (1 Year)',
-    color: '#7B1FA2',
-    items: [
-      'Advanced academics — electives and specialization',
-      'Cadet Exchange Programs with foreign military academies',
-      'NDA Cross-Country Run — 25km endurance test',
-      'Drill competitions, cultural activities, and social events',
-      'Wing-specific flying/sailing/adventure exposure',
-    ],
-  },
-  {
-    title: 'Phase IV — Graduating Term (6 Months)',
-    color: '#E65100',
-    items: [
-      'Senior leadership responsibilities — appointment as course senior',
-      'Final qualifying exams for BSc/BA degree from JNU',
-      'Overseas Naval cruise for Navy cadets',
-      'The iconic Passing-Out Parade (POP) at NDA Khadakwasla',
-      'Commission received and posted to respective service academies',
-    ],
-  },
+  { num: 1, title: 'Phase I — Basic training (6 months)', items: ['Introduction to NDA life, discipline, and military ethos', 'Basic drill, weapon handling, map reading, and field craft', 'Physical conditioning: swimming, obstacle courses, cross-country', 'Academic foundation: Maths, Physics, English, General Studies', 'Equitation (horse riding) — a unique NDA tradition'] },
+  { num: 2, title: 'Phase II — Academic year 1 (1 year)', items: ['Formal academic curriculum: BSc/BA degree (JNU-affiliated)', 'Service-specific subjects: Navigation (Navy), Aero (Air Force)', 'Summer camp and adventure training: trekking, rafting', 'Sports: mandatory participation in team and individual sports', 'Leadership begins — Junior Duty Cadet roles'] },
+  { num: 3, title: 'Phase III — Academic year 2 (1 year)', items: ['Advanced academics — electives and specialisation', 'Cadet Exchange Programs with foreign military academies', 'NDA Cross-Country Run — 25 km endurance test', 'Drill competitions, cultural events, and social activities', 'Wing-specific flying/sailing/adventure exposure'] },
+  { num: 4, title: 'Phase IV — Graduating term (6 months)', items: ['Senior leadership roles — appointment as course senior', 'Final qualifying exams for BSc/BA from JNU', 'Overseas naval cruise for Navy cadets', 'The iconic Passing-Out Parade (POP) at Khadakwasla', 'Commission received, posted to service academies'] },
 ];
 
 const traditions = [
-  { name: 'Sword of Honour', desc: 'Awarded to the overall best cadet of the passing-out batch. The highest individual honour.' },
-  { name: 'Swimming Test', desc: 'Every cadet must clear a 200-metre swim test. Water courage is a core military skill.' },
-  { name: 'Messing Traditions', desc: 'Formal dinner nights with specific dress codes — silver cutlery, toasts, and protocol.' },
-  { name: 'Equitation', desc: 'All cadets learn horse riding. NDA is one of the few academies globally to maintain this tradition.' },
-  { name: "Chief's Banner", desc: "Awarded to the best squadron in drill, sports, and academics during the POP." },
-  { name: 'The POP March', desc: 'The Passing-Out Parade marches to the tune of Auld Lang Syne — an emotional farewell to cadet life.' },
+  { icon: '⚔️', name: 'Sword of Honour', desc: 'Awarded to the overall best cadet of the passing-out batch — the highest individual honour at NDA.' },
+  { icon: '🏊', name: 'Swimming test', desc: 'Every cadet must clear a 200-metre swim test. Water courage is a core military skill.' },
+  { icon: '🍽️', name: 'Messing traditions', desc: 'Formal dinner nights with specific dress codes — silver cutlery, toasts, and strict protocol.' },
+  { icon: '🐎', name: 'Equitation', desc: 'All cadets learn horse riding. NDA is one of the few academies globally to maintain this tradition.' },
+  { icon: '🚩', name: "Chief's Banner", desc: 'Awarded to the best squadron in drill, sports, and academics during the POP.' },
+  { icon: '🎵', name: 'The POP March', desc: 'The Passing-Out Parade marches to Auld Lang Syne — an emotional farewell to cadet life.' },
 ];
+
+const schedule = [
+  { time: '05:30', activity: 'Reveille — bugle call, cadet wakes up', group: 'Morning' },
+  { time: '05:45', activity: 'PT — drill square or cross-country run', group: 'Morning' },
+  { time: '07:00', activity: 'Ablutions and breakfast in the mess', group: 'Morning' },
+  { time: '08:00–13:00', activity: 'Academic periods — 6 × 50-minute classes', group: 'Morning' },
+  { time: '13:00', activity: 'Lunch and rest period', group: 'Afternoon' },
+  { time: '14:30–16:30', activity: 'Sports — compulsory participation in one sport', group: 'Afternoon' },
+  { time: '16:30–18:30', activity: 'Study period or wing-specific activities', group: 'Afternoon' },
+  { time: '19:00', activity: 'Dinner in the officers mess', group: 'Evening' },
+  { time: '20:00–21:30', activity: 'Self-study period', group: 'Evening' },
+  { time: '22:00', activity: 'Lights Out', group: 'Evening' },
+];
+
+const groups = ['Morning', 'Afternoon', 'Evening'];
+const groupColors: Record<string, string> = { Morning: '#1D3FAB', Afternoon: '#D97706', Evening: '#6B3FA0' };
+const groupBg: Record<string, string> = { Morning: '#EEF2FF', Afternoon: '#FEF3C7', Evening: '#F3E8FF' };
 
 export default function TrainingPage() {
   return (
-    <div className="min-h-screen bg-[#F4F8FF] font-['DM_Sans',sans-serif]">
-      <div className="bg-gradient-to-br from-[#1565C0] to-[#0D47A1] text-white py-20 px-6 relative before:absolute before:inset-x-0 before:top-0 before:h-1 before:bg-[#FFB300]">
-        <div className="max-w-[1080px] mx-auto">
-          <Link href="/" className="text-[#E8F2FF] hover:text-white mb-6 inline-block text-sm font-medium transition-colors">← Back to ConquerNDA</Link>
-          <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#90CAF9] mb-3">Life at the Academy</div>
-          <h1 className="font-['Bebas_Neue',sans-serif] text-5xl md:text-7xl mb-4 tracking-wide">NDA Training Life</h1>
-          <p className="text-xl text-[#E8F2FF] max-w-2xl font-light">3 years that transform a civilian into a military leader. Inside the NDA experience.</p>
-        </div>
-      </div>
+    <div style={{ fontFamily: "'Inter','DM Sans',sans-serif", background: T.page, minHeight: '100vh' }}>
+      <PageHero
+        bg={T.navy}
+        badge="Life at the academy"
+        badgeBg="rgba(255,255,255,0.15)"
+        badgeColor="rgba(255,255,255,0.9)"
+        h1="NDA training life"
+        lead="3 years that transform a civilian into a military officer. Inside the NDA experience."
+        breadcrumbs={[{ label: 'Career', href: '/salary' }, { label: 'NDA Training Life' }]}
+        stats={[
+          { label: 'Total training', value: '3 years' },
+          { label: 'Squadrons', value: '6' },
+          { label: 'Battalions', value: '3' },
+          { label: 'Degree', value: 'JNU BSc/BA' },
+        ]}
+      />
 
-      <div className="max-w-[1080px] mx-auto px-6 py-16 space-y-12">
-        {/* Quick Facts */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[['3 Years', 'Total Training'], ['6 Squadrons', '18 Cadets Each'], ['3 Battalions', 'Army / Navy / AF'], ['JNU Degree', 'BSc or BA']].map(([n, l]) => (
-            <div key={l} className="bg-white rounded-2xl border border-[#C5D8F5] p-6 text-center shadow-sm">
-              <div className="font-['Bebas_Neue',sans-serif] text-3xl text-[#1565C0]">{n}</div>
-              <div className="text-[13px] text-[#455A7A] mt-1">{l}</div>
-            </div>
-          ))}
+      <PageLayout sidebarGroup="career">
+
+        {/* 4 Training phases */}
+        <div style={{ marginBottom: 40 }}>
+          <SectionLabel>Training timeline</SectionLabel>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            {phases.map(p => (
+              <div key={p.num} style={{ background: T.white, border: `1px solid ${T.border}`, borderLeft: `4px solid ${T.navyM}`, borderRadius: '0 12px 12px 0', padding: '20px 24px', boxShadow: T.shadow }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
+                  <div style={{ width: 32, height: 32, borderRadius: '50%', background: T.navyM, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 15, flexShrink: 0 }}>{p.num}</div>
+                  <h3 style={{ fontWeight: 700, fontSize: 16, color: T.text }}>{p.title}</h3>
+                </div>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 8, paddingLeft: 44 }}>
+                  {p.items.map((item, j) => (
+                    <li key={j} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, fontSize: 14, color: T.slate600 }}>
+                      <span style={{ color: T.navyM, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>✓</span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* 4 Phases */}
-        <div>
-          <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#1565C0] mb-2">Training Timeline</div>
-          <h2 className="font-['Bebas_Neue',sans-serif] text-4xl text-[#0D1B2A] tracking-wide mb-8">The 4 Training Phases</h2>
-          <div className="space-y-6">
-            {phases.map((phase, i) => (
-              <div key={i} className="bg-white rounded-2xl border border-[#C5D8F5] shadow-sm overflow-hidden">
-                <div className="p-1.5" style={{ background: phase.color }}>
-                  <div className="bg-white rounded-xl">
-                    <div className="flex items-center gap-4 p-5 border-b border-gray-100">
-                      <div className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-['Bebas_Neue',sans-serif] text-xl" style={{ background: phase.color }}>{i + 1}</div>
-                      <h3 className="font-bold text-[#0D1B2A] text-[16px]">{phase.title}</h3>
+        {/* Daily schedule timeline */}
+        <div style={{ marginBottom: 40 }}>
+          <SectionLabel>A typical day at NDA</SectionLabel>
+          <Card>
+            {groups.map(g => (
+              <div key={g} style={{ marginBottom: 24 }}>
+                <div style={{ fontSize: 12, fontWeight: 700, color: groupColors[g], background: groupBg[g], display: 'inline-block', padding: '3px 12px', borderRadius: 20, marginBottom: 12 }}>{g}</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+                  {schedule.filter(s => s.group === g).map((s, i, arr) => (
+                    <div key={i} style={{ display: 'flex', gap: 16, alignItems: 'flex-start', paddingBottom: i < arr.length - 1 ? 12 : 0, borderBottom: i < arr.length - 1 ? `1px solid ${T.border}` : 'none', marginBottom: i < arr.length - 1 ? 12 : 0 }}>
+                      <span style={{ fontSize: 12, fontWeight: 700, color: groupColors[g], background: groupBg[g], padding: '4px 10px', borderRadius: 20, flexShrink: 0, fontFamily: 'monospace', whiteSpace: 'nowrap' }}>{s.time}</span>
+                      <span style={{ fontSize: 14, color: T.text, paddingTop: 4 }}>{s.activity}</span>
                     </div>
-                    <ul className="p-5 space-y-2">
-                      {phase.items.map((item, j) => (
-                        <li key={j} className="flex items-start gap-3 text-[14px] text-[#455A7A]">
-                          <span className="shrink-0 w-1.5 h-1.5 rounded-full mt-2" style={{ background: phase.color }}></span>
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  ))}
                 </div>
               </div>
             ))}
-          </div>
+          </Card>
         </div>
 
-        {/* Daily Routine */}
-        <div className="bg-white rounded-2xl border border-[#C5D8F5] p-8 shadow-sm">
-          <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#1565C0] mb-2">A Typical Day</div>
-          <h2 className="font-['Bebas_Neue',sans-serif] text-3xl text-[#1565C0] tracking-wide mb-6">Daily Schedule at NDA</h2>
-          <div className="space-y-1">
-            {[
-              ['05:30', 'Reveille — Bugle call, cadet wakes up'],
-              ['05:45', 'PT (Physical Training) — Drill square or cross-country'],
-              ['07:00', 'Morning ablutions and breakfast'],
-              ['08:00–13:00', 'Academic periods (6 periods of 50 mins each)'],
-              ['13:00', 'Lunch and rest period'],
-              ['14:30–16:30', 'Sports (compulsory participation in one sport)'],
-              ['16:30–18:30', 'Study period / Wing activities'],
-              ['19:00', 'Dinner in the mess'],
-              ['20:00–21:30', 'Self-study period'],
-              ['22:00', 'Lights Out'],
-            ].map(([time, activity]) => (
-              <div key={time} className="flex items-center gap-4 py-2.5 border-b border-gray-50 last:border-0">
-                <div className="text-[13px] font-bold text-[#1565C0] w-24 shrink-0">{time}</div>
-                <div className="text-[14px] text-[#455A7A]">{activity}</div>
+        {/* Traditions grid */}
+        <div style={{ marginBottom: 32 }}>
+          <SectionLabel>Iconic NDA traditions</SectionLabel>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 16 }}>
+            {traditions.map(t => (
+              <div key={t.name} style={{ background: T.white, border: `1px solid ${T.border}`, borderRadius: 12, padding: '20px 24px', boxShadow: T.shadow }}>
+                <div style={{ fontSize: 28, marginBottom: 10 }}>{t.icon}</div>
+                <h3 style={{ fontWeight: 700, fontSize: 15, color: T.text, marginBottom: 6 }}>{t.name}</h3>
+                <p style={{ fontSize: 14, color: T.textMuted, lineHeight: 1.6 }}>{t.desc}</p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Traditions */}
-        <div>
-          <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#1565C0] mb-2">Heritage</div>
-          <h2 className="font-['Bebas_Neue',sans-serif] text-4xl text-[#0D1B2A] tracking-wide mb-8">Iconic NDA Traditions</h2>
-          <div className="grid md:grid-cols-2 gap-5">
-            {traditions.map((t) => (
-              <div key={t.name} className="bg-white rounded-2xl border border-[#C5D8F5] p-6 shadow-sm">
-                <h3 className="font-bold text-[#1565C0] mb-2">{t.name}</h3>
-                <p className="text-[14px] text-[#455A7A] leading-relaxed">{t.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+        <Callout type="tip">
+          The Passing-Out Parade is one of India's most celebrated military ceremonies. Parents and family are invited. Topping your batch earns the Sword of Honour — the most coveted prize in the armed forces.
+        </Callout>
+
+      </PageLayout>
+
+      <RelatedStrip items={[
+        { label: 'Rank Structure', href: '/rank-structure', desc: 'Post-commission career path', icon: '⭐' },
+        { label: 'SSB Overview', href: '/ssb', desc: 'Selection process', icon: '📅' },
+        { label: 'Salary & Perks', href: '/salary', desc: 'Pay and benefits', icon: '💰' },
+      ]} />
     </div>
   );
 }

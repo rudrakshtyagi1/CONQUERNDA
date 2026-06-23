@@ -1,338 +1,135 @@
 'use client';
-import Link from 'next/link';
 import { useState } from 'react';
+import { PageHero, PageLayout, Callout, Card, RelatedStrip, T, SectionLabel, StatsRow } from '@/components/ui/PageShell';
 
-const medicalTests = [
-  {
-    id: 'general',
-    day: 'Day 1 — Morning',
-    title: 'General Physical Examination',
-    color: '#1565C0',
-    bg: '#E8F2FF',
-    icon: '🩺',
-    procedures: [
-      {
-        name: 'Height & Weight Measurement',
-        detail: 'Standing height measured without footwear using a stadiometer. Weight measured in light clothing. BMI is calculated. Minimum heights: Army/Navy — 157 cm (male), 152 cm (female); Air Force — 162.5 cm. Weight must be proportionate per standard tables.',
-      },
-      {
-        name: 'Chest Measurement',
-        detail: 'Measured both on full inspiration and full expiration. Minimum chest expansion required is 5 cm. A flat or barrel chest is disqualifying. The difference between expanded and unexpanded must meet the standard.',
-      },
-      {
-        name: 'Skin Examination',
-        detail: 'Full body skin inspection for tattoos (not permitted on face, neck, or hands — inner forearm only for tribal customs), skin diseases like psoriasis, eczema, fungal infections, keloids, and severe acne that may indicate underlying conditions.',
-      },
-      {
-        name: 'Lymph Node Examination',
-        detail: 'All major lymph node groups examined (cervical, axillary, inguinal). Enlarged or matted nodes may indicate tuberculosis, lymphoma, or other conditions requiring investigation.',
-      },
-      {
-        name: 'Teeth & Oral Cavity',
-        detail: 'Minimum 14 dental points required (each present healthy tooth = 2 points, healthy molar = 2 points). Decayed, broken, or missing teeth must be filled or replaced before the exam. Poor oral hygiene alone is not disqualifying if teeth are present.',
-      },
-    ],
-  },
-  {
-    id: 'vision',
-    day: 'Day 1 — Afternoon',
-    title: 'Vision & Eye Examination',
-    color: '#2E7D32',
-    bg: '#E8F5E9',
-    icon: '👁️',
-    procedures: [
-      {
-        name: 'Distant Vision (Snellen Chart)',
-        detail: 'Tested at 6 metres using Snellen chart. Army standard: Better eye 6/6, Worse eye 6/9. Air Force flying: 6/6 in both eyes uncorrected. Navy: 6/6 or 6/9 depending on branch. Colour-coded chart may be used for illiteracy-adjusted testing.',
-      },
-      {
-        name: 'Near Vision Test',
-        detail: 'Tested using Jaeger chart. Must read N5 with better eye and N10 with worse eye. Tests ability to read maps, instruments, and fine print in operational conditions.',
-      },
-      {
-        name: 'Refraction Test',
-        detail: 'Full ophthalmological refraction to determine exact prescription. Myopia (short-sightedness): Maximum -2.5D for Army/Navy, -0.5D or NIL for Air Force flying. Hypermetropia: Maximum +3.5D Army, +2.0D Air Force. Astigmatism: Maximum 0.75D Air Force.',
-      },
-      {
-        name: 'Colour Vision Test',
-        detail: 'Ishihara plates test used first, followed by Lantern test if borderline. Graded CP-I to CP-IV. CP-I (perfect colour vision) required for Air Force. CP-III acceptable for Army. Deuteranopia or protanopia (red-green colour blindness) is disqualifying for Air Force.',
-      },
-      {
-        name: 'Night Vision & Field of Vision',
-        detail: 'Dark adaptation test using scotopic luminance or standard apparatus. Field of vision tested by perimetry — must be minimum 120 degrees combined. Tunnel vision or significant peripheral loss is disqualifying.',
-      },
-      {
-        name: 'Binocular Vision & Squint',
-        detail: 'Convergence and accommodation tested. Manifest squint (strabismus) is disqualifying. Latent squint (phoria) is evaluated — mild phoria may be accepted depending on degree. Depth perception tested with Synoptophore or Stereoscope.',
-      },
-      {
-        name: 'Slit-Lamp Examination',
-        detail: 'Specialist examination of anterior segment: cornea, lens (cataract), anterior chamber. Posterior segment via fundus examination. Any active pathology, optic disc abnormality, or significant retinal lesion is disqualifying.',
-      },
-      {
-        name: 'LASIK / PRK Surgery Note',
-        detail: 'LASIK surgery is NOT permitted for Air Force flying branch. For Army/Navy, post-LASIK candidates may be considered if surgery was performed at least 1 year prior, no complications, residual refraction within limits, and the cornea is stable. PRK is evaluated similarly.',
-      },
-    ],
-  },
-  {
-    id: 'hearing',
-    day: 'Day 1 — Afternoon',
-    title: 'Hearing & ENT Examination',
-    color: '#7B1FA2',
-    bg: '#F3E5F5',
-    icon: '👂',
-    procedures: [
-      {
-        name: 'Whisper Test (Screening)',
-        detail: 'Initial screening — candidate must hear a forced whisper at 610 cm (20 feet) from each ear separately while the other ear is masked. Failure triggers audiometry.',
-      },
-      {
-        name: 'Pure Tone Audiometry',
-        detail: 'Formal hearing assessment at frequencies 250 Hz, 500 Hz, 1000 Hz, 2000 Hz, 4000 Hz, 6000 Hz, 8000 Hz. Average hearing loss in better ear must not exceed 30 dB in speech frequencies. Loss at 4000 Hz (noise-induced) is a key marker.',
-      },
-      {
-        name: 'Tympanometry',
-        detail: 'Tests middle ear pressure and eardrum mobility. Identifies conditions like otitis media with effusion, ossicular chain disruption, or Eustachian tube dysfunction.',
-      },
-      {
-        name: 'ENT Cavity Examination',
-        detail: 'Nose: Deviated Nasal Septum (DNS) assessed — significant DNS causing obstruction is disqualifying. Nasal polyps, chronic sinusitis reviewed. Throat: Tonsillar hypertrophy graded (Grade III/IV may be disqualifying). Voice/speech assessed. Laryngoscopy if indicated.',
-      },
-      {
-        name: 'Vestibular Function Test',
-        detail: 'For Air Force flying candidates, a Barany Chair (caloric) test assesses vestibular labyrinthine function. Vertigo history is carefully investigated. Ménière\'s disease is permanently disqualifying.',
-      },
-    ],
-  },
-  {
-    id: 'systemic',
-    day: 'Day 2 — Morning',
-    title: 'Systemic Examination',
-    color: '#E65100',
-    bg: '#FFF3E0',
-    icon: '❤️',
-    procedures: [
-      {
-        name: 'Cardiovascular System',
-        detail: 'Full cardiac auscultation for murmurs, gallops, rubs. Peripheral pulses assessed. Blood pressure measured (must be 100–140 systolic, 60–90 diastolic). ECG (12-lead) performed on all candidates. Echocardiogram if any murmur detected. Any valvular abnormality, arrhythmia, or structural defect is disqualifying.',
-      },
-      {
-        name: 'Respiratory System',
-        detail: 'Auscultation of lung fields. Spirometry (PFT) may be performed for Air Force. History of asthma is carefully evaluated — exercise-induced bronchospasm or steroid-dependent asthma is disqualifying. Chest X-ray (PA view) mandatory. Tuberculosis history requires complete treatment documentation.',
-      },
-      {
-        name: 'Abdominal Examination',
-        detail: 'Inspection for hernias (inguinal, umbilical, femoral — all disqualifying if symptomatic or unrepaired). Liver, spleen, kidney palpated. Varicocele assessed — Grade II/III bilateral varicocele may be disqualifying. Undescended testis is disqualifying.',
-      },
-      {
-        name: 'Nervous System',
-        detail: 'Full neurological examination: cranial nerves, motor system, reflexes, sensory examination, cerebellar function. History of epilepsy/seizures is PERMANENTLY disqualifying. History of significant head injury with loss of consciousness investigated. Tremors, gait abnormalities assessed.',
-      },
-      {
-        name: 'Musculoskeletal Assessment',
-        detail: 'All joints assessed for range of movement. Flat foot (Pes Planus) graded — Grade III is disqualifying. Scoliosis measured by Cobb angle (>20 degrees is typically disqualifying). Knock knees (Genu Valgum) measured — >5 cm gap disqualifying. Bow legs, leg length discrepancy evaluated.',
-      },
-      {
-        name: 'Spine Examination',
-        detail: 'Cervical, thoracic, and lumbar spine range of movement tested. Spondylolysis, spondylolisthesis, significant disc prolapse are disqualifying. X-ray of spine if clinical examination is abnormal. Scheuermann\'s disease (adolescent kyphosis) evaluated.',
-      },
-    ],
-  },
-  {
-    id: 'laboratory',
-    day: 'Day 2 — Afternoon',
-    title: 'Laboratory & Radiology',
-    color: '#1565C0',
-    bg: '#E8F2FF',
-    icon: '🔬',
-    procedures: [
-      {
-        name: 'Complete Blood Count (CBC)',
-        detail: 'Haemoglobin (minimum 12 g/dL), RBC count, WBC count and differential, platelets. Haemoglobin S (sickle cell trait) testing may be performed in certain cases. Significant anaemia, polycythaemia, or blood cell abnormalities are disqualifying.',
-      },
-      {
-        name: 'Urine Analysis',
-        detail: 'Routine and microscopic examination. Glucose (diabetes screening), protein (kidney disease), blood, pus cells. Persistent proteinuria or haematuria requires further investigation (ultrasound kidneys). Glucosuria triggers blood glucose testing.',
-      },
-      {
-        name: 'Blood Glucose (Fasting & PP)',
-        detail: 'Fasting blood glucose and 2-hour postprandial testing. Any value suggesting impaired glucose tolerance or diabetes mellitus is disqualifying — even borderline values may require an OGTT (Oral Glucose Tolerance Test).',
-      },
-      {
-        name: 'Chest X-Ray (PA View)',
-        detail: 'Standard posterior-anterior chest X-ray. Checked for: active TB, old TB (Ghon\'s focus evaluated), cardiomegaly (cardiothoracic ratio must be <50%), pleural effusion, mediastinal masses, rib abnormalities, scoliosis, and lung pathology.',
-      },
-      {
-        name: 'Electrocardiogram (ECG)',
-        detail: '12-lead resting ECG. Evaluated for: sinus bradycardia (<50 bpm), right/left bundle branch blocks, pre-excitation syndromes (WPW), prolonged QT interval, heart blocks, ST/T wave changes, and arrhythmias. Treadmill stress test (TMT) if indicated.',
-      },
-      {
-        name: 'Liver Function Tests (LFT)',
-        detail: 'SGOT, SGPT, bilirubin, alkaline phosphatase, total protein, albumin. Elevated transaminases may suggest hepatitis or fatty liver. Hepatitis B surface antigen (HBsAg) and anti-HCV tested. Active Hepatitis B/C infection is disqualifying.',
-      },
-      {
-        name: 'HIV Test',
-        detail: 'ELISA-based HIV 1 & 2 screening. A reactive result is confirmed by Western Blot. HIV positive status is permanently and absolutely disqualifying for all three services.',
-      },
-      {
-        name: 'Lipid Profile & Kidney Function',
-        detail: 'Cholesterol, LDL, HDL, triglycerides. Serum creatinine, urea, electrolytes for kidney function. Abnormal creatinine triggers ultrasound of kidneys. Kidney stones (urolithiasis) history evaluated — bilateral or recurrent stones may be disqualifying.',
-      },
-    ],
-  },
-  {
-    id: 'specialist',
-    day: 'Day 3 (if required)',
-    title: 'Specialist Review & Board Decision',
-    color: '#37474F',
-    bg: '#ECEFF1',
-    icon: '📋',
-    procedures: [
-      {
-        name: 'Review Medical Board (RMB)',
-        detail: 'If the initial board is inconclusive or finds a borderline condition, a Review Medical Board (RMB) is convened. The candidate is referred to a specialist military hospital (e.g., AFMSD, Command Hospital) for further evaluation.',
-      },
-      {
-        name: 'Appeal Process',
-        detail: 'If declared UNFIT, the candidate has the right to appeal to an Appellate Medical Board (AMB) within 42 days. The AMB is the final authority. The AMB\'s decision is binding and no further appeal is entertained.',
-      },
-      {
-        name: 'Temporary Unfit (TU) Status',
-        detail: 'For conditions that are treatable (e.g., dental issues, minor hernia, correctable weight), a "Temporarily Unfit" status may be assigned with a specific review date — typically 3–6 months. The candidate must get the condition treated and re-appear.',
-      },
-      {
-        name: 'PULHHEEMS System',
-        detail: 'Indian Military Medicine uses the PULHHEEMS system for fitness grading: P=Physical capacity, U=Upper limbs, L=Lower limbs, H=Hearing (left), H=Hearing (right), E=Eyesight (right), E=Eyesight (left), M=Mental capacity, S=Stability (emotional). Shape 1 is perfect fitness.',
-      },
-    ],
-  },
+const tabs = [
+  { id: 'general', label: 'General physical', items: [
+    { name: 'Height & weight', detail: 'Army/Navy minimum 157 cm (male), AF minimum 162.5 cm. Weight proportionate per standard tables. BMI calculated.' },
+    { name: 'Chest measurement', detail: 'Minimum 77 cm with at least 5 cm expansion on full inspiration. Flat or barrel chest is disqualifying.' },
+    { name: 'Skin examination', detail: 'Tattoos not permitted on face, neck, or hands. Skin diseases like psoriasis, eczema, keloids reviewed.' },
+    { name: 'Teeth & oral', detail: 'Minimum 14 dental points required. Decayed or missing teeth must be filled or replaced before the exam.' },
+  ]},
+  { id: 'vision', label: 'Vision & eyes', items: [
+    { name: 'Distant vision', detail: 'Snellen chart at 6m. Army: better eye 6/6, worse 6/9. Air Force flying: 6/6 in both eyes uncorrected.' },
+    { name: 'Refraction', detail: 'Myopia max −2.5D for Army/Navy, −0.5D for Air Force. Astigmatism max 0.75D for Air Force.' },
+    { name: 'Colour vision', detail: 'Ishihara plates. CP-I required for Air Force flying. CP-III acceptable for Army. Red-green colour blindness disqualifies AF.' },
+    { name: 'LASIK', detail: 'Not permitted for Air Force flying. Army/Navy may be considered if surgery was 1+ year prior with no complications.' },
+  ]},
+  { id: 'hearing', label: 'Hearing', items: [
+    { name: 'Pure tone audiometry', detail: 'Hearing loss must not exceed 30 dB in the speech range (500–2000 Hz). Profound loss in one ear is disqualifying.' },
+    { name: 'ENT examination', detail: 'Ears, nose, and throat examined. Perforated ear drum, chronic otitis media, or nasal polyps are disqualifying.' },
+  ]},
+  { id: 'cardio', label: 'Cardiovascular', items: [
+    { name: 'ECG', detail: '12-lead ECG performed. Any significant arrhythmia, bundle branch blocks, or ST changes require further investigation.' },
+    { name: 'Blood pressure', detail: 'Systolic < 140, Diastolic < 90 required. White coat hypertension may be rechecked. Antihypertensives are disqualifying.' },
+  ]},
 ];
 
-const commonRejections = [
-  { condition: 'Colour Blindness (CP-IV)', serviceImpact: 'All services flying; Army/Navy ground also affected' },
-  { condition: 'Epilepsy / Seizure history', serviceImpact: 'Permanently disqualifying for ALL services' },
-  { condition: 'HIV Positive', serviceImpact: 'Permanently disqualifying for ALL services' },
-  { condition: 'Diabetes Mellitus', serviceImpact: 'Disqualifying for ALL services (even Type 2 diet-controlled)' },
-  { condition: 'Active Hepatitis B/C', serviceImpact: 'Disqualifying; inactive carrier status reviewed case-by-case' },
-  { condition: 'Flat Foot Grade III', serviceImpact: 'Disqualifying for Army; reviewed for Navy/AF' },
-  { condition: 'LASIK Surgery', serviceImpact: 'Disqualifying for Air Force flying; Army/Navy case-by-case' },
-  { condition: 'Manifest Squint', serviceImpact: 'Disqualifying for all services' },
-  { condition: 'Significant DNS with obstruction', serviceImpact: 'Surgery before re-examination required' },
-  { condition: 'Undescended testis', serviceImpact: 'Disqualifying (requires orchidopexy and review)' },
-  { condition: 'Unrepaired Hernia', serviceImpact: 'Temporary unfit; surgery + 6-month review' },
-  { condition: 'Scoliosis >20° Cobb angle', serviceImpact: 'Disqualifying for all services' },
+const conditions = [
+  { condition: 'Myopia > −2.5D (Army/Navy)', severity: 'Permanent', color: '#DC2626', bg: '#FEF2F2' },
+  { condition: 'LASIK (Air Force flying)', severity: 'Permanent', color: '#DC2626', bg: '#FEF2F2' },
+  { condition: 'Colour blindness (Air Force)', severity: 'Permanent', color: '#DC2626', bg: '#FEF2F2' },
+  { condition: 'Controlled hypertension on medication', severity: 'Permanent', color: '#DC2626', bg: '#FEF2F2' },
+  { condition: 'Hearing loss > 30 dB in speech range', severity: 'Permanent', color: '#DC2626', bg: '#FEF2F2' },
+  { condition: 'Active tuberculosis', severity: 'Temporary', color: '#D97706', bg: '#FEF3C7' },
+  { condition: 'Mild pes planus (flat foot)', severity: 'Case-by-case', color: '#1D4ED8', bg: '#DBEAFE' },
+  { condition: 'Mild varicocele', severity: 'Case-by-case', color: '#1D4ED8', bg: '#DBEAFE' },
+  { condition: 'Kidney stone (passed, no recurrence)', severity: 'Case-by-case', color: '#1D4ED8', bg: '#DBEAFE' },
+  { condition: 'Dental deficiency', severity: 'Temporary', color: '#D97706', bg: '#FEF3C7' },
+];
+
+const checklists = [
+  { title: 'Before SSB', color: '#16A34A', items: ['Get a full medical checkup 2 months before', 'Fix all dental issues — fill cavities, replace missing teeth', 'Treat any skin condition under dermatologist guidance', 'Correct vision with glasses if needed (Army/Navy)', 'Check your BMI and correct if outside range'] },
+  { title: 'Before medical exam', color: T.navyM, items: ['Sleep well the night before', 'Do not wear contact lenses on exam day', 'Carry all previous medical records', 'Declare all conditions honestly — hiding is worse', 'Bring valid photo ID and SSB recommendation letter'] },
 ];
 
 export default function MedicalPage() {
-  const [activeTest, setActiveTest] = useState(0);
+  const [activeTab, setActiveTab] = useState('general');
+  const [openItem, setOpenItem] = useState<number | null>(null);
+
+  const currentTab = tabs.find(t => t.id === activeTab)!;
 
   return (
-    <div className="min-h-screen bg-[#F4F8FF] font-['DM_Sans',sans-serif]">
-      {/* Hero */}
-      <div className="bg-gradient-to-br from-[#1565C0] to-[#0D47A1] text-white py-20 px-6 relative before:absolute before:inset-x-0 before:top-0 before:h-1 before:bg-[#FFB300]">
-        <div className="max-w-[1080px] mx-auto">
-          <Link href="/" className="text-[#E8F2FF] hover:text-white mb-6 inline-block text-sm font-medium transition-colors">← Back to ConquerNDA</Link>
-          <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#90CAF9] mb-3">Post-SSB Process</div>
-          <h1 className="font-['Bebas_Neue',sans-serif] text-5xl md:text-7xl mb-4 tracking-wide">Medical Examination</h1>
-          <p className="text-xl text-[#E8F2FF] max-w-2xl font-light">
-            The complete, procedure-by-procedure breakdown of what happens in the NDA Medical Examination — no surprises.
-          </p>
-          <div className="mt-8 grid grid-cols-3 gap-4 max-w-lg">
-            {[['3–5 Days', 'Duration'], ['6 Systems', 'Examined'], ['Military Hospital', 'Venue']].map(([v, l]) => (
-              <div key={l} className="bg-white/10 rounded-xl p-3 text-center">
-                <div className="font-bold text-lg">{v}</div>
-                <div className="text-[12px] text-[#90CAF9]">{l}</div>
-              </div>
+    <div style={{ fontFamily: "'Inter','DM Sans',sans-serif", background: T.page, minHeight: '100vh' }}>
+      <PageHero
+        bg={T.navy}
+        badge="After SSB recommendation"
+        badgeBg="rgba(255,255,255,0.15)"
+        badgeColor="rgba(255,255,255,0.9)"
+        h1="Medical examination"
+        lead="Only recommended candidates undergo this thorough 3–5 day medical board at a military hospital."
+        breadcrumbs={[{ label: 'SSB', href: '/ssb' }, { label: 'Medical Examination' }]}
+        stats={[
+          { label: 'Duration', value: '3–5 days' },
+          { label: 'Systems tested', value: '6+' },
+          { label: 'Venue', value: 'Military hospital' },
+        ]}
+      />
+
+      <PageLayout sidebarGroup="ssb">
+
+        <Callout type="warning" style={{ marginBottom: 32 }}>
+          The medical examination happens <strong>only after SSB recommendation</strong>. You must first clear the written exam, then the SSB, and only then are you called for the medical board.
+        </Callout>
+
+        {/* Test category tabs */}
+        <div style={{ marginBottom: 32 }}>
+          <SectionLabel>Medical test categories</SectionLabel>
+          {/* Tab strip */}
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 20 }}>
+            {tabs.map(tab => (
+              <button key={tab.id} onClick={() => { setActiveTab(tab.id); setOpenItem(null); }} style={{
+                padding: '8px 18px', borderRadius: 20, cursor: 'pointer', fontFamily: 'inherit',
+                fontWeight: 600, fontSize: 13, transition: 'all .15s',
+                background: activeTab === tab.id ? T.navyM : T.white,
+                color: activeTab === tab.id ? '#fff' : T.slate600,
+                border: `1.5px solid ${activeTab === tab.id ? T.navyM : T.border}`,
+              }}>{tab.label}</button>
             ))}
           </div>
-        </div>
-      </div>
-
-      <div className="max-w-[1080px] mx-auto px-6 py-16 space-y-12">
-        {/* Info Banner */}
-        <div className="bg-[#FFF8E1] border border-[#FFE082] rounded-2xl p-6 flex gap-4">
-          <span className="text-2xl shrink-0">⚠️</span>
-          <div>
-            <h3 className="font-bold text-[#B78103] mb-1">Who Appears for This Medical?</h3>
-            <p className="text-[14px] text-[#455A7A] leading-relaxed">
-              Only candidates <strong>recommended by the SSB board</strong> (typically 4–6% of SSB attendees) are called for the medical examination. The exam is conducted at designated Command Hospitals or Military Hospitals. Results of the medical are independent of the SSB scores — you can have a perfect SSB score and still be declared medically unfit.
-            </p>
-          </div>
-        </div>
-
-        {/* Tab Navigation */}
-        <div>
-          <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#1565C0] mb-4">Complete Procedure</div>
-          <h2 className="font-['Bebas_Neue',sans-serif] text-4xl text-[#0D1B2A] tracking-wide mb-6">Every Test — Explained</h2>
-
-          {/* Tab Buttons */}
-          <div className="flex gap-2 flex-wrap mb-6">
-            {medicalTests.map((test, i) => (
-              <button key={test.id} onClick={() => setActiveTest(i)}
-                className={`px-4 py-2 rounded-xl text-[13px] font-semibold transition-all border ${activeTest === i ? 'text-white border-transparent' : 'bg-white text-[#455A7A] border-[#C5D8F5] hover:border-[#1565C0] hover:text-[#1565C0]'}`}
-                style={activeTest === i ? { background: medicalTests[i].color } : {}}>
-                {test.icon} {test.title.split('—')[1]?.trim() || test.title}
-              </button>
-            ))}
-          </div>
-
-          {/* Active Test Panel */}
-          <div className="bg-white rounded-2xl border border-[#C5D8F5] shadow-sm overflow-hidden">
-            <div className="p-6 border-b" style={{ background: medicalTests[activeTest].bg, borderColor: '#C5D8F5' }}>
-              <div className="text-[11px] font-bold uppercase tracking-wider mb-1" style={{ color: medicalTests[activeTest].color }}>
-                {medicalTests[activeTest].day}
-              </div>
-              <div className="flex items-center gap-3">
-                <span className="text-3xl">{medicalTests[activeTest].icon}</span>
-                <h3 className="font-['Bebas_Neue',sans-serif] text-3xl tracking-wide" style={{ color: medicalTests[activeTest].color }}>
-                  {medicalTests[activeTest].title}
-                </h3>
-              </div>
-            </div>
-            <div className="divide-y divide-gray-50">
-              {medicalTests[activeTest].procedures.map((proc, j) => (
-                <details key={j} className="group">
-                  <summary className="flex items-center justify-between p-5 cursor-pointer hover:bg-[#F4F8FF] transition-colors list-none gap-4">
-                    <div className="flex items-center gap-3">
-                      <span className="w-7 h-7 rounded-full flex items-center justify-center text-white text-[12px] font-bold shrink-0"
-                        style={{ background: medicalTests[activeTest].color }}>{j + 1}</span>
-                      <span className="font-semibold text-[#0D1B2A] text-[15px]">{proc.name}</span>
-                    </div>
-                    <span className="shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center text-[11px] transition-transform group-open:rotate-180"
-                      style={{ borderColor: medicalTests[activeTest].color, color: medicalTests[activeTest].color }}>▼</span>
-                  </summary>
-                  <div className="px-5 pb-5 ml-10">
-                    <p className="text-[14px] text-[#455A7A] leading-relaxed">{proc.detail}</p>
+          {/* Accordion content */}
+          <Card>
+            {currentTab.items.map((item, i) => (
+              <div key={i} style={{ borderBottom: i < currentTab.items.length - 1 ? `1px solid ${T.border}` : 'none' }}>
+                <button onClick={() => setOpenItem(openItem === i ? null : i)} style={{
+                  width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                  padding: '14px 0', background: 'none', border: 'none', cursor: 'pointer',
+                  textAlign: 'left', fontWeight: 600, fontSize: 15, color: T.text, fontFamily: 'inherit',
+                }}>
+                  <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+                    <div style={{ width: 24, height: 24, borderRadius: '50%', background: '#EEF2FF', color: T.navyM, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700 }}>{i + 1}</div>
+                    {item.name}
                   </div>
-                </details>
-              ))}
-            </div>
-          </div>
+                  <svg style={{ width: 16, height: 16, flexShrink: 0, transform: openItem === i ? 'rotate(180deg)' : 'none', transition: 'transform .2s', color: T.textMuted }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                {openItem === i && (
+                  <div style={{ padding: '0 0 16px 34px', fontSize: 14, color: T.slate600, lineHeight: 1.7 }}>
+                    {item.detail}
+                  </div>
+                )}
+              </div>
+            ))}
+          </Card>
         </div>
 
-        {/* Common Rejection Reasons */}
-        <div className="bg-white rounded-2xl border border-[#C5D8F5] p-8 shadow-sm">
-          <div className="flex items-center gap-3 mb-6">
-            <span className="text-2xl">❌</span>
-            <div>
-              <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#DC2626] mb-1">Know Before You Go</div>
-              <h2 className="font-['Bebas_Neue',sans-serif] text-3xl text-[#0D1B2A] tracking-wide">Common Disqualifying Conditions</h2>
-            </div>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-[14px] min-w-[500px]">
+        {/* Disqualifying conditions table */}
+        <div style={{ marginBottom: 40 }}>
+          <SectionLabel>Common conditions and their impact</SectionLabel>
+          <div style={{ overflowX: 'auto', borderRadius: 12, border: `1px solid ${T.border}`, boxShadow: T.shadow }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>
               <thead>
-                <tr className="bg-[#FEF2F2] text-[#DC2626] text-[11px] uppercase tracking-wider">
-                  <th className="p-3 border-b border-[#FECACA]">Medical Condition</th>
-                  <th className="p-3 border-b border-[#FECACA]">Impact on Service</th>
+                <tr style={{ background: '#F7F8FC', borderBottom: `1px solid ${T.border}` }}>
+                  <th style={{ color: T.textMuted, fontWeight: 500, padding: '12px 16px', textAlign: 'left', fontSize: 13 }}>Medical condition</th>
+                  <th style={{ color: T.textMuted, fontWeight: 500, padding: '12px 16px', textAlign: 'left', fontSize: 13 }}>Severity</th>
                 </tr>
               </thead>
               <tbody>
-                {commonRejections.map((r, i) => (
-                  <tr key={i} className={`${i % 2 === 0 ? 'bg-white' : 'bg-[#FEF2F2]/30'} hover:bg-[#FEF2F2]/60 transition-colors`}>
-                    <td className="p-3 border-b border-gray-50 font-medium text-[#0D1B2A]">{r.condition}</td>
-                    <td className="p-3 border-b border-gray-50 text-[#DC2626]">{r.serviceImpact}</td>
+                {conditions.map((row, idx) => (
+                  <tr key={idx} style={{ background: idx % 2 === 0 ? T.white : '#FAFAFA', borderBottom: `1px solid ${T.border}` }}>
+                    <td style={{ padding: '12px 16px', color: T.text }}>{row.condition}</td>
+                    <td style={{ padding: '12px 16px' }}>
+                      <span style={{ fontSize: 12, fontWeight: 700, color: row.color, background: row.bg, padding: '3px 10px', borderRadius: 20 }}>{row.severity}</span>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -340,63 +137,17 @@ export default function MedicalPage() {
           </div>
         </div>
 
-        {/* Preparation Tips */}
-        <div>
-          <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#1565C0] mb-2">How to Prepare</div>
-          <h2 className="font-['Bebas_Neue',sans-serif] text-4xl text-[#0D1B2A] tracking-wide mb-6">Medical Preparation Checklist</h2>
-          <div className="grid md:grid-cols-2 gap-5">
-            {[
-              {
-                title: 'Before SSB — Get Checked Early',
-                items: [
-                  'Visit an ophthalmologist — test your refraction accurately',
-                  'Get dental work done — fill all cavities, replace missing teeth',
-                  'Treat any hernia, varicocele, or skin conditions proactively',
-                  'Get a basic blood panel (CBC, blood glucose, LFT) at a private lab',
-                  'Treat DNS, sinusitis, or tonsil issues before appearing',
-                ],
-                color: '#2E7D32',
-              },
-              {
-                title: 'Before Medical Exam',
-                items: [
-                  'Carry all previous medical records and surgery documentation',
-                  'Get required vaccinations — typhoid, hepatitis B if not done',
-                  'Avoid heavy exercise 24–48 hours before (can affect ECG, BP)',
-                  'Ensure you are well-rested and well-hydrated',
-                  'Fasting blood tests — go empty stomach for 10–12 hours',
-                ],
-                color: '#1565C0',
-              },
-              {
-                title: 'Documents to Carry',
-                items: [
-                  'UPSC admit card + SSB recommendation letter',
-                  'All old prescriptions, spectacle prescriptions',
-                  'Allergy or chronic medication history (be honest)',
-                  'Previous surgery records (especially ortho, ENT, eye)',
-                  'Vaccination certificates',
-                ],
-                color: '#7B1FA2',
-              },
-              {
-                title: 'Be Honest — Always',
-                items: [
-                  'Never hide a medical condition — it can lead to permanent disqualification',
-                  'Medical history is cross-checked during service tenure',
-                  'Fraudulent enrolment is a criminal offence under Army Act',
-                  'Borderline conditions are often accepted if properly disclosed',
-                  'If Temp Unfit: get treated, get certified, come back stronger',
-                ],
-                color: '#E65100',
-              },
-            ].map((tip) => (
-              <div key={tip.title} className="bg-white rounded-2xl border border-[#C5D8F5] p-6 shadow-sm">
-                <h3 className="font-bold text-[15px] mb-4" style={{ color: tip.color }}>{tip.title}</h3>
-                <ul className="space-y-2">
-                  {tip.items.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-[14px] text-[#455A7A]">
-                      <span className="shrink-0 w-1.5 h-1.5 rounded-full mt-2" style={{ background: tip.color }}></span>
+        {/* Checklists */}
+        <div style={{ marginBottom: 32 }}>
+          <SectionLabel>Preparation checklists</SectionLabel>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}>
+            {checklists.map(cl => (
+              <div key={cl.title} style={{ background: T.white, border: `1px solid ${T.border}`, borderTop: `4px solid ${cl.color}`, borderRadius: 12, padding: '20px 24px', boxShadow: T.shadow }}>
+                <h3 style={{ fontWeight: 700, fontSize: 16, color: cl.color, marginBottom: 14 }}>{cl.title}</h3>
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  {cl.items.map((item, i) => (
+                    <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, fontSize: 14, color: T.slate600 }}>
+                      <span style={{ color: cl.color, fontWeight: 700, flexShrink: 0, marginTop: 1 }}>✓</span>
                       {item}
                     </li>
                   ))}
@@ -406,22 +157,17 @@ export default function MedicalPage() {
           </div>
         </div>
 
-        {/* Final CTA */}
-        <div className="bg-gradient-to-br from-[#1565C0] to-[#0D47A1] text-white rounded-2xl p-8">
-          <h2 className="font-['Bebas_Neue',sans-serif] text-3xl tracking-wide mb-3">The Medical is Not Your Enemy</h2>
-          <p className="text-[#E8F2FF] leading-relaxed max-w-2xl">
-            Most candidates who are declared unfit are given a <strong>"Temporarily Unfit"</strong> status for correctable issues like dental problems, weight issues, or hernia. Start your health checks 6–12 months before your SSB so you have time to fix any issues. A healthy body is part of the military mindset — start now.
-          </p>
-          <div className="mt-6 flex gap-3">
-            <Link href="/fitness" className="bg-white text-[#1565C0] font-bold px-5 py-2.5 rounded-xl text-[14px] hover:bg-[#E8F2FF] transition-colors">
-              Start Fitness Plan →
-            </Link>
-            <Link href="/eligibility" className="bg-white/10 text-white font-bold px-5 py-2.5 rounded-xl text-[14px] hover:bg-white/20 transition-colors border border-white/20">
-              Check Eligibility
-            </Link>
-          </div>
-        </div>
-      </div>
+        <Callout type="tip">
+          <strong>Declare all conditions honestly.</strong> Concealing a medical condition and being found out later is a permanent disqualification from all Indian Armed Forces — far worse than the condition itself.
+        </Callout>
+
+      </PageLayout>
+
+      <RelatedStrip items={[
+        { label: 'Eligibility', href: '/eligibility', desc: 'Physical standards by wing', icon: '✅' },
+        { label: 'SSB Overview', href: '/ssb', desc: 'The full 5-day process', icon: '📅' },
+        { label: 'Fitness Tracker', href: '/fitness', desc: 'Build physical fitness', icon: '💪' },
+      ]} />
     </div>
   );
 }

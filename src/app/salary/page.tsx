@@ -1,99 +1,88 @@
 'use client';
-import Link from 'next/link';
+import { useState } from 'react';
+import { PageHero, PageLayout, Callout, Card, RelatedStrip, T, SectionLabel, StatsRow, Btn } from '@/components/ui/PageShell';
 
-const salaryData = [
-  { rank: 'NDA Cadet', period: 'During Training', pay: '₹56,100', level: 10, pct: 18, color: '#64B5F6' },
-  { rank: 'Lieutenant / Sub Lt / Fg Offr', period: '0–2 Years', pay: '₹56,100 – ₹1,77,500', level: 10, pct: 32, color: '#42A5F5' },
-  { rank: 'Captain / Lt Commander / Fg Lt', period: '2–6 Years', pay: '₹61,300 – ₹1,93,900', level: 10, pct: 42, color: '#2196F3' },
-  { rank: 'Major / Cdr / Sqn Ldr', period: '6–13 Years', pay: '₹69,400 – ₹2,07,200', level: 11, pct: 55, color: '#1E88E5' },
-  { rank: 'Lt Colonel / Capt / Wg Cdr', period: '13–26 Years', pay: '₹1,21,200 – ₹2,12,400', level: 12, pct: 68, color: '#1976D2' },
-  { rank: 'Colonel / Commodore / Gp Capt', period: '26+ Years', pay: '₹1,30,600 – ₹2,15,900', level: 13, pct: 80, color: '#1565C0' },
-  { rank: 'Brigadier / RAdm / AVM', period: 'Senior Level', pay: '₹1,39,600 – ₹2,17,600', level: '13A', pct: 90, color: '#0D47A1' },
-  { rank: 'Major General / VAdm / AirMshl', period: 'Flag/General Officer', pay: '₹1,44,200 – ₹2,18,200', level: 14, pct: 95, color: '#0D47A1' },
+const ranks = [
+  { rank: 'Lieutenant', basic: '₹56,100', msp: '₹15,500', level: 'Level 10', inhand: '₹80,000–90,000' },
+  { rank: 'Captain', basic: '₹61,300', msp: '₹15,500', level: 'Level 10B', inhand: '₹90,000–1,05,000' },
+  { rank: 'Major', basic: '₹69,400', msp: '₹15,500', level: 'Level 11', inhand: '₹1,10,000–1,25,000' },
+  { rank: 'Lieutenant Colonel', basic: '₹1,21,200', msp: '₹15,500', level: 'Level 12A', inhand: '₹1,60,000–1,80,000' },
+  { rank: 'Colonel', basic: '₹1,30,600', msp: '₹15,500', level: 'Level 13', inhand: '₹1,75,000–2,00,000' },
+  { rank: 'Brigadier', basic: '₹1,39,600', msp: '₹15,500', level: 'Level 13A', inhand: '₹1,90,000–2,20,000' },
+  { rank: 'Major General', basic: '₹1,44,200', msp: '₹15,500', level: 'Level 14', inhand: '₹2,10,000–2,40,000' },
+  { rank: 'Lieutenant General', basic: '₹1,82,200', msp: '₹15,500', level: 'Level 15', inhand: '₹2,60,000–3,00,000' },
+  { rank: 'General / COAS', basic: '₹2,50,000 (fixed)', msp: '—', level: 'Level 18', inhand: '₹3,00,000+' },
 ];
 
 const perks = [
-  { icon: '🏠', title: 'Free Housing', desc: 'Government accommodation provided in cantonment areas or HRA allowance' },
-  { icon: '🚗', title: 'Transport Allowance', desc: 'Conveyance allowance plus official vehicle for senior ranks' },
-  { icon: '🏥', title: 'Full Medical Coverage', desc: 'ECHS — free medical for self, spouse, children, and parents at military hospitals' },
-  { icon: '🎓', title: 'Children\'s Education', desc: 'CEA: ₹2,250/month per child. Prestigious Sainik Schools at concessional fees' },
-  { icon: '✈️', title: 'Air Travel Entitlement', desc: 'LTC (Leave Travel Concession) for annual travel reimbursement for family' },
-  { icon: '⚔️', title: 'Gallantry Pay', desc: 'Additional pay for Param Vir Chakra, Maha Vir Chakra, Vir Chakra awardees' },
-  { icon: '🏦', title: 'Pension (OROP)', desc: 'One Rank One Pension — pension continues after retirement based on last rank' },
-  { icon: '🏖️', title: 'Canteen Facilities', desc: 'CSD canteen providing goods at subsidised prices — significant cost savings' },
+  { icon: '🏠', title: 'Free housing', desc: 'Government accommodation throughout service, or HRA (24–27% of basic) if not availed' },
+  { icon: '🏥', title: 'Free medical', desc: 'ECHS covers officer and entire family — parents, spouse, and children' },
+  { icon: '🛒', title: 'CSD canteen', desc: 'Subsidised groceries and goods at Canteen Stores Department across India' },
+  { icon: '📅', title: '60 days leave', desc: 'Annual earned leave + casual leave — best leave structure in any Indian profession' },
+  { icon: '💼', title: 'Pension', desc: 'Defined pension scheme continues after retirement, fully inflation-indexed' },
+  { icon: '🛡️', title: 'Group insurance', desc: 'AGIF and DSOP Fund provides substantial financial security to family' },
+  { icon: '✈️', title: 'Air travel (LTC)', desc: 'Leave Travel Concession for free/subsidised travel across India' },
+  { icon: '🎓', title: "Children's education", desc: 'Education allowance and priority admission in Kendriya Vidyalaya and Sainik Schools' },
+  { icon: '🏋️', title: 'Sports & clubs', desc: 'Access to officers mess, swimming pools, golf courses, and sports facilities' },
 ];
 
 export default function SalaryPage() {
   return (
-    <div className="min-h-screen bg-[#F4F8FF] font-['DM_Sans',sans-serif]">
-      {/* Hero */}
-      <div className="bg-gradient-to-br from-[#1565C0] to-[#0D47A1] text-white py-20 px-6 relative before:absolute before:inset-x-0 before:top-0 before:h-1 before:bg-[#FFB300]">
-        <div className="max-w-[1080px] mx-auto">
-          <Link href="/" className="text-[#E8F2FF] hover:text-white mb-6 inline-block text-sm font-medium transition-colors">
-            ← Back to ConquerNDA
-          </Link>
-          <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#90CAF9] mb-3">Career & Growth</div>
-          <h1 className="font-['Bebas_Neue',sans-serif] text-5xl md:text-7xl mb-4 tracking-wide">Salary & Perks</h1>
-          <p className="text-xl text-[#E8F2FF] max-w-2xl font-light">
-            From cadet stipend to General-level pay — complete NDA officer compensation breakdown.
-          </p>
-        </div>
-      </div>
+    <div style={{ fontFamily: "'Inter','DM Sans',sans-serif", background: T.page, minHeight: '100vh' }}>
+      <PageHero
+        bg={T.navy}
+        h1="NDA officer salary & perks"
+        lead="Complete breakdown of pay, allowances, and benefits at every stage of your military career."
+        breadcrumbs={[{ label: 'Career', href: '/salary' }, { label: 'Salary & Perks' }]}
+      />
 
-      <div className="max-w-[1080px] mx-auto px-6 py-16 space-y-12">
-        {/* Pay Matrix */}
-        <div>
-          <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#1565C0] mb-2">7th Pay Commission</div>
-          <h2 className="font-['Bebas_Neue',sans-serif] text-4xl text-[#0D1B2A] tracking-wide mb-8">Officer Pay Progression</h2>
-          <div className="space-y-4">
-            {salaryData.map((row, i) => (
-              <div key={i} className="bg-white rounded-2xl border border-[#C5D8F5] p-6 shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-center justify-between mb-3">
-                  <div>
-                    <div className="font-bold text-[#0D1B2A] text-[15px]">{row.rank}</div>
-                    <div className="text-[12px] text-[#455A7A]">{row.period}</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="font-bold text-[#1565C0] text-[15px]">{row.pay}</div>
-                    <div className="text-[11px] text-[#455A7A]">Level {row.level} pay matrix</div>
-                  </div>
-                </div>
-                <div className="h-2 bg-[#E8F2FF] rounded-full overflow-hidden">
-                  <div className="h-full rounded-full transition-all" style={{ width: `${row.pct}%`, background: row.color }} />
-                </div>
+      <PageLayout sidebarGroup="career">
+        {/* Featured starting salary */}
+        <Card style={{ borderLeft: `5px solid ${T.amber}`, marginBottom: 32, background: 'linear-gradient(135deg, #FEF3C7 0%, #fff 60%)' }}>
+          <div style={{ display: 'flex', gap: 24, alignItems: 'flex-start', flexWrap: 'wrap' }}>
+            <div style={{ flex: '0 0 auto' }}>
+              <div style={{ fontSize: 11, fontWeight: 600, color: T.textMuted, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 6 }}>Cadet stipend during training</div>
+              <div style={{ fontSize: 44, fontWeight: 800, color: T.amber, lineHeight: 1, marginBottom: 6 }}>₹56,100</div>
+              <div style={{ fontSize: 14, color: T.textMuted }}>per month basic pay</div>
+            </div>
+            <div style={{ flex: 1, minWidth: 240 }}>
+              <div style={{ fontSize: 14, color: T.text, lineHeight: 1.7, marginBottom: 12 }}>
+                During your 3 years at NDA and subsequent pre-commissioning training, you receive ₹56,100 monthly stipend. Food, accommodation, clothing, and equipment are <strong>fully provided by the government</strong>.
               </div>
-            ))}
+              <div style={{ fontSize: 14, color: T.slate600, background: '#FEF3C7', borderRadius: 10, padding: '10px 14px' }}>
+                💡 After commissioning as <strong>Lieutenant</strong>: Basic ₹56,100 + MSP ₹15,500 + DA + HRA + allowances ≈ <strong>₹80,000–₹95,000 total in-hand</strong>
+              </div>
+            </div>
           </div>
-          <p className="text-[12px] text-[#455A7A] mt-4 text-center">* Basic Pay only. Total take-home is significantly higher due to allowances.</p>
-        </div>
+        </Card>
 
-        {/* Allowances Table */}
-        <div className="bg-white rounded-2xl border border-[#C5D8F5] p-8 shadow-sm">
-          <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#1565C0] mb-2">Key Allowances</div>
-          <h2 className="font-['Bebas_Neue',sans-serif] text-3xl text-[#1565C0] tracking-wide mb-6">What Adds to Your Salary</h2>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
+        <StatsRow stats={[
+          { icon: '💰', label: 'Cadet stipend', value: '₹56,100/mo' },
+          { icon: '🏠', label: 'Housing', value: 'Free', sub: 'Throughout career' },
+          { icon: '🏥', label: 'Medical', value: 'Free', sub: 'Family included' },
+          { icon: '📅', label: 'Annual leave', value: '60 days', sub: '+ casual leave' },
+        ]} />
+
+        {/* Rank-wise pay table */}
+        <div style={{ marginBottom: 32 }}>
+          <SectionLabel>Rank-wise pay structure (7th Pay Commission)</SectionLabel>
+          <div style={{ overflowX: 'auto', borderRadius: 12, border: `1px solid ${T.border}`, boxShadow: T.shadow }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>
               <thead>
-                <tr className="bg-[#F4F8FF] text-[#455A7A] text-[11px] uppercase tracking-wider">
-                  <th className="p-4 border-b border-[#C5D8F5]">Allowance</th>
-                  <th className="p-4 border-b border-[#C5D8F5]">Amount (Approx)</th>
-                  <th className="p-4 border-b border-[#C5D8F5]">Notes</th>
+                <tr style={{ background: T.navyM }}>
+                  {['Rank', 'Basic Pay', 'MSP', 'Pay Level', 'Approx in-hand'].map((h, i) => (
+                    <th key={i} style={{ color: '#fff', fontWeight: 600, padding: '12px 16px', textAlign: 'left', whiteSpace: 'nowrap', fontSize: 13 }}>{h}</th>
+                  ))}
                 </tr>
               </thead>
-              <tbody className="text-[#455A7A]">
-                {[
-                  ['Dearness Allowance (DA)', '42% of basic pay', 'Revised twice a year'],
-                  ['Military Service Pay (MSP)', '₹15,500/month', 'Flat for all officers (except Generals)'],
-                  ['House Rent Allowance (HRA)', '24–27% of basic', 'If Govt accommodation not availed'],
-                  ['Field Area Allowance', '₹6,300–₹16,900/mo', 'For postings in operational areas'],
-                  ['High Altitude Allowance', 'Up to ₹25,000/mo', 'For postings above 9,000 ft'],
-                  ['Flying Allowance', '₹25,000/month', 'For Air Force flying personnel'],
-                  ['Submarine Allowance', '₹25,000/month', 'For Navy submarine officers'],
-                ].map(([a, b, c], i) => (
-                  <tr key={i} className={i % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
-                    <td className="p-4 border-b border-[#E8F2FF] font-medium text-[#0D1B2A]">{a}</td>
-                    <td className="p-4 border-b border-[#E8F2FF] font-bold text-[#1565C0]">{b}</td>
-                    <td className="p-4 border-b border-[#E8F2FF]">{c}</td>
+              <tbody>
+                {ranks.map((r, i) => (
+                  <tr key={i} style={{ background: i % 2 === 0 ? T.white : T.page }}>
+                    <td style={{ padding: '11px 16px', fontWeight: 600, color: T.navyM, borderBottom: `1px solid ${T.border}` }}>{r.rank}</td>
+                    <td style={{ padding: '11px 16px', color: T.text, borderBottom: `1px solid ${T.border}` }}>{r.basic}</td>
+                    <td style={{ padding: '11px 16px', color: T.text, borderBottom: `1px solid ${T.border}` }}>{r.msp}</td>
+                    <td style={{ padding: '11px 16px', color: T.textMuted, borderBottom: `1px solid ${T.border}` }}>{r.level}</td>
+                    <td style={{ padding: '11px 16px', fontWeight: 600, color: T.green, borderBottom: `1px solid ${T.border}` }}>{r.inhand}</td>
                   </tr>
                 ))}
               </tbody>
@@ -101,27 +90,36 @@ export default function SalaryPage() {
           </div>
         </div>
 
-        {/* Perks */}
-        <div>
-          <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#1565C0] mb-2">Beyond the Paycheck</div>
-          <h2 className="font-['Bebas_Neue',sans-serif] text-4xl text-[#0D1B2A] tracking-wide mb-8">Benefits & Perks</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <Callout type="info">
+          Pay figures are approximate and vary by posting location, allowances drawn, and field vs peace area classification. HRA is 24–27% of basic pay in metro cities.
+        </Callout>
+
+        {/* Perks grid */}
+        <div style={{ marginTop: 40, marginBottom: 32 }}>
+          <SectionLabel>Non-cash benefits & perks</SectionLabel>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(260px,1fr))', gap: 16 }}>
             {perks.map((p, i) => (
-              <div key={i} className="bg-white rounded-2xl border border-[#C5D8F5] p-6 shadow-sm hover:-translate-y-1 transition-transform">
-                <div className="text-3xl mb-3">{p.icon}</div>
-                <h3 className="font-bold text-[#0D1B2A] mb-2">{p.title}</h3>
-                <p className="text-[12px] text-[#455A7A] leading-relaxed">{p.desc}</p>
+              <div key={i} style={{ background: T.white, border: `1px solid ${T.border}`, borderRadius: 14, padding: '20px 22px', boxShadow: T.shadow, display: 'flex', gap: 14, alignItems: 'flex-start' }}>
+                <span style={{ fontSize: 26, flexShrink: 0 }}>{p.icon}</span>
+                <div>
+                  <div style={{ fontWeight: 700, fontSize: 14, color: T.text, marginBottom: 4 }}>{p.title}</div>
+                  <div style={{ fontSize: 13, color: T.textMuted, lineHeight: 1.6 }}>{p.desc}</div>
+                </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Summary CTA */}
-        <div className="bg-[#1565C0] rounded-2xl p-8 text-white text-center">
-          <h2 className="font-['Bebas_Neue',sans-serif] text-4xl tracking-wide mb-3">Total Package: ₹1.5L – ₹2.5L+ /month</h2>
-          <p className="text-[#E8F2FF] text-[15px] max-w-xl mx-auto">When you include MSP, DA, HRA, and allowances, a young Lieutenant takes home over ₹1.2 lakh per month — with free housing, medical, and education on top.</p>
-        </div>
-      </div>
+        <Callout type="tip">
+          The true value of military compensation lies in non-cash benefits. Free housing, free family healthcare, pension, and subsidised canteen make the effective CTC 2–3× the basic pay figure.
+        </Callout>
+      </PageLayout>
+
+      <RelatedStrip items={[
+        { label: 'Rank Structure', href: '/rank-structure', desc: 'Army, Navy & Air Force ranks', icon: '🎖️' },
+        { label: 'NDA Training Life', href: '/training', desc: 'Life at the academy', icon: '🪖' },
+        { label: 'What is NDA', href: '/what-is-nda', desc: 'Overview & history', icon: '🏛️' },
+      ]} />
     </div>
   );
 }

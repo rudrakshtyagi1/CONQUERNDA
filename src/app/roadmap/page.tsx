@@ -1,140 +1,114 @@
 'use client';
 import Link from 'next/link';
-
-const plans = [
-  {
-    id: 'class-10',
-    title: 'Class 10 Aspirant',
-    badge: '3–4 Years Out',
-    color: '#2E7D32',
-    bg: '#E8F5E9',
-    border: '#A5D6A7',
-    steps: [
-      { phase: 'Now', task: 'Focus 100% on Class 10 board exams. Score 85%+ to build academic confidence.' },
-      { phase: 'After Boards', task: 'Choose PCM (Physics, Chemistry, Maths) in Class 11 — mandatory for Navy/AF wings.' },
-      { phase: 'Summer Vacation', task: 'Start basic physical training: 5km run daily, 20 push-ups, 10 pull-ups.' },
-      { phase: 'Class 11', task: 'Master NCERT Maths and Physics thoroughly. These form 60% of NDA paper.' },
-      { phase: 'Class 11 End', task: 'Start GK reading: Newspapers, Geography maps, Indian history.' },
-      { phase: 'Class 12', task: 'Simultaneously prepare for NDA. Register for NDA 1 (appears in April).' },
-    ],
-  },
-  {
-    id: 'class-11',
-    title: 'Class 11 Aspirant',
-    badge: '2–3 Years Out',
-    color: '#1565C0',
-    bg: '#E8F2FF',
-    border: '#90CAF9',
-    steps: [
-      { phase: 'Immediately', task: 'Ensure you have PCM. If not in PCM, consider switching — crucial for Navy/AF.' },
-      { phase: 'Now', task: 'Start NCERT Maths: Complete Class 10 and 11 thoroughly. Daily 2 hours.' },
-      { phase: 'Month 1–3', task: 'Build physical base: 5km run, push-ups, pull-ups, swimming if possible.' },
-      { phase: 'Month 3–6', task: 'Begin GAT prep: English grammar (Wren & Martin), GK (Lucent), Physics.' },
-      { phase: 'Month 6–12', task: 'Solve PYQs (Previous Year Questions) for Maths. Identify weak topics.' },
-      { phase: 'Class 12', task: 'Appear in NDA 1 (April). Even if not fully prepared, the experience is invaluable.' },
-    ],
-  },
-  {
-    id: 'class-12',
-    title: 'Class 12 Aspirant',
-    badge: '1 Year Out',
-    color: '#E65100',
-    bg: '#FFF3E0',
-    border: '#FFCC80',
-    steps: [
-      { phase: 'Now', task: 'Register for upcoming NDA exam — check UPSC website for notification dates.' },
-      { phase: 'Maths (Month 1–2)', task: 'Algebra, Trigonometry, Coordinate Geometry, Calculus — use R.D. Sharma + PYQs.' },
-      { phase: 'GAT (Month 2–3)', task: 'English (Objective), Physics NCERT, Chemistry basics, Lucent GK daily.' },
-      { phase: 'Month 3–4', task: 'Mock tests every Sunday. Analyze mistakes. Focus on accuracy over speed.' },
-      { phase: 'Month 4–5', task: 'Current Affairs — read newspaper daily. Focus on defence, awards, sports.' },
-      { phase: 'Final Month', task: 'Only revision. No new topics. Sleep 8hrs. Run daily. Stay confident.' },
-    ],
-  },
-  {
-    id: 'dropper',
-    title: 'Dropper / Repeat Aspirant',
-    badge: 'Second Attempt',
-    color: '#7B1FA2',
-    bg: '#F3E5F5',
-    border: '#CE93D8',
-    steps: [
-      { phase: 'First Week', task: 'Honest self-analysis: Why did you miss last time? Maths? GAT? Time management?' },
-      { phase: 'Month 1', task: 'Create a structured 6-month plan. Join a coaching institute if needed for accountability.' },
-      { phase: 'Month 2–3', task: 'Deep-dive on weak topics. Do NOT re-read strong topics — focus on gaps only.' },
-      { phase: 'Month 3–4', task: 'Take full mock tests under exam conditions. Aim for 60–65% accuracy in Maths.' },
-      { phase: 'Month 4–5', task: 'SSB preparation simultaneously — GD practice, current affairs, self-awareness.' },
-      { phase: 'Final Month', task: 'Full revision. Track your score improvement. Age eligibility: ensure you\'re still under 19.5 years.' },
-    ],
-  },
-];
-
-const resources = [
-  { subject: 'Mathematics', books: ['R.D. Sharma (Class 11 & 12)', 'Pathfinder NDA/NA by Arihant', 'NDA Maths by RPH Editorial'] },
-  { subject: 'English (GAT)', books: ['Wren & Martin — High School Grammar', 'Word Power Made Easy by Norman Lewis', 'Objective English by R.S. Aggarwal'] },
-  { subject: 'General Knowledge', books: ['Lucent\'s General Knowledge', 'Manorama Year Book', 'Geography NCERT (Class 9–12)'] },
-  { subject: 'Physics & Chemistry', books: ['NCERT Physics Class 11 & 12', 'NCERT Chemistry Class 11 & 12', 'Arihant Science for NDA'] },
-];
+import { PageHero, PageLayout, Callout, RelatedStrip, T, SectionLabel, Table } from '@/components/ui/PageShell';
 
 export default function RoadmapPage() {
   return (
-    <div className="min-h-screen bg-[#F4F8FF] font-['DM_Sans',sans-serif]">
-      <div className="bg-gradient-to-br from-[#1565C0] to-[#0D47A1] text-white py-20 px-6 relative before:absolute before:inset-x-0 before:top-0 before:h-1 before:bg-[#FFB300]">
-        <div className="max-w-[1080px] mx-auto">
-          <Link href="/" className="text-[#E8F2FF] hover:text-white mb-6 inline-block text-sm font-medium transition-colors">← Back to ConquerNDA</Link>
-          <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#90CAF9] mb-3">Preparation Strategy</div>
-          <h1 className="font-['Bebas_Neue',sans-serif] text-5xl md:text-7xl mb-4 tracking-wide">Study Roadmap</h1>
-          <p className="text-xl text-[#E8F2FF] max-w-2xl font-light">Customized preparation plans based on where you are in your academic journey.</p>
-        </div>
-      </div>
+    <div style={{ fontFamily: "'Inter','DM Sans',sans-serif", background: T.page, minHeight: '100vh' }}>
+      <PageHero
+        bg="#EEF2FF"
+        h1="NDA study roadmap"
+        lead="A structured plan whether you are in Class 10, 11, 12, or a dropper."
+        breadcrumbs={[{ label: 'Preparation', href: '/roadmap' }, { label: 'Study Roadmap' }]}
+      />
 
-      <div className="max-w-[1080px] mx-auto px-6 py-16 space-y-12">
-        {plans.map((plan) => (
-          <div key={plan.id} className="bg-white rounded-2xl border shadow-sm overflow-hidden" style={{ borderColor: plan.border }}>
-            <div className="p-6 border-b flex items-center gap-4" style={{ background: plan.bg, borderColor: plan.border }}>
-              <div>
-                <h2 className="font-['Bebas_Neue',sans-serif] text-3xl tracking-wide" style={{ color: plan.color }}>{plan.title}</h2>
-                <span className="text-[12px] font-bold uppercase tracking-wider px-3 py-1 rounded-full" style={{ background: plan.color, color: 'white' }}>{plan.badge}</span>
-              </div>
+      <PageLayout sidebarGroup="preparation">
+        <SectionLabel>Choose your stage</SectionLabel>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20, marginBottom: 40 }}>
+          <Link href="/roadmap/class-10" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <div style={{ background: T.white, border: `1px solid ${T.border}`, borderTop: '4px solid #16A34A', borderRadius: 16, padding: 28, transition: 'transform 0.2s, box-shadow 0.2s', boxShadow: T.shadow }}>
+              <div style={{ fontSize: 32, marginBottom: 12 }}>🌱</div>
+              <h3 style={{ fontSize: 20, fontWeight: 700, marginBottom: 6 }}>Class 10</h3>
+              <p style={{ fontSize: 14, color: T.textMuted, marginBottom: 16 }}>Start early, build your base</p>
+              <div style={{ fontSize: 14, fontWeight: 600, color: '#16A34A' }}>See roadmap →</div>
             </div>
-            <div className="p-6">
-              <div className="space-y-4">
-                {plan.steps.map((step, i) => (
-                  <div key={i} className="flex gap-4">
-                    <div className="flex flex-col items-center">
-                      <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-[12px] font-bold shrink-0" style={{ background: plan.color }}>{i + 1}</div>
-                      {i < plan.steps.length - 1 && <div className="w-0.5 flex-1 my-1" style={{ background: plan.border }}></div>}
-                    </div>
-                    <div className="pb-4">
-                      <div className="text-[11px] font-bold uppercase tracking-wider mb-1" style={{ color: plan.color }}>{step.phase}</div>
-                      <p className="text-[14px] text-[#455A7A] leading-relaxed">{step.task}</p>
-                    </div>
-                  </div>
+          </Link>
+          <Link href="/roadmap/class-11" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <div style={{ background: T.white, border: `1px solid ${T.border}`, borderTop: '4px solid #D4900A', borderRadius: 16, padding: 28, transition: 'transform 0.2s, box-shadow 0.2s', boxShadow: T.shadow }}>
+              <div style={{ fontSize: 32, marginBottom: 12 }}>📖</div>
+              <h3 style={{ fontSize: 20, fontWeight: 700, marginBottom: 6 }}>Class 11</h3>
+              <p style={{ fontSize: 14, color: T.textMuted, marginBottom: 16 }}>Core preparation window</p>
+              <div style={{ fontSize: 14, fontWeight: 600, color: '#D4900A' }}>See roadmap →</div>
+            </div>
+          </Link>
+          <Link href="/roadmap/class-12" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <div style={{ background: T.white, border: `1px solid ${T.border}`, borderTop: '4px solid #1D3FAB', borderRadius: 16, padding: 28, transition: 'transform 0.2s, box-shadow 0.2s', boxShadow: T.shadow }}>
+              <div style={{ fontSize: 32, marginBottom: 12 }}>🎯</div>
+              <h3 style={{ fontSize: 20, fontWeight: 700, marginBottom: 6 }}>Class 12</h3>
+              <p style={{ fontSize: 14, color: T.textMuted, marginBottom: 16 }}>Balance boards + NDA</p>
+              <div style={{ fontSize: 14, fontWeight: 600, color: '#1D3FAB' }}>See roadmap →</div>
+            </div>
+          </Link>
+          <Link href="/roadmap/dropper" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <div style={{ background: T.white, border: `1px solid ${T.border}`, borderTop: '4px solid #DC2626', borderRadius: 16, padding: 28, transition: 'transform 0.2s, box-shadow 0.2s', boxShadow: T.shadow }}>
+              <div style={{ fontSize: 32, marginBottom: 12 }}>🔥</div>
+              <h3 style={{ fontSize: 20, fontWeight: 700, marginBottom: 6 }}>Dropper</h3>
+              <p style={{ fontSize: 14, color: T.textMuted, marginBottom: 16 }}>Full-time focused prep</p>
+              <div style={{ fontSize: 14, fontWeight: 600, color: '#DC2626' }}>See roadmap →</div>
+            </div>
+          </Link>
+        </div>
+
+        <SectionLabel>General 12-month overview</SectionLabel>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 24, paddingLeft: 16, borderLeft: `2px solid ${T.border}`, marginBottom: 40, position: 'relative' }}>
+          {[
+            { phase: 'Phase 1: Foundation', time: 'Month 1–3', desc: 'Build NCERT basics for all subjects, start with Class 9-10 math.' },
+            { phase: 'Phase 2: Build-up', time: 'Month 4–8', desc: 'Cover full NDA syllabus systematically, subject-by-subject.' },
+            { phase: 'Phase 3: Revision', time: 'Month 9–10', desc: 'Rapid revision using short notes, solve previous year papers.' },
+            { phase: 'Phase 4: Mock Sprint', time: 'Month 11–12', desc: 'Full-length mock tests every week, analyse and fix weak areas.' }
+          ].map((step, i) => (
+            <div key={i} style={{ position: 'relative' }}>
+              <div style={{ position: 'absolute', left: -25, top: 4, width: 14, height: 14, borderRadius: '50%', background: T.navyM, border: `3px solid ${T.page}` }} />
+              <div style={{ fontSize: 12, fontWeight: 600, color: T.navyM, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 4 }}>{step.time}</div>
+              <h4 style={{ fontSize: 16, fontWeight: 700, marginBottom: 6 }}>{step.phase}</h4>
+              <p style={{ fontSize: 14, color: T.slate600, lineHeight: 1.6 }}>{step.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        <SectionLabel>Subject priority guide</SectionLabel>
+        <div style={{ overflowX: 'auto', borderRadius: 12, border: `1px solid ${T.border}`, boxShadow: T.shadow, marginBottom: 24 }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14 }}>
+            <thead>
+              <tr style={{ background: T.navyM }}>
+                {['Subject', 'Priority', 'Recommended hrs/week', 'Key resource'].map((h, i) => (
+                  <th key={i} style={{ color: '#fff', fontWeight: 600, padding: '12px 16px', textAlign: 'left' }}>{h}</th>
                 ))}
-              </div>
-            </div>
-          </div>
-        ))}
-
-        {/* Resources */}
-        <div>
-          <div className="text-[11px] font-bold uppercase tracking-[0.13em] text-[#1565C0] mb-2">Best Books</div>
-          <h2 className="font-['Bebas_Neue',sans-serif] text-4xl text-[#0D1B2A] tracking-wide mb-8">Recommended Resources</h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            {resources.map((r) => (
-              <div key={r.subject} className="bg-white rounded-2xl border border-[#C5D8F5] p-6 shadow-sm">
-                <h3 className="font-bold text-[#1565C0] mb-3">{r.subject}</h3>
-                <ul className="space-y-2">
-                  {r.books.map((b) => (
-                    <li key={b} className="flex items-start gap-2 text-[14px] text-[#455A7A]">
-                      <span className="text-[#1565C0] shrink-0 font-bold">›</span> {b}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                ['Mathematics', 'High 🔴', '10–12 hrs', 'R.D. Sharma + PYQs'],
+                ['English', 'High 🔴', '4–5 hrs', 'Wren & Martin'],
+                ['Physics', 'Medium 🟡', '4–5 hrs', 'NCERT Class 11–12'],
+                ['Chemistry', 'Medium 🟡', '3–4 hrs', 'NCERT Class 11–12'],
+                ['General Science', 'Medium 🟡', '3–4 hrs', 'NCERT Class 9–10'],
+                ['History', 'Low 🟢', '2–3 hrs', 'NCERT + Spectrum'],
+                ['Geography', 'Low 🟢', '2–3 hrs', 'NCERT Class 11'],
+                ['Current Affairs', 'High 🔴', 'Daily 30 min', 'Newspapers + Apps'],
+              ].map((row, idx) => (
+                <tr key={idx} style={{ background: idx % 2 === 0 ? T.white : T.page }}>
+                  <td style={{ padding: '12px 16px', fontWeight: 600, color: T.text, borderBottom: `1px solid ${T.border}` }}>{row[0]}</td>
+                  <td style={{ padding: '12px 16px', borderBottom: `1px solid ${T.border}` }}>{row[1]}</td>
+                  <td style={{ padding: '12px 16px', color: T.slate600, borderBottom: `1px solid ${T.border}` }}>{row[2]}</td>
+                  <td style={{ padding: '12px 16px', color: T.textMuted, borderBottom: `1px solid ${T.border}` }}>{row[3]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-      </div>
+
+        <Callout type="tip">
+          <strong>Consistency beats intensity.</strong> 4 hours daily for 12 months outperforms 12 hours for 3 months. Build a routine and protect it.
+        </Callout>
+
+      </PageLayout>
+
+      <RelatedStrip items={[
+        { label: 'Syllabus', href: '/syllabus', desc: 'Complete topic list', icon: '📚' },
+        { label: 'Books & Resources', href: '/syllabus/books', desc: 'Best books per subject', icon: '📖' },
+        { label: 'Mock Tests', href: '/mock-tests', desc: 'Practice tests', icon: '✏️' },
+      ]} />
     </div>
   );
 }
