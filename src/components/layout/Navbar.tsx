@@ -216,15 +216,15 @@ function SearchModal({ onClose }: { onClose: () => void }) {
           {results.length === 0 && <div className="text-center py-12 text-[var(--slate-500)] font-bold">No results found for &ldquo;{query}&rdquo;</div>}
           {results.map(item => (
             <Link key={item.href + item.label} href={item.href} onClick={onClose}
-              className="flex items-center gap-4 px-5 py-4 rounded-2xl hover:bg-[var(--blue-50)] transition-colors group">
-              <div className="w-12 h-12 rounded-2xl bg-[var(--slate-100)] flex items-center justify-center flex-shrink-0 group-hover:bg-white group-hover:shadow-sm transition-all">
-                <Search size={18} className="text-[var(--slate-500)] group-hover:text-[var(--blue)] transition-colors" />
+              className="flex items-center gap-3 px-4 py-3.5 rounded-2xl hover:bg-[var(--blue-50)] transition-colors group">
+              <div className="w-10 h-10 rounded-xl bg-[var(--slate-100)] flex items-center justify-center flex-shrink-0 group-hover:bg-white group-hover:shadow-sm transition-all">
+                <Search size={16} className="text-[var(--slate-500)] group-hover:text-[var(--blue)] transition-colors" />
               </div>
-              <div className="flex-1 min-w-0">
-                <div className="text-[16px] font-black text-[var(--slate-800)] group-hover:text-[var(--blue)] transition-colors mb-0.5">{item.label}</div>
-                <div className="text-[14px] font-medium text-[var(--slate-500)] truncate">{item.desc}</div>
+              <div className="flex-1 min-w-0 overflow-hidden">
+                <div className="text-[14px] font-bold text-[var(--slate-800)] group-hover:text-[var(--blue)] transition-colors truncate">{item.label}</div>
+                <div className="text-[12px] font-medium text-[var(--slate-500)] truncate">{item.desc}</div>
               </div>
-              <span className="hidden sm:inline-block text-[11px] font-bold px-3 py-1 bg-[var(--slate-100)] text-[var(--slate-600)] rounded-full">{item.tag}</span>
+              <span className="flex-shrink-0 text-[11px] font-bold px-2.5 py-1 rounded-full whitespace-nowrap" style={{ background: '#EEF2FF', color: '#1D3FAB' }}>{item.tag}</span>
             </Link>
           ))}
         </div>

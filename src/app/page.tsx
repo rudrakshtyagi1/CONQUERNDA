@@ -39,8 +39,8 @@ h1,h2,h3,h4{letter-spacing:-0.02em}
 ═══════════════════════════════════════ */
 .wrap{max-width:1080px;margin:0 auto;padding:0 36px}
 .sec{padding:64px 0}
-.stag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.13em;color:var(--blue);margin-bottom:10px}
-.stitle{font-family:'Bebas Neue',sans-serif;font-size:44px;color:var(--text);letter-spacing:.5px;line-height:1;margin-bottom:8px}
+.stag{display:inline-block;font-size:11px;font-weight:600;color:#1D3FAB;background:#EEF2FF;padding:4px 12px;border-radius:20px;margin-bottom:12px;letter-spacing:0}
+.stitle{font-size:32px;font-weight:700;color:#1A1A2E;line-height:1.2;margin-bottom:8px}
 .ssub{font-size:14px;color:var(--muted);margin-bottom:32px;max-width:560px}
 .bg-alt{background:var(--surface)}
 .bg-white{background:var(--white)}
@@ -623,15 +623,34 @@ footer{background:var(--text);padding:56px 36px 30px}
   <h1>Your Gateway to the<br><em>Indian Armed Forces</em></h1>
   <p class="hero-sub">Everything NDA aspirants need — Rank Predictor, Syllabus, SSB Guide, Cutoff Analysis, Eligibility, Salary Calculator, and more.</p>
   <div class="hero-btns">
-    <button class="btn-pri"><i class="ti ti-chart-bar"></i> Predict My Rank</button>
-    <button class="btn-out">Explore NDA →</button>
+    <a href="/rank-predictor" class="btn-pri"><i class="ti ti-chart-bar"></i> Predict My Rank</a>
+    <a href="/what-is-nda" class="btn-out">Explore NDA →</a>
   </div>
-  <div class="hero-stats">
-    <div class="stat-item"><div class="stat-n">15+</div><div class="stat-l">Major Sections</div><div class="stat-s">Covered</div></div>
-    <div class="stat-item"><div class="stat-n">100+</div><div class="stat-l">Articles</div><div class="stat-s">In-depth guides</div></div>
-    <div class="stat-item"><div class="stat-n">10</div><div class="stat-l">Exam Datasets</div><div class="stat-s">Real UPSC data</div></div>
-    <div class="stat-item"><div class="stat-n">1900+</div><div class="stat-l">Candidates</div><div class="stat-s">Analyzed</div></div>
+  <!-- NDA challenge stats -->
+  <div style="background:white;border:1px solid #E5E7EB;border-radius:16px;display:grid;grid-template-columns:repeat(4,1fr);position:relative;z-index:1;overflow:hidden">
+    <div style="padding:24px 20px;text-align:center;border-right:1px solid #E5E7EB">
+      <div style="font-size:42px;font-weight:800;color:#1D3FAB;line-height:1">~5 lakh</div>
+      <div style="font-size:14px;font-weight:600;color:#1A1A2E;margin-top:6px">Applicants every cycle</div>
+      <div style="font-size:12px;color:#6B7280;margin-top:4px;font-style:italic">You are 1 in 500,000</div>
+    </div>
+    <div style="padding:24px 20px;text-align:center;border-right:1px solid #E5E7EB">
+      <div style="font-size:42px;font-weight:800;color:#1D3FAB;line-height:1">~20,000</div>
+      <div style="font-size:14px;font-weight:600;color:#1A1A2E;margin-top:6px">Clear the written exam</div>
+      <div style="font-size:12px;color:#6B7280;margin-top:4px">Top <strong style="color:#D4900A;font-weight:700">4%</strong> make it past here</div>
+    </div>
+    <div style="padding:24px 20px;text-align:center;border-right:1px solid #E5E7EB">
+      <div style="font-size:42px;font-weight:800;color:#1D3FAB;line-height:1">~800</div>
+      <div style="font-size:14px;font-weight:600;color:#1A1A2E;margin-top:6px">Get SSB recommended</div>
+      <div style="font-size:12px;color:#6B7280;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:5px"><span style="width:7px;height:7px;border-radius:50%;background:#DC2626;display:inline-block;flex-shrink:0"></span> 1 in 25 at interview stage</div>
+    </div>
+    <div style="padding:24px 20px;text-align:center">
+      <div style="font-size:42px;font-weight:800;color:#D4900A;line-height:1">~400</div>
+      <div style="font-size:14px;font-weight:600;color:#1A1A2E;margin-top:6px">Join NDA each cycle</div>
+      <div style="font-size:12px;color:#1D3FAB;margin-top:4px;font-style:italic">The ones who prepared right</div>
+    </div>
   </div>
+  <div style="margin-top:0;border-top:2px solid #D4900A;width:100%;position:relative;z-index:1"></div>
+  <div style="text-align:center;font-size:14px;color:#6B7280;padding:12px 0 0;position:relative;z-index:1">ConquerNDA is built for the student who wants to be in that 400. <a href="/rank-predictor" style="color:#1D3FAB;font-weight:700;text-decoration:none">Start free →</a></div>
 </section>
 
 <!-- ══════════════════════════════════════
@@ -640,22 +659,61 @@ footer{background:var(--text);padding:56px 36px 30px}
 <div class="bg-white">
 <div class="wrap"><div class="sec fade-up">
   <div class="info-grid">
+    <!-- NOTIFICATION CARD -->
     <div class="icard">
-      <div class="ilabel">Latest Notification</div>
-      <h3>NDA &amp; NA (II) 2026 <span class="badge badge-up">Upcoming</span></h3>
-      <p>UPSC notification expected May 2026<br>Application window: May–June 2026<br>Exam date: September 2026</p>
+      <span class="stag" style="margin-bottom:14px">Latest notification</span>
+      <h3 style="font-size:20px;font-weight:700;color:#1A1A2E;display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px">NDA &amp; NA (II) 2026 <span class="badge badge-up">Upcoming</span></h3>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px">
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)">
+          <i class="ti ti-bell" style="color:var(--blue);font-size:15px;flex-shrink:0"></i>
+          <span style="color:#374151;font-weight:500;width:140px;flex-shrink:0">Notification:</span>
+          <span>Expected May 2026</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)">
+          <i class="ti ti-calendar" style="color:var(--blue);font-size:15px;flex-shrink:0"></i>
+          <span style="color:#374151;font-weight:500;width:140px;flex-shrink:0">Application window:</span>
+          <span>May – June 2026</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)">
+          <i class="ti ti-clipboard" style="color:var(--blue);font-size:15px;flex-shrink:0"></i>
+          <span style="color:#374151;font-weight:500;width:140px;flex-shrink:0">Exam date:</span>
+          <span>September 2026</span>
+        </div>
+      </div>
       <hr class="icard-divider">
-      <button class="btn-ghost">View Full Notification <i class="ti ti-arrow-right"></i></button>
+      <a href="/exam-pattern" class="btn-ghost" style="text-decoration:none;display:inline-flex">View full notification <i class="ti ti-arrow-right"></i></a>
     </div>
+    <!-- FUNNEL CARD -->
     <div class="icard gold-card">
-      <div class="ilabel">Selection Rate</div>
-      <div class="bigpct">4%</div>
-      <div class="pctlbl">of applicants get selected into NDA</div>
+      <span class="stag" style="color:#D4900A;background:#FFF8E1;margin-bottom:12px">Selection funnel</span>
+      <h3 style="font-size:18px;font-weight:700;color:#1A1A2E;margin-bottom:16px">How brutal is the competition?</h3>
       <div class="funnel">
-        <div class="frow"><span class="flbl">Apply</span><div class="ftrack"><div class="fbar" style="width:100%;background:#1565C0"></div></div><span class="fval">~5 lakh</span></div>
-        <div class="frow"><span class="flbl">Clear Written</span><div class="ftrack"><div class="fbar" style="width:40%;background:#1976D2"></div></div><span class="fval">~20,000</span></div>
-        <div class="frow"><span class="flbl">SSB Recommended</span><div class="ftrack"><div class="fbar" style="width:12%;background:#64B5F6"></div></div><span class="fval">~6,000</span></div>
-        <div class="frow"><span class="flbl">Join NDA</span><div class="ftrack"><div class="fbar" style="width:1%;background:#FFB300"></div></div><span class="fval">~400</span></div>
+        <div class="frow">
+          <span class="flbl">Apply</span>
+          <div class="ftrack"><div class="fbar" style="width:100%;background:#E5E7EB"></div></div>
+          <span class="fval" style="color:#1D3FAB">~5 lakh</span>
+        </div>
+        <div style="text-align:center;color:#9CA3AF;font-size:12px;padding:2px 0"><i class="ti ti-arrow-down"></i></div>
+        <div class="frow">
+          <span class="flbl">Clear Written</span>
+          <div class="ftrack"><div class="fbar" style="width:70%;background:#93C5FD"></div></div>
+          <span class="fval" style="color:#1D3FAB">~20,000</span>
+        </div>
+        <div style="text-align:center;color:#9CA3AF;font-size:12px;padding:2px 0"><i class="ti ti-arrow-down"></i></div>
+        <div class="frow">
+          <span class="flbl">SSB Recommended</span>
+          <div class="ftrack"><div class="fbar" style="width:40%;background:#1D3FAB"></div></div>
+          <span class="fval" style="color:#1D3FAB">~800</span>
+        </div>
+        <div style="text-align:center;color:#9CA3AF;font-size:12px;padding:2px 0"><i class="ti ti-arrow-down"></i></div>
+        <div class="frow">
+          <span class="flbl">Join NDA</span>
+          <div class="ftrack"><div class="fbar" style="width:15%;background:#D4900A"></div></div>
+          <span class="fval" style="color:#D4900A">~400</span>
+        </div>
+      </div>
+      <div style="margin-top:16px;border-left:3px solid #D4900A;background:#FFF8E1;padding:10px 14px;border-radius:0 8px 8px 0;font-size:12px;color:#78350F;line-height:1.6">
+        Only ~400 seats fill each cycle. Your rank in the written exam directly determines if you get an SSB call. <a href="/rank-predictor" style="color:#D4900A;font-weight:700;text-decoration:none">Check your rank →</a>
       </div>
     </div>
   </div>
@@ -838,42 +896,49 @@ footer{background:var(--text);padding:56px 36px 30px}
 ══════════════════════════════════════ -->
 <div class="bg-alt">
 <div class="wrap"><div class="sec fade-up">
-  <div class="stag">Career Growth</div>
-  <div class="stitle">Officer Salary Progression</div>
-  <div class="ssub">From cadet stipend to General-level pay — a complete breakdown.</div>
-  <div class="salary-grid">
+  <span class="stag">Career growth</span>
+  <div class="stitle">Officer salary progression</div>
+  <div class="ssub">From cadet stipend to Colonel-level pay — a complete breakdown.</div>
+  <div class="salary-grid" style="grid-template-columns:repeat(5,1fr)">
     <div class="salcard">
-      <div class="sal-icon"><i class="ti ti-award"></i></div>
+      <div class="sal-icon" style="background:#EEF2FF"><i class="ti ti-school" style="color:#1D3FAB"></i></div>
       <div class="sal-rank">Cadet (NDA)</div>
-      <div class="sal-years">During Training</div>
+      <div class="sal-years" style="background:#F3F4F6;color:#6B7280;padding:2px 8px;border-radius:12px;display:inline-block;font-size:10px;margin-bottom:8px">During Training</div>
       <div class="sal-pay">₹56,100/mo</div>
-      <div class="sal-bar"><div class="sal-fill" style="width:18%"></div></div>
+      <div class="sal-bar"><div class="sal-fill" style="width:15%"></div></div>
     </div>
     <div class="salcard">
-      <div class="sal-icon"><i class="ti ti-award"></i></div>
+      <div class="sal-icon" style="background:#EEF2FF"><i class="ti ti-star" style="color:#1D3FAB"></i></div>
       <div class="sal-rank">Lieutenant</div>
-      <div class="sal-years">0–2 Years</div>
-      <div class="sal-pay">₹56,100 – 1,77,500</div>
-      <div class="sal-bar"><div class="sal-fill" style="width:32%"></div></div>
+      <div class="sal-years" style="background:#F3F4F6;color:#6B7280;padding:2px 8px;border-radius:12px;display:inline-block;font-size:10px;margin-bottom:8px">0–2 years</div>
+      <div class="sal-pay">₹56,100–1,77,500</div>
+      <div class="sal-bar"><div class="sal-fill" style="width:30%"></div></div>
     </div>
     <div class="salcard">
-      <div class="sal-icon"><i class="ti ti-award"></i></div>
+      <div class="sal-icon" style="background:#EEF2FF"><i class="ti ti-award" style="color:#1D3FAB"></i></div>
       <div class="sal-rank">Captain</div>
-      <div class="sal-years">2–6 Years</div>
-      <div class="sal-pay">₹61,300 – 1,93,900</div>
-      <div class="sal-bar"><div class="sal-fill" style="width:48%"></div></div>
+      <div class="sal-years" style="background:#F3F4F6;color:#6B7280;padding:2px 8px;border-radius:12px;display:inline-block;font-size:10px;margin-bottom:8px">2–6 years</div>
+      <div class="sal-pay">₹61,300–1,93,900</div>
+      <div class="sal-bar"><div class="sal-fill" style="width:50%"></div></div>
     </div>
     <div class="salcard">
-      <div class="sal-icon"><i class="ti ti-award"></i></div>
+      <div class="sal-icon" style="background:#EEF2FF"><i class="ti ti-shield-chevron" style="color:#1D3FAB"></i></div>
       <div class="sal-rank">Major</div>
-      <div class="sal-years">6–13 Years</div>
-      <div class="sal-pay">₹69,400 – 2,07,200</div>
-      <div class="sal-bar"><div class="sal-fill" style="width:60%"></div></div>
+      <div class="sal-years" style="background:#F3F4F6;color:#6B7280;padding:2px 8px;border-radius:12px;display:inline-block;font-size:10px;margin-bottom:8px">6–13 years</div>
+      <div class="sal-pay">₹69,400–2,07,200</div>
+      <div class="sal-bar"><div class="sal-fill" style="width:65%"></div></div>
+    </div>
+    <div class="salcard" style="border-top:3px solid #D4900A">
+      <div class="sal-icon" style="background:#FFF8E1"><i class="ti ti-medal" style="color:#D4900A"></i></div>
+      <div class="sal-rank">Colonel</div>
+      <div class="sal-years" style="background:#FFF3E0;color:#D4900A;padding:2px 8px;border-radius:12px;display:inline-block;font-size:10px;margin-bottom:8px">16+ years</div>
+      <div class="sal-pay" style="color:#D4900A">₹1,30,600–2,15,900</div>
+      <div class="sal-bar"><div class="sal-fill" style="width:85%;background:#D4900A"></div></div>
     </div>
   </div>
   <p class="sal-note">*7th CPC pay matrix + MSP (₹15,500) + DA + HRA + allowances. Actual take-home varies by posting.</p>
   <div class="ssb-cta">
-    <button class="btn-ghost">View Detailed Breakdown <i class="ti ti-arrow-right"></i></button>
+    <a href="/salary" class="btn-ghost" style="text-decoration:none;display:inline-flex;cursor:pointer">View detailed breakdown <i class="ti ti-arrow-right"></i></a>
   </div>
 </div></div></div>
 
@@ -882,52 +947,73 @@ footer{background:var(--text);padding:56px 36px 30px}
 ══════════════════════════════════════ -->
 <div class="bg-white">
 <div class="wrap"><div class="sec fade-up">
-  <div class="stag">Defence Forces</div>
-  <div class="stitle">Officer Rank Structure</div>
-  <div class="ssub">Rank progression across all three services of the Indian Armed Forces.</div>
+  <span class="stag">Defence forces</span>
+  <div class="stitle">Officer rank structure</div>
+  <div class="ssub">Rank progression across all three services after commissioning via NDA.</div>
   <div class="rank-grid">
-    <div class="rcard">
-      <div class="rhead"><div class="rdot army"></div><span class="rname">Indian Army</span></div>
+    <div class="rcard" style="border-top:4px solid #2D6A4F;padding-top:20px">
+      <div class="rhead" style="border-bottom:1px solid #F3F4F6;padding-bottom:12px;margin-bottom:14px">
+        <i class="ti ti-shield" style="font-size:20px;color:#2D6A4F"></i>
+        <div>
+          <span class="rname">Indian Army</span>
+          <div style="font-size:12px;color:var(--muted);margin-top:1px">After NDA → IMA Dehradun</div>
+        </div>
+      </div>
       <ul class="rlist">
-        <li><span class="rrank-num">1.</span>Lieutenant</li>
-        <li><span class="rrank-num">2.</span>Captain</li>
-        <li><span class="rrank-num">3.</span>Major</li>
-        <li><span class="rrank-num">4.</span>Lt Colonel</li>
-        <li><span class="rrank-num">5.</span>Colonel</li>
-        <li><span class="rrank-num">6.</span>Brigadier</li>
-        <li><span class="rrank-num">7.</span>Major General</li>
-        <li><span class="rrank-num">8.</span>Lt General</li>
-        <li><span class="rrank-num">9.</span>General</li>
+        <li><span class="rrank-num">1.</span><a href="/rank-structure" style="color:inherit;text-decoration:none;flex:1">Lieutenant <span style="font-size:10px;font-weight:700;color:#D4900A;background:#FFF8E1;padding:1px 7px;border-radius:12px;margin-left:4px">NDA entry</span></a></li>
+        <li><span class="rrank-num">2.</span><a href="/rank-structure" style="color:inherit;text-decoration:none">Captain</a></li>
+        <li><span class="rrank-num">3.</span><a href="/rank-structure" style="color:inherit;text-decoration:none">Major</a></li>
+        <li><span class="rrank-num">4.</span><a href="/rank-structure" style="color:inherit;text-decoration:none">Lt Colonel</a></li>
+        <li><span class="rrank-num">5.</span><a href="/rank-structure" style="color:inherit;text-decoration:none">Colonel</a></li>
+        <li><span class="rrank-num">6.</span><a href="/rank-structure" style="color:inherit;text-decoration:none">Brigadier</a></li>
+        <li><span class="rrank-num">7.</span><a href="/rank-structure" style="color:inherit;text-decoration:none">Major General</a></li>
+        <li><span class="rrank-num">8.</span><a href="/rank-structure" style="color:inherit;text-decoration:none">Lt General</a></li>
+        <li><span class="rrank-num">9.</span><a href="/rank-structure" style="color:inherit;text-decoration:none">General</a></li>
       </ul>
     </div>
-    <div class="rcard">
-      <div class="rhead"><div class="rdot navy"></div><span class="rname">Indian Navy</span></div>
+    <div class="rcard" style="border-top:4px solid #1D3FAB;padding-top:20px">
+      <div class="rhead" style="border-bottom:1px solid #F3F4F6;padding-bottom:12px;margin-bottom:14px">
+        <i class="ti ti-anchor" style="font-size:20px;color:#1D3FAB"></i>
+        <div>
+          <span class="rname">Indian Navy</span>
+          <div style="font-size:12px;color:var(--muted);margin-top:1px">After NDA → INA Ezhimala</div>
+        </div>
+      </div>
       <ul class="rlist">
-        <li><span class="rrank-num">1.</span>Sub Lieutenant</li>
-        <li><span class="rrank-num">2.</span>Lieutenant</li>
-        <li><span class="rrank-num">3.</span>Lt Commander</li>
-        <li><span class="rrank-num">4.</span>Commander</li>
-        <li><span class="rrank-num">5.</span>Captain</li>
-        <li><span class="rrank-num">6.</span>Commodore</li>
-        <li><span class="rrank-num">7.</span>Rear Admiral</li>
-        <li><span class="rrank-num">8.</span>Vice Admiral</li>
-        <li><span class="rrank-num">9.</span>Admiral</li>
+        <li><span class="rrank-num">1.</span><a href="/rank-structure" style="color:inherit;text-decoration:none;flex:1">Sub Lieutenant <span style="font-size:10px;font-weight:700;color:#D4900A;background:#FFF8E1;padding:1px 7px;border-radius:12px;margin-left:4px">NDA entry</span></a></li>
+        <li><span class="rrank-num">2.</span><a href="/rank-structure" style="color:inherit;text-decoration:none">Lieutenant</a></li>
+        <li><span class="rrank-num">3.</span><a href="/rank-structure" style="color:inherit;text-decoration:none">Lt Commander</a></li>
+        <li><span class="rrank-num">4.</span><a href="/rank-structure" style="color:inherit;text-decoration:none">Commander</a></li>
+        <li><span class="rrank-num">5.</span><a href="/rank-structure" style="color:inherit;text-decoration:none">Captain</a></li>
+        <li><span class="rrank-num">6.</span><a href="/rank-structure" style="color:inherit;text-decoration:none">Commodore</a></li>
+        <li><span class="rrank-num">7.</span><a href="/rank-structure" style="color:inherit;text-decoration:none">Rear Admiral</a></li>
+        <li><span class="rrank-num">8.</span><a href="/rank-structure" style="color:inherit;text-decoration:none">Vice Admiral</a></li>
+        <li><span class="rrank-num">9.</span><a href="/rank-structure" style="color:inherit;text-decoration:none">Admiral</a></li>
       </ul>
     </div>
-    <div class="rcard">
-      <div class="rhead"><div class="rdot af"></div><span class="rname">Indian Air Force</span></div>
+    <div class="rcard" style="border-top:4px solid #6B3FA0;padding-top:20px">
+      <div class="rhead" style="border-bottom:1px solid #F3F4F6;padding-bottom:12px;margin-bottom:14px">
+        <i class="ti ti-plane" style="font-size:20px;color:#6B3FA0"></i>
+        <div>
+          <span class="rname">Indian Air Force</span>
+          <div style="font-size:12px;color:var(--muted);margin-top:1px">After NDA → AFA Hyderabad</div>
+        </div>
+      </div>
       <ul class="rlist">
-        <li><span class="rrank-num">1.</span>Flying Officer</li>
-        <li><span class="rrank-num">2.</span>Flt Lieutenant</li>
-        <li><span class="rrank-num">3.</span>Sqn Leader</li>
-        <li><span class="rrank-num">4.</span>Wing Commander</li>
-        <li><span class="rrank-num">5.</span>Gp Captain</li>
-        <li><span class="rrank-num">6.</span>Air Commodore</li>
-        <li><span class="rrank-num">7.</span>Air Vice Marshal</li>
-        <li><span class="rrank-num">8.</span>Air Marshal</li>
-        <li><span class="rrank-num">9.</span>ACM</li>
+        <li><span class="rrank-num">1.</span><a href="/rank-structure" style="color:inherit;text-decoration:none;flex:1">Flying Officer <span style="font-size:10px;font-weight:700;color:#D4900A;background:#FFF8E1;padding:1px 7px;border-radius:12px;margin-left:4px">NDA entry</span></a></li>
+        <li><span class="rrank-num">2.</span><a href="/rank-structure" style="color:inherit;text-decoration:none">Flt Lieutenant</a></li>
+        <li><span class="rrank-num">3.</span><a href="/rank-structure" style="color:inherit;text-decoration:none">Sqn Leader</a></li>
+        <li><span class="rrank-num">4.</span><a href="/rank-structure" style="color:inherit;text-decoration:none">Wing Commander</a></li>
+        <li><span class="rrank-num">5.</span><a href="/rank-structure" style="color:inherit;text-decoration:none">Gp Captain</a></li>
+        <li><span class="rrank-num">6.</span><a href="/rank-structure" style="color:inherit;text-decoration:none">Air Commodore</a></li>
+        <li><span class="rrank-num">7.</span><a href="/rank-structure" style="color:inherit;text-decoration:none">Air Vice Marshal</a></li>
+        <li><span class="rrank-num">8.</span><a href="/rank-structure" style="color:inherit;text-decoration:none">Air Marshal</a></li>
+        <li><span class="rrank-num">9.</span><a href="/rank-structure" style="color:inherit;text-decoration:none">ACM</a></li>
       </ul>
     </div>
+  </div>
+  <div style="text-align:center;margin-top:20px">
+    <a href="/rank-structure" style="color:#1D3FAB;font-weight:600;font-size:14px;text-decoration:none">See full rank &amp; salary breakdown →</a>
   </div>
 </div></div></div>
 
@@ -1050,8 +1136,8 @@ footer{background:var(--text);padding:56px 36px 30px}
       <h2>Start your NDA<br>prep today.</h2>
       <p>Join 1,900+ candidates who used ConquerNDA to plan smarter, rank higher, and serve the nation.</p>
       <div style="margin-top:24px;display:flex;gap:12px">
-        <button class="btn-wh">Predict My AIR Rank →</button>
-        <button style="background:rgba(255,255,255,.12);color:white;padding:13px 24px;border-radius:28px;font-size:14px;font-weight:500;cursor:pointer;border:1px solid rgba(255,255,255,.25);font-family:'DM Sans',sans-serif;transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.2)'" onmouseout="this.style.background='rgba(255,255,255,.12)'">Browse All Tools</button>
+        <a href="/rank-predictor" class="btn-wh" style="text-decoration:none;display:inline-flex;align-items:center">Predict My AIR Rank →</a>
+        <a href="/" style="background:rgba(255,255,255,.12);color:white;padding:13px 24px;border-radius:28px;font-size:14px;font-weight:500;cursor:pointer;border:1px solid rgba(255,255,255,.25);font-family:'DM Sans',sans-serif;transition:background .2s;text-decoration:none;display:inline-flex;align-items:center" onmouseover="this.style.background='rgba(255,255,255,.2)'" onmouseout="this.style.background='rgba(255,255,255,.12)'">Browse All Tools</a>
       </div>
     </div>
     <div class="cta-right">
