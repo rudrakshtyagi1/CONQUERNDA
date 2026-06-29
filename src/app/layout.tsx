@@ -26,6 +26,9 @@ export const metadata: Metadata = {
     description: 'Complete NDA preparation platform: Rank Predictor, Eligibility, Syllabus, SSB Guide, Cutoff Analysis, Salary Calculator.',
   },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-video-preview': -1, 'max-image-preview': 'large', 'max-snippet': -1 } },
+  verification: {
+    google: 'T0061T1IWVUPP65xsPB1Ah2o4IJZmycTxvQDVA1ArE8',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
